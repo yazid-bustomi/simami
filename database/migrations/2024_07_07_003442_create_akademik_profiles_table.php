@@ -17,7 +17,7 @@ class CreateAkademikProfilesTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('perguruan_tinggi');
-            $table->string('jurusan');
+            $table->foreignId('jurusan_id')->constrained('jurusan_kampuses')->onDelete('cascade');
             $table->string('transkip')->nullable();
             $table->string('ipk')->nullable();
             $table->string('semester')->nullable();
