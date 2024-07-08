@@ -16,6 +16,7 @@ class LowonganController extends Controller
     public function index()
     {
         //
+        return view('mahasiswa.pendaftar.index');
     }
 
     /**

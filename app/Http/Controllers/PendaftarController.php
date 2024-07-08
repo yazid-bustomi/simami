@@ -16,6 +16,7 @@ class PendaftarController extends Controller
     public function index()
     {
         //
+
     }
 
     /**
