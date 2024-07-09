@@ -18,4 +18,9 @@ class AkademikProfile extends Model
     {
         return $this->belongsTo(User::class, 'admin_kampus_id');
     }
+
+    public function pengalaman()
+    {
+        return $this->hasMany(Pengalaman::class);
+    }
 }

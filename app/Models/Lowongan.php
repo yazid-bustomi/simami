@@ -13,4 +13,9 @@ class Lowongan extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function pendaftar()
+    {
+        return $this->hasMany(Pendaftar::class);
+    }
 }

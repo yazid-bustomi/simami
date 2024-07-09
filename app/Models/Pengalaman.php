@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Pengalaman extends Model
 {
     use HasFactory;
+
+    public function akademikProfile()
+    {
+        return $this->belongsTo(AkademikProfile::class);
+    }
 }
