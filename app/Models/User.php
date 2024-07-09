@@ -54,12 +54,32 @@ class User extends Authenticatable implements MustVerifyEmail
     public function jurusanKampus()
     {
         // relasi user memiliki satu jurusan
-        return $this->hasOne(JurusanKampus::class);
+        return $this->hasMany(JurusanKampus::class);
     }
 
     public function mahasiswaProfile()
     {
         return $this->hasOne(MahasiswaProfile::class);
+    }
+
+    public function sosmed()
+    {
+        return $this->hasOne(Sosmed::class);
+    }
+
+    public function lowongan()
+    {
+        return $this->hasMany(Lowongan::class);
+    }
+
+    public function akademikProfile()
+    {
+        return $this->hasOne(AkademikProfile::class, 'user_id');
+    }
+
+    public function adminKampus()
+    {
+        return $this->hasMany(AkademikProfile::class, 'admin_kampus_id');
     }
 };
 

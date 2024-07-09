@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -14,7 +15,9 @@ class AdminController extends Controller
     public function index()
     {
         // menampilkan view admin
-        return view('admin.users.index');
+        $user = User::with(['alamat', 'jurusanKampus', 'sosmed', 'akademikProfile',])->get();
+        dd($user->toArray());
+        return view('admin.users.index', compact('user'));
     }
 
     /**

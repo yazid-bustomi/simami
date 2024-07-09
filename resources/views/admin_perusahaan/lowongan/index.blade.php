@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('style')
+    <link href={{ asset('vendor/datatables/dataTables.bootstrap4.css') }} rel="stylesheet">
+@endsection
+
 @section('content')
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
@@ -22,16 +26,6 @@
                         <th>Salary</th>
                     </tr>
                 </thead>
-                {{-- <tfoot>
-                    <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
-                    </tr>
-                </tfoot> --}}
                 <tbody>
                     <tr>
                         <td>Tiger Nixon</td>
@@ -494,4 +488,13 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+    <!-- Page level plugins -->
+    <script src={{ asset('vendor/datatables/jquery.dataTables.min.js') }}></script>
+    <script src={{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}></script>
+
+    <!-- Page level custom scripts -->
+    <script src={{ asset('js/demo/datatables-demo.js') }}></script>
 @endsection
