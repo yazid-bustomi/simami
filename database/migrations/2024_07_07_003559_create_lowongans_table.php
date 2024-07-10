@@ -22,7 +22,7 @@ class CreateLowongansTable extends Migration
             $table->string('durasi_magang');
             $table->date('open_lowongan');
             $table->date('close_lowongan');
-            $table->string('img');
+            $table->string('img')->nullable();
             $table->timestamps();
         });
     }

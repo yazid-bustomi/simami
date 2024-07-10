@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class KampusController extends Controller
 {
@@ -13,7 +15,17 @@ class KampusController extends Controller
      */
     public function index()
     {
-        //
+        //Memanggil user id admin untuk di tampilkan
+        $admin_kampus_id = Auth::user()->id;
+
+        // menampilkan semua data mahasiswa hanya yang menjadi user mahasiswanya sesuai id admin
+        $users = User::with(['alamat', 'jurusanKampus', 'sosmed', 'akademikProfile.jurusanKampus', 'mahasiswaProfile'])
+        ->whereHas('akademikProfile', function ($query) use ($admin_kampus_id){
+            $query->where('admin_kampus_id', $admin_kampus_id);
+        })
+            ->get();
+        // dd($admin);
+        return view('admin_kampus.users.index', compact('users'));
     }
 
     /**
@@ -80,5 +92,10 @@ class KampusController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function dashboard()
+    {
+        return view('admin_kampus.dashboard');
     }
 }

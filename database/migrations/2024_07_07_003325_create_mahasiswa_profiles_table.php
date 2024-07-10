@@ -16,11 +16,11 @@ class CreateMahasiswaProfilesTable extends Migration
         Schema::create('mahasiswa_profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->integer('no_hp');
+            $table->double('no_hp');
             $table->date('tanggal_lahir');
             $table->string('tempat_lahir');
             $table->string('agama');
-            $table->string('img');
+            $table->string('img')->nullable();
             $table->timestamps();
         });
     }

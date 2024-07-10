@@ -19,14 +19,17 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>Nim</th>
+                            <th>Emaio</th>
+                            <th>Jurusan</th>
+                            <th>No Hp</th>
+                            <th>Semester</th>
                         </tr>
                     </thead>
                    <tbody>
+                    @foreach ($users as $user)
+                        {{ $user }}
+                    @endforeach
                     <tr></tr>
                    </tbody>
                 </table>

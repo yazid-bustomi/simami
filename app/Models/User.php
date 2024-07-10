@@ -45,6 +45,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function nama_lengkap()
+    {
+        return "{$this->nama_depan} {$this->nama_belakang}";
+    }
+
     public function alamat()
     {
         // relasi user hanya memiliki satu alamat di tabel alamat
@@ -69,7 +74,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function lowongan()
     {
-        return $this->hasMany(Lowongan::class);
+        return $this->hasMany(Lowongan::class, 'mahasiswa_id');
     }
 
     public function akademikProfile()

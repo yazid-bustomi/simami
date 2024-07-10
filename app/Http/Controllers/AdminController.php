@@ -15,9 +15,9 @@ class AdminController extends Controller
     public function index()
     {
         // menampilkan view admin
-        $user = User::with(['alamat', 'jurusanKampus', 'sosmed', 'akademikProfile',])->get();
-        dd($user->toArray());
-        return view('admin.users.index', compact('user'));
+        $users = User::with(['alamat', 'jurusanKampus', 'sosmed', 'akademikProfile',])->get();
+        // dd($user->toArray());
+        return view('admin.users.index', compact('users'));
     }
 
     /**

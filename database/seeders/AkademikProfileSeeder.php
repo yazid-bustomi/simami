@@ -17,49 +17,57 @@ class AkademikProfileSeeder extends Seeder
         DB::table('akademik_profiles')->insert([
             [
                 'user_id' => '9',
-                'perguruan_tinggi' => 'ITB',
+                'nim' => '120020',
+                'semester' => '3',
                 'jurusan_id' => '5',
                 'admin_kampus_id' => '3'
             ],
             [
                 'user_id' => '10',
-                'perguruan_tinggi' => 'ITB',
+                'nim' => '120021',
+                'semester' => '5',
                 'jurusan_id' => '6',
                 'admin_kampus_id' => '3'
             ],
             [
                 'user_id' => '11',
-                'perguruan_tinggi' => 'ITB',
+                'nim' => '100010',
+                'semester' => '6',
                 'jurusan_id' => '1',
                 'admin_kampus_id' => '2'
             ],
             [
                 'user_id' => '12',
-                'perguruan_tinggi' => 'ITB',
+                'nim' => '100011',
+                'semester' => '6',
                 'jurusan_id' => '2',
                 'admin_kampus_id' => '2'
             ],
             [
                 'user_id' => '13',
-                'perguruan_tinggi' => 'ITB',
+                'nim' => '100012',
+                'semester' => '1',
                 'jurusan_id' => '3',
                 'admin_kampus_id' => '2'
             ],
             [
                 'user_id' => '14',
-                'perguruan_tinggi' => 'ITB',
+                'nim' => '500201',
+                'semester' => '3',
                 'jurusan_id' => '8',
                 'admin_kampus_id' => '4'
             ],
             [
                 'user_id' => '15',
-                'perguruan_tinggi' => 'ITB',
+                'nim' => '90129',
+                'semester' => '8',
                 'jurusan_id' => '9',
                 'admin_kampus_id' => '5'
             ],
             [
-                'user_id' => '15',
-                'perguruan_tinggi' => 'ITB',
+                'user_id' => '16',
+                'nim' => '90128',
+                'semester' => '6',
                 'jurusan_id' => '10',
                 'admin_kampus_id' => '5'
             ],

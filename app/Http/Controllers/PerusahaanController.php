@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lowongan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PerusahaanController extends Controller
 {
@@ -14,7 +16,10 @@ class PerusahaanController extends Controller
     public function index()
     {
         //
-        return view('admin_perusahaan.lowongan.index');
+        $idPt = Auth::user()->id;
+        $lowongans = Lowongan::with('pendaftar')->where('user_id', $idPt)->get();
+        // dd($lowongans->toArray());
+        return view('admin_perusahaan.lowongan.index', compact('lowongans'));
     }
 
     /**
@@ -81,5 +86,10 @@ class PerusahaanController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function dashboard()
+    {
+        return view('admin_perusahaan.dashboard');
     }
 }

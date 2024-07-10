@@ -23,4 +23,10 @@ class AkademikProfile extends Model
     {
         return $this->hasMany(Pengalaman::class);
     }
+
+    public function jurusanKampus()
+    {
+        return $this->belongsTo(JurusanKampus::class, 'jurusan_id');
+    }
+
 }

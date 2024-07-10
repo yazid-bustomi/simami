@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\KampusController;
 use App\Http\Controllers\LowonganController;
 use App\Http\Controllers\PendaftarController;
 use App\Http\Controllers\PerusahaanController;
@@ -24,7 +25,7 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('verified')->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('verified')->name('home');
 // Route::get('/verification/verify', 'VerificationController@verify')->name('verification.verify');
 
 
@@ -38,6 +39,11 @@ Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('adm
 
 // CRUD Lowongan
 Route::resource('/perusahaan/lowongan', PerusahaanController::class);
+Route::get('/perusahaan/dashboard', [PerusahaanController::class, 'dashboard'])->name('perusahaan.dashboard');
 
 // CRUD Pendaftar Lowongan untuk di approve
-Route::resource('/pendaftar', LowonganController::class);
+Route::resource('/pendaftar', PendaftarController::class);
+
+// CRUD Admin Kampus
+Route::resource('/kampus/user', KampusController::class);
+Route::get('/kampus/dashboard', [KampusController::class, 'dashboard'])->name('kampus.dashboard');

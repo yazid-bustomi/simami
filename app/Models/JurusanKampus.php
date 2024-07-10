@@ -13,4 +13,9 @@ class JurusanKampus extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function akademikProfile()
+    {
+        return $this->hasMany(AkademikProfile::class, 'jurusan_id');
+    }
 }
