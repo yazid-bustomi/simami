@@ -9,7 +9,7 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h5 class="font-weight-bold text-dark m-0 mx-4">Daftar Mahasiswa</h5>
-            <a href="#" class="btn btn-primary btn-sm mr-4">
+            <a href="{{ route('user.create') }}" class="btn btn-primary btn-sm mr-4">
                 <i class="fas fa-plus-circle fa-sm fa-fw mr-2"></i> Tambah Mahasiswa
             </a>
         </div>

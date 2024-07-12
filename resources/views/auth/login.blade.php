@@ -58,21 +58,15 @@
                                     <button class="btn btn-primary btn-user btn-block" type="submit">
                                         Login
                                     </button>
-                                    {{-- <a href="index.html" class="btn btn-primary btn-user btn-block">
-                                    Login
-                                </a> --}}
-                                    <hr>
-                                    <a href="#" class="btn btn-google btn-user btn-block">
-                                        <i class="fas fa-home fa-fw"></i> Back to Home
-                                    </a>
+
                                 </form>
                                 <hr>
                                 <div class="text-center">
                                     <a class="small" href="{{ route('password.request') }}">Forgot Password?</a>
                                 </div>
-                                <div class="text-center">
+                                {{-- <div class="text-center">
                                     <a class="small" href="{{ route('register') }}">Create an Account!</a>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <div class="col-lg-6 d-none d-lg-flex align-items-center justify-content-center">

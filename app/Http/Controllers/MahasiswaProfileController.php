@@ -101,4 +101,8 @@ class MahasiswaProfileController extends Controller
         // dd($tes->toArray());
         // return view('mahasiswa.profile');
     }
+    public function dashboard()
+    {
+        return view('mahasiswa.dashboard');
+    }
 }

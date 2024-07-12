@@ -24,7 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // return view('home');
         if (Auth::user()->role == 'admin') {
             return redirect()->route('admin.dashboard');
 
@@ -33,9 +32,8 @@ class HomeController extends Controller
 
         } elseif(Auth::user()->role == 'kampus'){
             return redirect()->route('kampus.dashboard');
-
         }else {
-            return redirect('/');
+            return redirect()->route('mahasiswa.profile');
         }
 
 

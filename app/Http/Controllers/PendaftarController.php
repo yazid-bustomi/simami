@@ -101,14 +101,12 @@ class PendaftarController extends Controller
      */
     public function update(UpdatePendaftarRequest $request, Pendaftar $pendaftar)
     {
-        // update status pendaftar lowongan
         $request ->validate([
-            'status' => 'required|in:select,rejected'
+            'status' => 'required|in:approve,select,rejected_kampus,rejected_perusahaan'
         ]);
 
-        $pendaftar = Pendaftar::findOrFile($pendaftar);
+        $pendaftar = Pendaftar::findOrFail($pendaftar->id);
 
-        dd($pendaftar);
         // Update status
         $pendaftar->status = $request->input('status');
         $pendaftar->save();

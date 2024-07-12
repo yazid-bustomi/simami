@@ -24,10 +24,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
 });
 
-Auth::routes(['verify' => true]);
+Auth::routes(['verify' => true, 'register' => false]);
 
 // CRUD Users by admin
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {
@@ -55,12 +55,12 @@ Route::middleware(['auth', 'verified', 'mahasiswa'])->group(function () {
     // Mahasiswa daftar lowongan magang
     Route::resource('/pendaftaran', LowonganController::class);
     Route::get('/mahasiswa/profile', [MahasiswaProfileController::class, 'profile'])->name('mahasiswa.profile');
+    Route::get('/mahasiswa/dashboard', [MahasiswaProfileController::class, 'dashboard'])->name('mahasiswa.dashboard');
+
 });
 
 // CRUD Pendaftar Lowongan untuk di approve
 Route::resource('/pendaftar', PendaftarController::class);
-
-
 
 // untuk get jurusan di dalam pendaftaran ketika di pilih kampusnya menampilkan semua jurusan sesuai kampus yang di pilih
 Route::GET('/get-jurusan/{kampusId}', [RegisterController::class, 'getJurusan'])->name('getJurusan');

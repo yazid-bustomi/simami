@@ -69,6 +69,12 @@
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li>
+                @elseif (Auth::user()->role == 'mahasiswa')
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('mahasiswa.dashboard') }}">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Dashboard</span></a>
+                </li>
             @endif
 
             <hr class="sidebar-divider">
@@ -151,19 +157,19 @@
 
             @if (Auth::user()->role == 'admin')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.profile') }}">
+                    <a class="nav-link" href="#">
                         <i class="fas fa-fw fa-chart-area"></i>
                         <span>Profile</span></a>
                 </li>
             @elseif (Auth::user()->role == 'kampus')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('kampus.profile') }}">
+                    <a class="nav-link" href="#">
                         <i class="fas fa-fw fa-chart-area"></i>
                         <span>Profile</span></a>
                 </li>
             @elseif (Auth::user()->role == 'perusahaan')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('perusahaan.profile') }}">
+                    <a class="nav-link" href="#">
                         <i class="fas fa-fw fa-chart-area"></i>
                         <span>Profile</span></a>
                 </li>

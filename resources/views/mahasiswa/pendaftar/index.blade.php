@@ -2,6 +2,7 @@
 
 @section('style')
     <link href={{ asset('vendor/datatables/dataTables.bootstrap4.css') }} rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 
 @section('content')
@@ -11,6 +12,12 @@
             <h5 class="font-weight-bold text-dark m-0 mx-4">Pelamar Lowongan Magang</h5>
         </div>
         <div class="card-body">
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             <div class="table-responsive">
                 <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
                     <thead>
@@ -23,11 +30,14 @@
                             <th>Jurusan</th>
                             <th>Semester</th>
                             <th>Ipk</th>
+                            <th>Status</th>
                             <th>Aksi</th>
+
                         </tr>
                     </thead>
                     <tbody>
                         @php
+                            $role = Auth::user()->role;
                             $no = 1;
                         @endphp
                         @foreach ($pendaftars as $pendaftar)
@@ -41,17 +51,38 @@
                                 <td>{{ $pendaftar->user->akademikProfile->semester ?? '-' }}</td>
                                 <td>{{ $pendaftar->user->akademikProfile->ipk ?? '-' }}</td>
                                 <td>
-                                    <button class="badge bg-primary text-white rounded-pill"
-                                        onclick="confirmAction('{{ $pendaftar->id }}', '{{ $pendaftar->user->nama_depan . ' ' . $pendaftar->user->nama_belakang }}', 'terima')">Terima</button>
+                                    @if ($pendaftar->status == 'pending')
+                                        <div class="text-info">Seleksi Kampus</div>
+                                        @elseif ($pendaftar->status == 'approve')
+                                        <div class="text-primary"> Seleksi Perusahaan </div>
+                                        @elseif ($pendaftar->status == 'select')
+                                        <div class="text-success">Diterima Magang</div>
+                                        @elseif ($pendaftar->status == 'rejected_kampus')
+                                        <div class="text-danger">Ditolak Kampus</div>
+                                        @else
+                                        <div class="text-danger">Ditolak Perusahaan</div>
 
-                                    <button class="badge bg-danger text-white rounded-pill"
-                                        onclick="confirmAction('{{ $pendaftar->id }}', '{{ $pendaftar->user->nama_depan . ' ' . $pendaftar->user->nama_belakang }}', 'tolak')">Tolak</button>
-
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($role == 'kampus' && $pendaftar->status == 'pending')
+                                        <button class="badge bg-primary text-white rounded-pill"
+                                            onclick="confirmAction('{{ $pendaftar->id }}', '{{ $pendaftar->user->nama_depan . ' ' . $pendaftar->user->nama_belakang }}', 'approve')">Terima</button>
+                                        <button class="badge bg-danger text-white rounded-pill"
+                                            onclick="confirmAction('{{ $pendaftar->id }}', '{{ $pendaftar->user->nama_depan . ' ' . $pendaftar->user->nama_belakang }}', 'rejected_kampus')">Tolak</button>
+                                    @elseif ($role == 'perusahaan' && $pendaftar->status == 'approve')
+                                        <button class="badge bg-primary text-white rounded-pill"
+                                            onclick="confirmAction('{{ $pendaftar->id }}', '{{ $pendaftar->user->nama_depan . ' ' . $pendaftar->user->nama_belakang }}', 'select')">Terima</button>
+                                        <button class="badge bg-danger text-white rounded-pill"
+                                            onclick="confirmAction('{{ $pendaftar->id }}', '{{ $pendaftar->user->nama_depan . ' ' . $pendaftar->user->nama_belakang }}', 'rejected_perusahaan')">Tolak</button>
+                                    @endif
                                     <a href="#" class="badge bg-info text-white rounded-pill">Detail</a>
 
-                                    <form id="action-form-{{ $pendaftar->id }}" action="{{ route('pendaftar.edit', ['pendaftar' => $pendaftar->id]) }}"
+                                    <form id="action-form-{{ $pendaftar->id }}"
+                                        action="{{ route('pendaftar.update', ['pendaftar' => $pendaftar->id]) }}"
                                         method="POST" class="d-none">
                                         @csrf
+                                        @method('PATCH')
                                     </form>
                                 </td>
                             </tr>
@@ -67,14 +98,26 @@
 
     <script>
         function confirmAction(id, name, action) {
-            let actionText = action === 'terima' ? 'menerima' : 'menolak';
+            let actionText = '';
+            let status = '';
 
-            let route = routes[action];
-            let route = action === 'terima' ? '{{ route('pendaftar.edit', ':id') }}' :
-                '{{ route('pendaftar.edit', ':id') }}';
+            if (action === 'approve') {
+                actionText = 'mengajukan magang';
+                status = 'approve';
+            } else if (action === 'select') {
+                actionText = 'menerima magang';
+                status = 'select';
+            } else if(action === 'rejected_kampus'){
+                actionText = 'menolak';
+                status = 'rejected_kampus';
+            } else if(action === 'rejected_perusahaan'){
+                actionText = 'menolak';
+                status = 'rejected_perusahaan';
+            }
+
+
+            let route = '{{ route('pendaftar.update', ':id') }}';
             route = route.replace(':id', id);
-
-            let status = action === 'terima' ? 'tolak' : 'rejected';
 
             Swal.fire({
                 title: `Apakah yakin ${actionText} ${name}?`,
@@ -89,7 +132,6 @@
                     let form = document.getElementById('action-form-' + id);
                     form.action = route;
 
-                    // Append hidden input for status
                     let input = document.createElement('input');
                     input.type = 'hidden';
                     input.name = 'status';

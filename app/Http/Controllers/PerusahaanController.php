@@ -51,8 +51,8 @@ class PerusahaanController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $validator = Validator::make($request->all(),[
+        // cek validasi create lowongan
+        $validator = Validator::make($request->all(), [
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
             'pemagang' => 'required|integer|min:1',
@@ -62,10 +62,11 @@ class PerusahaanController extends Controller
             'img' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
+        // jika validasi gagal tampilkan error ini
         if ($validator->fails()) {
             return redirect()->back()
-                             ->withErrors($validator)
-                             ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
         // ketika user tidak upload image lowongan
         $fileName = null;
@@ -78,6 +79,7 @@ class PerusahaanController extends Controller
             // Crop the image to fit 1080 x 720 using GD library
         }
 
+        // simpan data
         $lowongans = new Lowongan([
             'user_id' => Auth::user()->id,
             'judul' => $request->judul,
@@ -135,17 +137,23 @@ class PerusahaanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $lowongan = Lowongan::find($id);
+        if ($lowongan) {
+            $lowongan->delete();
+            return redirect()->route('lowongan.index')->with('success', 'Lowongan berhasil di hapus');
+        }
     }
 
     public function dashboard()
     {
-        return view('admin_perusahaan.dashboard');
+        // untuk mendapatkan user id
+        $idPt = Auth::user()->id;
+        $magang = Lowongan::where('user_id', $idPt);
+        return view('admin_perusahaan.dashboard', compact('magang'));
     }
 
     public function profile()
     {
         return view('admin_perusahaan.profile');
     }
-
 }
