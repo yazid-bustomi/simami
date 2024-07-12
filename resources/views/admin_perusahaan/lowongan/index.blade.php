@@ -32,7 +32,9 @@
                             <th>Durasi</th>
                             <th>Open Informasi</th>
                             <th>Pendaftar</th>
-                            <th>Aksi</th>
+                            @if (Auth::user()->role == 'perusahaan')
+                                <th>Aksi</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -45,19 +47,23 @@
                                 <td>{{ $lowongan->durasi_magang }} bulan</td>
                                 <td>{{ $lowongan->close_lowongan }}</td>
                                 <td>{{ $lowongan->pendaftar()->count() }}</td>
-                                <td>
-                                    <a href="{{ route('lowongan.edit', $lowongan->id) }}" class="btn btn-warning btn-sm">
-                                        <i class="fas fa-edit"></i> Edit
-                                    </a>
-                                    <form action="{{ route('lowongan.destroy', $lowongan->id) }}" method="POST"
-                                        style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete(this)">
-                                            <i class="fas fa-trash"></i> Delete
-                                        </button>
-                                    </form>
-                                </td>
+                                @if (Auth::user()->role == 'perusahaan')
+                                    <td>
+                                        <a href="{{ route('lowongan.edit', $lowongan->id) }}"
+                                            class="btn btn-warning btn-sm">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
+                                        <form action="{{ route('lowongan.destroy', $lowongan->id) }}" method="POST"
+                                            style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                                onclick="confirmDelete(this)">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </button>
+                                        </form>
+                                    </td>
+                                @endif
                             </tr>
                             @php $no++ @endphp
                         @endforeach

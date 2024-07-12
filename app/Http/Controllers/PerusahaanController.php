@@ -10,6 +10,8 @@ use Image;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Validator;
 
+use function PHPUnit\Framework\fileExists;
+
 class PerusahaanController extends Controller
 {
     /**
@@ -59,7 +61,7 @@ class PerusahaanController extends Controller
             'durasi_magang' => 'required|integer|min:1',
             'open_lowongan' => 'required|date|after_or_equal:today',
             'close_lowongan' => 'required|date|after:open_lowongan',
-            'img' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
+            'img' => 'image|mimes:jpeg,png,jpg,gif|max:10120',
         ]);
 
         // jika validasi gagal tampilkan error ini
@@ -114,7 +116,8 @@ class PerusahaanController extends Controller
      */
     public function edit($id)
     {
-        //
+        $lowongan = Lowongan::find($id);
+        return view('admin_perusahaan.lowongan.edit', compact('lowongan'));
     }
 
     /**
@@ -126,7 +129,40 @@ class PerusahaanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $lowongan = Lowongan::findOrFail($id);
+
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'pemagang' => 'required|integer|min:1',
+            'durasi_magang' => 'required|integer|min:1',
+            'open_lowongan' => 'required|date|after_or_equal:today',
+            'close_lowongan' => 'required|date|after:open_lowongan',
+            'img' => 'image|mimes:jpeg,png,jpg,gif|max:10120',
+        ]);
+
+        // mengecek apakah ada file yang di upload
+        if($request->hasFile('img')){
+            $filePath = public_path('/img/post/' . $lowongan->img);
+            // jika file sebelumnya ada maka di hapus dahulu, jika tidak langsung di tambahkan
+            if($lowongan->img && fileExists($filePath) ){
+                unlink($filePath);
+            };
+            $fileName = time() . '.' . $request->img->extension();
+            $request->img->move(public_path('/img/post/'), $fileName);
+            $lowongan->img = $fileName;
+        };
+
+        $lowongan->judul = $request->input('judul');
+        $lowongan->deskripsi = $request->input('deskripsi');
+        $lowongan->pemagang = $request->input('pemagang');
+        $lowongan->durasi_magang = $request->input('durasi_magang');
+        $lowongan->open_lowongan = $request->input('open_lowongan');
+        $lowongan->close_lowongan = $request->input('close_lowongan');
+
+        $lowongan->save();
+
+        return redirect()->route('lowongan.index')->with('success', 'Lowongan berhasil di update');
     }
 
     /**
@@ -139,6 +175,10 @@ class PerusahaanController extends Controller
     {
         $lowongan = Lowongan::find($id);
         if ($lowongan) {
+            $filePath = public_path('/img/post/' . $lowongan->img);
+            if(file_exists($filePath)){
+                unlink($filePath);
+            }
             $lowongan->delete();
             return redirect()->route('lowongan.index')->with('success', 'Lowongan berhasil di hapus');
         }
