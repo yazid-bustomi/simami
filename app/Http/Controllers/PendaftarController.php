@@ -16,31 +16,37 @@ class PendaftarController extends Controller
      */
     public function index()
     {
-        // mendapatkan user id dari admin kampus hanya bisa melihat mahasiswanya
+        // mendapatkan user id
         $idUser = Auth::user()->id;
+
+        // untuk role perusahaan mengambil data sesuai dengan id user perusahaan
         if (Auth::user()->role == 'perusahaan') {
             $pendaftars = Pendaftar::with(['lowongan', 'user', 'user.mahasiswaProfile', 'user.akademikProfile', 'user.akademikProfile.jurusanKampus', 'user.akademikProfile.adminKampus', 'user.alamat'])
             ->whereHas('lowongan', function ($query) use ($idUser){
                 $query->where('user_id', $idUser);
             })
             ->get();
-
-            // dd($pendaftars->toArray());
             return view('mahasiswa.pendaftar.index', compact('pendaftars'));
 
+            // untuk role kampus mengambil data sesuai id by admin kampus
         } elseif (Auth::user()->role == 'kampus') {
             $pendaftars = Pendaftar::with(['lowongan', 'user', 'user.mahasiswaProfile', 'user.akademikProfile', 'user.akademikProfile.jurusanKampus', 'user.akademikProfile.adminKampus', 'user.alamat'])
             ->whereHas('user.akademikProfile', function ($query) use ($idUser){
                 $query->where('admin_kampus_id', $idUser);
             })
             ->get();
-
-            // dd($pendaftars->toArray());
             return view('mahasiswa.pendaftar.index', compact('pendaftars'));
 
-        } else {
-        }
+            // untuk role mahasiswa menampilkan semua lowongan magang
+        } elseif(Auth::user()->role == 'mahasiswa') {
+            $pendaftars = Pendaftar::with(['lowongan', 'user', 'user.mahasiswaProfile', 'user.akademikProfile', 'user.akademikProfile.jurusanKampus', 'user.akademikProfile.adminKampus', 'user.alamat'])
+            ->get();
+            return view('mahasiswa.pendaftar.index', compact('pendaftars'));
 
+        } else // untuk role admin masih belum
+        {
+
+        }
     }
 
     /**

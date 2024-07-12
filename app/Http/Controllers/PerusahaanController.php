@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Lowongan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+// use Intervention\Image\Facades\Image;
+use Image;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Validator;
 
 class PerusahaanController extends Controller
 {
@@ -15,11 +19,18 @@ class PerusahaanController extends Controller
      */
     public function index()
     {
-        //
+        // untuk mendapatkan user id
         $idPt = Auth::user()->id;
-        $lowongans = Lowongan::with('pendaftar')->where('user_id', $idPt)->get();
-        // dd($lowongans->toArray());
-        return view('admin_perusahaan.lowongan.index', compact('lowongans'));
+
+        if (Auth::user()->role == 'perusahaan') {
+            // menampilkan hanya yang di upload sendiri lowongannya
+            $lowongans = Lowongan::with('pendaftar')->where('user_id', $idPt)->get();
+            return view('admin_perusahaan.lowongan.index', compact('lowongans'));
+        } else {
+            // menampilkan semua data yang di upload oleh perusahaan
+            $lowongans = Lowongan::with('pendaftar')->get();
+            return view('admin_perusahaan.lowongan.index', compact('lowongans'));
+        }
     }
 
     /**
@@ -29,7 +40,7 @@ class PerusahaanController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin_perusahaan.lowongan.create');
     }
 
     /**
@@ -41,6 +52,45 @@ class PerusahaanController extends Controller
     public function store(Request $request)
     {
         //
+        $validator = Validator::make($request->all(),[
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'pemagang' => 'required|integer|min:1',
+            'durasi_magang' => 'required|integer|min:1',
+            'open_lowongan' => 'required|date|after_or_equal:today',
+            'close_lowongan' => 'required|date|after:open_lowongan',
+            'img' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                             ->withErrors($validator)
+                             ->withInput();
+        }
+        // ketika user tidak upload image lowongan
+        $fileName = null;
+
+        // Upload gambar jika ada
+        if ($request->hasFile('img')) {
+            $file = $request->file('img');
+            $fileName = time() . '.' . $request->img->extension();
+            $file->move(public_path('img/post'), $fileName);
+            // Crop the image to fit 1080 x 720 using GD library
+        }
+
+        $lowongans = new Lowongan([
+            'user_id' => Auth::user()->id,
+            'judul' => $request->judul,
+            'deskripsi' => $request->deskripsi,
+            'pemagang' => $request->pemagang,
+            'durasi_magang' => $request->durasi_magang,
+            'open_lowongan' => $request->open_lowongan,
+            'close_lowongan' => $request->close_lowongan,
+            'img' => $fileName,
+        ]);
+        $lowongans->save();
+
+        return redirect()->route('lowongan.index')->with('success', 'Lowongan magang berhasil di tambahkan.');
     }
 
     /**
@@ -92,4 +142,10 @@ class PerusahaanController extends Controller
     {
         return view('admin_perusahaan.dashboard');
     }
+
+    public function profile()
+    {
+        return view('admin_perusahaan.profile');
+    }
+
 }

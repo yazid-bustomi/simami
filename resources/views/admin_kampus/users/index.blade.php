@@ -37,9 +37,9 @@
                        <td>{{ $user->email }}</td>
                        <td>{{ $user->akademikProfile->nim }}</td>
                        <td>{{ $user->alamat->alamat ?? '' }} {{ $user->alamat->desa ?? ''}} {{ $user->alamat->kecamatan ?? ''}} {{ $user->alamat->kab_kot ?? ''}} {{ $user->alamat->provinsi ?? ''}} {{ $user->alamat->kode_pos ?? ''}}</td>
-                       <td>{{ $user->mahasiswaProfile->no_hp }}</td>
+                       <td>{{ $user->mahasiswaProfile->no_hp ?? ''}}</td>
                        <td>{{ $user->akademikProfile->jurusanKampus->nama_jurusan }}</td>
-                       <td>{{ $user->akademikProfile->semester }}</td>
+                       <td>{{ $user->akademikProfile->semester ?? '' }}</td>
                     </tr>
                     @php $no++ @endphp
                     @endforeach

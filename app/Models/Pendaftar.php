@@ -9,6 +9,8 @@ class Pendaftar extends Model
 {
     use HasFactory;
 
+    protected $guarded;
+
     public function lowongan()
     {
         return $this->belongsTo(Lowongan::class);

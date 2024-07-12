@@ -9,6 +9,8 @@ class Pengalaman extends Model
 {
     use HasFactory;
 
+    protected $guarded;
+
     public function akademikProfile()
     {
         return $this->belongsTo(AkademikProfile::class);

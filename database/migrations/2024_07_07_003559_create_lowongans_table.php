@@ -17,9 +17,9 @@ class CreateLowongansTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('judul');
-            $table->string('deskripsi');
-            $table->integer('pemagang');
-            $table->string('durasi_magang');
+            $table->string('deskripsi')->nullable();
+            $table->integer('pemagang')->nullable();
+            $table->integer('durasi_magang');
             $table->date('open_lowongan');
             $table->date('close_lowongan');
             $table->string('img')->nullable();

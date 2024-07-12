@@ -19,6 +19,8 @@
 
     <!-- Custom styles for this template-->
     <link href={{ asset('css/sb-admin-2.min.css') }} rel="stylesheet">
+    {{-- <link rel="stylesheet" href="{{ asset('css/styles.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}"> --}}
 
     <!-- SweetAlert CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -36,7 +38,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -46,16 +48,32 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ route('admin.dashboad') }}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
+            @if (Auth::user()->role == 'admin')
+                <!-- Nav Item Admin - Dashboard -->
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Dashboard</span></a>
+                </li>
+            @elseif (Auth::user()->role == 'kampus')
+                <!-- Nav Item Kampus - Dashboard -->
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ route('kampus.dashboard') }}">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Dashboard</span></a>
+                </li>
+            @elseif (Auth::user()->role == 'perusahaan')
+                <!-- Nav Item Perusahaan - Dashboard -->
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ route('perusahaan.dashboard') }}">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Dashboard</span></a>
+                </li>
+            @endif
 
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
+            {{-- Nav Item User --}}
             @if (Auth::user()->role == 'kampus')
                 <!-- Nav Item - User - By Kampus -->
                 <li class="nav-item">
@@ -65,11 +83,10 @@
                 </li>
                 <!-- Divider -->
                 <hr class="sidebar-divider">
-
             @elseif (Auth::user()->role == 'admin')
                 <!-- Nav Item - User - By Kampus -->
                 <li class="nav-item">
-                    <a class="nav-link" href="">
+                    <a class="nav-link" href="#">
                         <i class="fas fa-fw fa-user"></i>
                         <span>User All</span></a>
                 </li>
@@ -77,31 +94,86 @@
                 <hr class="sidebar-divider">
             @endif
 
-            <!-- Nav Item - Charts -->
+
+            @if (Auth::user()->role == 'mahasiswa')
+            <!-- Nav Item - Lowongan -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('pendaftaran.index') }}">
+                    <i class="fas fa-fw fa-briefcase"></i>
+                    <span>Lowongan</span></a>
+            </li>
+
+            @elseif (Auth::user()->role == 'kampus')
+            <!-- Nav Item - Lowongan -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('lowongan.index') }}">
                     <i class="fas fa-fw fa-briefcase"></i>
                     <span>Lowongan</span></a>
             </li>
 
+            @elseif (Auth::user()->role == 'perusahaan')
+            <!-- Nav Item - Lowongan -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('lowongan.index') }}">
+                    <i class="fas fa-fw fa-briefcase"></i>
+                    <span>Lowongan</span></a>
+            </li>
+            @endif
+
+
+            @if (Auth::user()->role == 'mahasiswa')
+                <hr class="sidebar-divider">
+
+                <!-- Nav Item - Pengalaman -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-fw fa-briefcase"></i>
+                        <span>Pengalaman</span></a>
+                </li>
+            @else
+
+            @endif
+
+            @if (Auth::user()->role == 'kampus' || Auth::user()->role == 'perusahaan')
+                <hr class="sidebar-divider">
+
+                <!-- Nav Item - Pnedaftar by kampus dan perusahaan -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('pendaftar.index') }}">
+                        <i class="fas fa-fw fa-users"></i>
+                        <span>Pendaftar</span></a>
+                </li>
+            @else
+            @endif
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('pendaftar.index') }}">
-                    <i class="fas fa-fw fa-users"></i>
-                    <span>Pendaftar</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Profile</span></a>
-            </li>
+            @if (Auth::user()->role == 'admin')
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.profile') }}">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Profile</span></a>
+                </li>
+            @elseif (Auth::user()->role == 'kampus')
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('kampus.profile') }}">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Profile</span></a>
+                </li>
+            @elseif (Auth::user()->role == 'perusahaan')
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('perusahaan.profile') }}">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Profile</span></a>
+                </li>
+            @elseif (Auth::user()->role == 'mahasiswa')
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Profile</span></a>
+                </li>
+            @endif
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -131,45 +203,16 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Notifikasi
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All
-                                    Alerts</a>
-                            </div>
-                        </li>
-
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->nama_depan }}
+                                <span
+                                    class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->nama_depan }}
                                     {{ Auth::user()->nama_belakang }}</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="{{ asset('img/undraw_profile.svg') }}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -177,14 +220,6 @@
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
 

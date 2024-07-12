@@ -26,6 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $guarded;
 
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -90,6 +91,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function pendaftar()
     {
         return $this->hasOne(Pendaftar::class);
+    }
+    public function pengalaman()
+    {
+        return $this->hasMany(Pengalaman::class);
     }
 };
 

@@ -25,14 +25,19 @@ class HomeController extends Controller
     public function index()
     {
         // return view('home');
-
         if (Auth::user()->role == 'admin') {
-            return view('admin.dashboard');
+            return redirect()->route('admin.dashboard');
+
         } elseif(Auth::user()->role == 'perusahaan') {
-            return view('admin_perusahaan.dashboard');
+            return redirect()->route('perusahaan.dashboard');
+
         } elseif(Auth::user()->role == 'kampus'){
-            return view('admin_kampus.dashboard');
+            return redirect()->route('kampus.dashboard');
+
+        }else {
+            return redirect('/');
         }
+
 
     }
 }

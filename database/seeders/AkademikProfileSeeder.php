@@ -71,6 +71,20 @@ class AkademikProfileSeeder extends Seeder
                 'jurusan_id' => '10',
                 'admin_kampus_id' => '5'
             ],
+            [
+                'user_id' => '17',
+                'nim' => '2362',
+                'semester' => '3',
+                'jurusan_id' => '10',
+                'admin_kampus_id' => '5'
+            ],
+            [
+                'user_id' => '18',
+                'nim' => '946294',
+                'semester' => '1',
+                'jurusan_id' => '10',
+                'admin_kampus_id' => '4'
+            ],
         ]);
     }
 }

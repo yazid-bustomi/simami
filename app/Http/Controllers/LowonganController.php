@@ -18,25 +18,10 @@ class LowonganController extends Controller
     public function index()
     {
         // mendapatkan user id dari admin kampus hanya bisa melihat mahasiswanya
-        $idUser = Auth::user()->id;
-        if (Auth::user()->role == 'perusahaan') {
-            $pendaftars = Pendaftar::with(['lowongan', 'user', 'user.mahasiswaProfile', 'user.akademikProfile', 'user.akademikProfile.jurusanKampus', 'user.akademikProfile.adminKampus', 'user.alamat'])
-            ->whereHas('lowongan', function ($query) use ($idUser){
-                $query->where('user_id', $idUser);
-            })
-            ->get();
-
-            // dd($pendaftars->toArray());
-            return view('mahasiswa.pendaftar.index', compact('pendaftars'));
-
-        } elseif (Auth::user()->role == 'kampus') {
-
-        } else {
+        if (Auth::user()->role == 'mahasiswa') {
+            $lowongans = Lowongan::all();
+            return view('mahasiswa.magang.index', compact('lowongans'));
         }
-
-        // $pendaftars = Pendaftar::with(['lowongan', 'user', 'user.mahasiswaProfile', 'user.akademikProfile', 'user.akademikProfile.jurusanKampus', 'user.akademikProfile.adminKampus', 'user.alamat'])->get();
-        // dd($idUser);
-        // return view('mahasiswa.pendaftar.index', compact('pendaftars'));
     }
 
     /**

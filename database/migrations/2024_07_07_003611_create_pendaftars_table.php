@@ -17,7 +17,8 @@ class CreatePendaftarsTable extends Migration
             $table->id();
             $table->foreignId('mahasiswa_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('lowongan_id')->constrained('lowongans')->onDelete('cascade');
-            $table->enum('status', ['pending', 'approve', 'select', 'rejected']);
+            $table->enum('status', ['pending', 'approve', 'select', 'rejected_kampus', 'rejected_perusahaan']);
+
             /**
              * pending => masih proses mendaftar
              * approve => di approve oleh kampus untuk di ajukan seleksi ke perusahaan

@@ -98,4 +98,9 @@ class KampusController extends Controller
     {
         return view('admin_kampus.dashboard');
     }
+
+    public function profile()
+    {
+        return view('admin_kampus.profile');
+    }
 }

@@ -16,8 +16,7 @@ class CreateAkademikProfilesTable extends Migration
         Schema::create('akademik_profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->integer('nim');
-            // $table->string('perguruan_tinggi');
+            $table->integer('nim')->nullable();
             $table->foreignId('jurusan_id')->constrained('jurusan_kampuses')->onDelete('cascade');
             $table->string('transkip')->nullable();
             $table->string('ipk')->nullable();

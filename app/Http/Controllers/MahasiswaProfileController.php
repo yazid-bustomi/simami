@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMahasiswaProfileRequest;
 use App\Http\Requests\UpdateMahasiswaProfileRequest;
+use App\Models\AkademikProfile;
 use App\Models\MahasiswaProfile;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class MahasiswaProfileController extends Controller
 {
@@ -82,5 +85,20 @@ class MahasiswaProfileController extends Controller
     public function destroy(MahasiswaProfile $mahasiswaProfile)
     {
         //
+    }
+
+    public function profile()
+    {
+        // $idUser = Auth::user()->id;
+        // $mahasiswas = User::with(['akademikProfile', 'mahasiswaProfile', 'alamat', 'sosmed'])
+        // ->where('id', $idUser)
+        // ->get();
+
+
+        // $tes = AkademikProfile::with(['pengalaman'])
+        // // ->where('user_id', $idUser)
+        // ->get();
+        // dd($tes->toArray());
+        // return view('mahasiswa.profile');
     }
 }

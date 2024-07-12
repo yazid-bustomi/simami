@@ -9,9 +9,6 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h5 class="font-weight-bold text-dark m-0 mx-4">Pelamar Lowongan Magang</h5>
-            {{-- <a href="#" class="btn btn-primary btn-sm mr-4">
-            <i class="fas fa-plus-circle fa-sm fa-fw mr-2"></i> Tambah User
-        </a> --}}
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -43,12 +40,6 @@
                                 <td>{{ $pendaftar->user->akademikProfile->jurusanKampus->nama_jurusan ?? '-' }}</td>
                                 <td>{{ $pendaftar->user->akademikProfile->semester ?? '-' }}</td>
                                 <td>{{ $pendaftar->user->akademikProfile->ipk ?? '-' }}</td>
-                                {{-- <td>{{ $pendaftar->user->alamat->alamat ?? '' }}
-                                    {{ $pendaftar->user->alamat->kecamatan ?? '' }}
-                                    {{ $pendaftar->user->alamat->kab_kot ?? '' }}
-                                    {{ $pendaftar->user->alamat->provinsi ?? '' }}
-                                    {{ $pendaftar->user->alamat->kode_pos ?? '' }}
-                                </td> --}}
                                 <td>
                                     <button class="badge bg-primary text-white rounded-pill"
                                         onclick="confirmAction('{{ $pendaftar->id }}', '{{ $pendaftar->user->nama_depan . ' ' . $pendaftar->user->nama_belakang }}', 'terima')">Terima</button>
