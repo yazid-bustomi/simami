@@ -22,6 +22,11 @@
                                         {{ session('status') }}
                                     </div>
                                 @endif
+                                @if (session('resent'))
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ __('Silahkan verifikasi email terlebih dahulu') }}
+                                    </div>
+                                @endif
 
                                 <form class="user" method="POST" action="{{ route('login') }}">
                                     @csrf

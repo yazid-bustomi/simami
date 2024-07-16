@@ -32,8 +32,11 @@ class HomeController extends Controller
 
         } elseif(Auth::user()->role == 'kampus'){
             return redirect()->route('kampus.dashboard');
-        }else {
-            return redirect()->route('mahasiswa.profile');
+
+        }elseif(Auth::user()->role == 'mahasiswa') {
+            return redirect()->route('mahasiswa.dashboard');
+        }else{
+
         }
 
 

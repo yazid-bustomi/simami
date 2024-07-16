@@ -17,7 +17,7 @@ class MahasiswaMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && (Auth::user()->role == 'mahasiswa'))
+        if (Auth::check() && (Auth::user()->role == 'mahasiswa' || Auth::user()->role == 'perusahaan' || Auth::user()->role == 'kampus' || Auth::user()->role == 'admin'))
         return $next($request);
 
     }

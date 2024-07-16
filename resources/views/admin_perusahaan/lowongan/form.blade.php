@@ -30,10 +30,22 @@
         </div>
         <div class="col-md-12">
             <div class="form-group">
-                <label for="deskripsi" class="form-control-label">Deskripsi Magang</label>
-                <textarea class="form-control @error('deskripsi') is-invalid @enderror" id="deskripsi" name="deskripsi" rows="3"
-                    required>{{ old('deskripsi', $lowongan->deskripsi ?? '') }}</textarea>
-                @error('deskripsi')
+                <label for="kriteria" class="form-control-label">Kriteria Magang</label>
+                <textarea class="form-control @error('kriteria') is-invalid @enderror" id="kriteria" name="kriteria" rows="10"
+                    required>{{ old('kriteria', $lowongan->kriteria ?? '') }}</textarea>
+                @error('kriteria')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="rincian" class="form-control-label">Rincian Kegiatan Magang</label>
+                <textarea class="form-control @error('rincian') is-invalid @enderror" id="rincian" name="rincian" rows="10"
+                    required>{{ old('rincian', $lowongan->rincian ?? '') }}</textarea>
+                @error('rincian')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>

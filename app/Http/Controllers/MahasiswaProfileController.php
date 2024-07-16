@@ -6,6 +6,7 @@ use App\Http\Requests\StoreMahasiswaProfileRequest;
 use App\Http\Requests\UpdateMahasiswaProfileRequest;
 use App\Models\AkademikProfile;
 use App\Models\MahasiswaProfile;
+use App\Models\Pendaftar;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -89,20 +90,29 @@ class MahasiswaProfileController extends Controller
 
     public function profile()
     {
-        // $idUser = Auth::user()->id;
-        // $mahasiswas = User::with(['akademikProfile', 'mahasiswaProfile', 'alamat', 'sosmed'])
-        // ->where('id', $idUser)
-        // ->get();
+        $idUser = Auth::user()->id;
+        $mahasiswas = User::with(['akademikProfile', 'mahasiswaProfile', 'alamat', 'sosmed'])
+        ->where('id', $idUser)
+        ->get();
 
-
-        // $tes = AkademikProfile::with(['pengalaman'])
-        // // ->where('user_id', $idUser)
-        // ->get();
-        // dd($tes->toArray());
-        // return view('mahasiswa.profile');
+        return view('mahasiswa.profile');
     }
     public function dashboard()
     {
         return view('mahasiswa.dashboard');
+    }
+
+    public function status() {
+        $idUser = Auth::user()->id;
+        // dd($idUser);
+        $approve = Pendaftar::where('mahasiswa_id', $idUser)
+        ->with([
+            'lowongan',
+            'user.akademikProfile',
+            'user.mahasiswaProfile',
+            'user.akademikProfile.adminKampus',
+            'user.akademikProfile.jurusanKampus'
+            ])->get();
+        return view('mahasiswa.magang.status', compact('approve'));
     }
 }

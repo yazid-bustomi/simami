@@ -69,10 +69,10 @@
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li>
-                @elseif (Auth::user()->role == 'mahasiswa')
+            @elseif (Auth::user()->role == 'mahasiswa')
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('mahasiswa.dashboard') }}">
-                        <i class="fas fa-fw fa-chart-area"></i>
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li>
             @endif
@@ -102,28 +102,26 @@
 
 
             @if (Auth::user()->role == 'mahasiswa')
-            <!-- Nav Item - Lowongan -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('pendaftaran.index') }}">
-                    <i class="fas fa-fw fa-briefcase"></i>
-                    <span>Lowongan</span></a>
-            </li>
-
+                <!-- Nav Item - Lowongan -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('magang.index') }}">
+                        <i class="fas fa-fw fa-briefcase"></i>
+                        <span>Lowongan</span></a>
+                </li>
             @elseif (Auth::user()->role == 'kampus')
-            <!-- Nav Item - Lowongan -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('lowongan.index') }}">
-                    <i class="fas fa-fw fa-briefcase"></i>
-                    <span>Lowongan</span></a>
-            </li>
-
+                <!-- Nav Item - Lowongan -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('lowongan.index') }}">
+                        <i class="fas fa-fw fa-briefcase"></i>
+                        <span>Lowongan</span></a>
+                </li>
             @elseif (Auth::user()->role == 'perusahaan')
-            <!-- Nav Item - Lowongan -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('lowongan.index') }}">
-                    <i class="fas fa-fw fa-briefcase"></i>
-                    <span>Lowongan</span></a>
-            </li>
+                <!-- Nav Item - Lowongan -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('lowongan.index') }}">
+                        <i class="fas fa-fw fa-briefcase"></i>
+                        <span>Lowongan</span></a>
+                </li>
             @endif
 
 
@@ -133,11 +131,10 @@
                 <!-- Nav Item - Pengalaman -->
                 <li class="nav-item">
                     <a class="nav-link" href="#">
-                        <i class="fas fa-fw fa-briefcase"></i>
+                        <i class="fas fa-fw fa-chart-line"></i>
                         <span>Pengalaman</span></a>
                 </li>
             @else
-
             @endif
 
             @if (Auth::user()->role == 'kampus' || Auth::user()->role == 'perusahaan')
@@ -149,7 +146,15 @@
                         <i class="fas fa-fw fa-users"></i>
                         <span>Pendaftar</span></a>
                 </li>
-            @else
+            @elseif (Auth::user()->role == 'mahasiswa')
+                <hr class="sidebar-divider">
+
+                <!-- Nav Item - Pnedaftar by kampus dan perusahaan -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('mahasiswa.status') }}">
+                        <i class="fas fa-fw fa-users"></i>
+                        <span>Pendaftar</span></a>
+                </li>
             @endif
 
             <!-- Divider -->
@@ -158,25 +163,25 @@
             @if (Auth::user()->role == 'admin')
                 <li class="nav-item">
                     <a class="nav-link" href="#">
-                        <i class="fas fa-fw fa-chart-area"></i>
+                        <i class="fas fa-fw fa-id-card"></i>
                         <span>Profile</span></a>
                 </li>
             @elseif (Auth::user()->role == 'kampus')
                 <li class="nav-item">
                     <a class="nav-link" href="#">
-                        <i class="fas fa-fw fa-chart-area"></i>
+                        <i class="fas fa-fw fa-id-card"></i>
                         <span>Profile</span></a>
                 </li>
             @elseif (Auth::user()->role == 'perusahaan')
                 <li class="nav-item">
                     <a class="nav-link" href="#">
-                        <i class="fas fa-fw fa-chart-area"></i>
+                        <i class="fas fa-fw fa-id-card"></i>
                         <span>Profile</span></a>
                 </li>
             @elseif (Auth::user()->role == 'mahasiswa')
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-fw fa-chart-area"></i>
+                    <a class="nav-link" href="{{ route('mahasiswa.profile') }}">
+                        <i class="fas fa-fw fa-id-card"></i>
                         <span>Profile</span></a>
                 </li>
             @endif
@@ -209,15 +214,14 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        <div class="topbar-divider d-none d-sm-block"></div>
-
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span
-                                    class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->nama_depan }}
-                                    {{ Auth::user()->nama_belakang }}</span>
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span
+                            class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->nama_depan }}
+                            {{ Auth::user()->nama_belakang }}</span>
+                            <div class="topbar-divider d-none d-sm-block"></div>
                                 <img class="img-profile rounded-circle" src="{{ asset('img/undraw_profile.svg') }}">
                             </a>
                             <!-- Dropdown - User Information -->
@@ -246,10 +250,8 @@
                     @yield('content')
 
                 </div>
-                <!-- /.container-fluid -->
 
             </div>
-            <!-- End of Main Content -->
 
             <!-- Footer -->
             <footer class="sticky-footer bg-white">

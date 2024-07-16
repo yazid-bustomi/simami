@@ -20,45 +20,31 @@
             <div class="content-wrapper">
                 <div class="row">
 
+
                     @foreach ($lowongans as $lowongan)
-                        <div class="col-lg-4 col-sm-12 col-md-6 col-xl-3 d-flex grid-margin stretch-card mb-2">
-                            <div class="card overflow-hidden hover-img">
-                                <div class="position-relative">
-                                    @php
-                                        $img = !empty($lowongan->img) ? $lowongan->img : 'default.jpg';
-                                    @endphp
-
-                                    <img src="{{ asset('img/post/' . $img) }}"
-                                        class="card-img-top img-fluid object-fit-cover" alt="icon-profile"
-                                        style="width: 100%; height: 200px; object-fit: cover;">
-                                </div>
-                                <div class="px-3">
-                                    <hr class="my-2">
-                                </div>
-
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                @php
+                                    $img = !empty($lowongan->img) ? $lowongan->img : 'default.jpg';
+                                @endphp
+                                <img src="{{ asset('img/post/' . $img) }}" class="img-fluid rounded-start" style="height: 100%; object-fit: cover" alt="{{ $lowongan->judul }}">
+                            </div>
+                            <div class="col-md-8">
                                 <div class="card-body">
-                                    <a class="d-block fs-5 text-dark fw-semibold link-primary"
-                                        style="text-decoration: none;">{{ $lowongan->judul }}</a>
-                                    <div class="d-flex align-items-center gap-2">
-                                        <div class="d-flex align-items-center gap-4 mx-1">
-                                            <i class="mdi mdi-briefcase text-dark fs-10"></i>{{ $lowongan->pemagang }}
-                                        </div>
-                                        <div class="d-flex align-items-center gap-2 mx-2">
-                                            <i class="mdi mdi-clock text-dark fs-10"></i>{{ $lowongan->durasi_magang }}
-                                            bulan
-                                        </div>
-                                        <div class="d-flex align-items-center fs-10 ms-auto gap-2 mx-2">
-                                            <i class="mdi mdi-calendar-check text-dark"></i>{{ $lowongan->close_lowongan }}
-                                        </div>
-                                    </div>
+                                    <h4 class="card-title fw-bold">{{ $lowongan->judul }}</h4>
+                                    <p class="card-text"><i class="mdi mdi-briefcase"></i> Pemagang: {{ $lowongan->pemagang }} Orang</p>
+                                    <p class="card-text"><i class="mdi mdi-clock"></i> Durasi: {{ $lowongan->durasi_magang }} bulan</p>
+                                    <p class="card-text"><i class="mdi mdi-calendar-check"></i> Penutupan: {{ $lowongan->days_remaining }} Hari</p>
+                                    <p class="card-text"><strong>Kriteria:</strong> {{ $lowongan->short_kriteria }}</p>
+                                    <a href="{{ route('magang.show', $lowongan->id) }}" class="btn btn-primary">Lihat Detail</a>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-
+                    </div>
+                @endforeach
                 </div>
             </div>
         </div>
-        <!-- main-panel ends -->
     </div>
 @endsection

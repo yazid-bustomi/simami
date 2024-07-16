@@ -12,18 +12,18 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="nama_depan" class="form-control-label">Nama Depan</label>
-                                    <input class="form-control" name="nama_depan" type="text" value="Yazid" onfocus="focused(this)"
-                                        onfocusout="defocused(this)">
+                                    <input class="form-control" name="nama_depan" type="text" value="Yazid"
+                                        onfocus="focused(this)" onfocusout="defocused(this)">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="nama_belakang" class="form-control-label">Nama Belakang</label>
-                                    <input class="form-control" id="nama_belakang" name="nama_belakang" type="text" value="Bustomi"
-                                        onfocus="focused(this)" onfocusout="defocused(this)">
+                                    <input class="form-control" id="nama_belakang" name="nama_belakang" type="text"
+                                        value="Bustomi" onfocus="focused(this)" onfocusout="defocused(this)">
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-8">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Tempat Lahir</label>
                                     <input class="form-control" type="text"
@@ -34,6 +34,13 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Tanggal Lahir</label>
+                                    <input class="form-control" type="text" value="New York" onfocus="focused(this)"
+                                        onfocusout="defocused(this)">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Email</label>
                                     <input class="form-control" type="text" value="New York" onfocus="focused(this)"
                                         onfocusout="defocused(this)">
                                 </div>
@@ -99,6 +106,7 @@
                                 </div>
                             </div>
                         </div>
+                        <a href="" class="btn btn-primary float-right mx-3">Update</a>
                     </div>
                 </div>
             </div>

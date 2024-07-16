@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KampusController;
 use App\Http\Controllers\LowonganController;
 use App\Http\Controllers\MahasiswaProfileController;
@@ -23,20 +24,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect('/login');
-});
+Route::get('/', [HomeController::class, 'index']);
 
-Auth::routes(['verify' => true, 'register' => false]);
+Auth::routes(['register' => false]);
 
 // CRUD Users by admin
-Route::middleware(['auth', 'verified', 'admin'])->group(function () {
+Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('/admin/users', AdminController::class);
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
 });
 
-Route::middleware(['auth', 'verified', 'perusahaan'])->group(function () {
+Route::middleware(['auth', 'perusahaan'])->group(function () {
     // CRUD Lowongan
     Route::resource('/perusahaan/lowongan', PerusahaanController::class);
     // profile perusahaan
@@ -44,23 +43,24 @@ Route::middleware(['auth', 'verified', 'perusahaan'])->group(function () {
     Route::get('/perusahaan/dashboard', [PerusahaanController::class, 'dashboard'])->name('perusahaan.dashboard');
 });
 
-Route::middleware(['auth', 'verified', 'kampus'])->group(function () {
+Route::middleware(['auth', 'kampus'])->group(function () {
     // CRUD User dari Kampus
     Route::resource('/kampus/user', KampusController::class);
     Route::get('/kampus/profile', [KampusController::class, 'profile'])->name('kampus.profile');
     Route::get('/kampus/dashboard', [KampusController::class, 'dashboard'])->name('kampus.dashboard');
 });
 
-Route::middleware(['auth', 'verified', 'mahasiswa'])->group(function () {
+Route::middleware(['auth', 'mahasiswa'])->group(function () {
     // Mahasiswa daftar lowongan magang
-    Route::resource('/pendaftaran', LowonganController::class);
+    Route::resource('/magang', LowonganController::class);
+    Route::get('/mahasiswa/status', [MahasiswaProfileController::class, 'status'])->name('mahasiswa.status');
     Route::get('/mahasiswa/profile', [MahasiswaProfileController::class, 'profile'])->name('mahasiswa.profile');
     Route::get('/mahasiswa/dashboard', [MahasiswaProfileController::class, 'dashboard'])->name('mahasiswa.dashboard');
 
+    // CRUD lamar and approve magang
+    Route::resource('/pendaftar', PendaftarController::class);
 });
 
-// CRUD Pendaftar Lowongan untuk di approve
-Route::resource('/pendaftar', PendaftarController::class);
 
 // untuk get jurusan di dalam pendaftaran ketika di pilih kampusnya menampilkan semua jurusan sesuai kampus yang di pilih
 Route::GET('/get-jurusan/{kampusId}', [RegisterController::class, 'getJurusan'])->name('getJurusan');

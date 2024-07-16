@@ -56,7 +56,8 @@ class PerusahaanController extends Controller
         // cek validasi create lowongan
         $validator = Validator::make($request->all(), [
             'judul' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
+            'kriteria' => 'required|string',
+            'rincian' => 'required|string',
             'pemagang' => 'required|integer|min:1',
             'durasi_magang' => 'required|integer|min:1',
             'open_lowongan' => 'required|date|after_or_equal:today',
@@ -85,7 +86,8 @@ class PerusahaanController extends Controller
         $lowongans = new Lowongan([
             'user_id' => Auth::user()->id,
             'judul' => $request->judul,
-            'deskripsi' => $request->deskripsi,
+            'kriteria' => $request->kriteria,
+            'rincian' => $request->rincian,
             'pemagang' => $request->pemagang,
             'durasi_magang' => $request->durasi_magang,
             'open_lowongan' => $request->open_lowongan,
@@ -133,7 +135,8 @@ class PerusahaanController extends Controller
 
         $request->validate([
             'judul' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
+            'kriteria' => 'required|string',
+            'rincian' => 'required|string',
             'pemagang' => 'required|integer|min:1',
             'durasi_magang' => 'required|integer|min:1',
             'open_lowongan' => 'required|date|after_or_equal:today',
@@ -154,7 +157,8 @@ class PerusahaanController extends Controller
         };
 
         $lowongan->judul = $request->input('judul');
-        $lowongan->deskripsi = $request->input('deskripsi');
+        $lowongan->kriteria = $request->input('kriteria');
+        $lowongan->rincian = $request->input('rincian');
         $lowongan->pemagang = $request->input('pemagang');
         $lowongan->durasi_magang = $request->input('durasi_magang');
         $lowongan->open_lowongan = $request->input('open_lowongan');

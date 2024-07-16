@@ -10,7 +10,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Jumlah Pemagang</div>
+                                Total Mendaftar</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">40</div>
                         </div>
                         <div class="col-auto">
@@ -28,7 +28,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Jumlah Lowongan</div>
+                                Total  Lowongan</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
                         </div>
                         <div class="col-auto">
@@ -47,7 +47,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Pending Approve</div>
+                                Total Pengalaman</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
                         </div>
                         <div class="col-auto">

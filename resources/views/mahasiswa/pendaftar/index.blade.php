@@ -26,8 +26,10 @@
                             <th>Lowongan</th>
                             <th>Nama</th>
                             <th>No Hp</th>
-                            <th>Instansi</th>
-                            <th>Jurusan</th>
+                            @if (Auth::user()->role == 'perusahaan')
+                                <th>Instansi</th>
+                                <th>Jurusan</th>
+                            @endif
                             <th>Semester</th>
                             <th>Ipk</th>
                             <th>Status</th>
@@ -46,31 +48,35 @@
                                 <td>{{ $pendaftar->lowongan->judul }}</td>
                                 <td>{{ $pendaftar->user->nama_depan }} {{ $pendaftar->user->nama_belakang }}</td>
                                 <td>{{ $pendaftar->user->mahasiswaProfile->no_hp ?? '-' }}</td>
-                                <td>{{ $pendaftar->user->akademikProfile->adminKampus->nama_depan ?? '-' }}</td>
-                                <td>{{ $pendaftar->user->akademikProfile->jurusanKampus->nama_jurusan ?? '-' }}</td>
+                                @if (Auth::user()->role == 'perusahaan')
+                                    <td>{{ $pendaftar->user->akademikProfile->adminKampus->nama_depan ?? '-' }}</td>
+                                    <td>{{ $pendaftar->user->akademikProfile->jurusanKampus->nama_jurusan ?? '-' }}</td>
+                                @endif
                                 <td>{{ $pendaftar->user->akademikProfile->semester ?? '-' }}</td>
                                 <td>{{ $pendaftar->user->akademikProfile->ipk ?? '-' }}</td>
                                 <td>
                                     @if ($pendaftar->status == 'pending')
                                         <div class="text-info">Seleksi Kampus</div>
-                                        @elseif ($pendaftar->status == 'approve')
+                                    @elseif ($pendaftar->status == 'approve')
                                         <div class="text-primary"> Seleksi Perusahaan </div>
-                                        @elseif ($pendaftar->status == 'select')
+                                    @elseif ($pendaftar->status == 'select')
                                         <div class="text-success">Diterima Magang</div>
-                                        @elseif ($pendaftar->status == 'rejected_kampus')
+                                    @elseif ($pendaftar->status == 'rejected_kampus')
                                         <div class="text-danger">Ditolak Kampus</div>
-                                        @else
+                                    @else
                                         <div class="text-danger">Ditolak Perusahaan</div>
-
                                     @endif
                                 </td>
                                 <td>
+                                    {{-- jika kampus dan status pending maka approve di lakukan oleh kampus terlebih dahulu --}}
                                     @if ($role == 'kampus' && $pendaftar->status == 'pending')
                                         <button class="badge bg-primary text-white rounded-pill"
                                             onclick="confirmAction('{{ $pendaftar->id }}', '{{ $pendaftar->user->nama_depan . ' ' . $pendaftar->user->nama_belakang }}', 'approve')">Terima</button>
                                         <button class="badge bg-danger text-white rounded-pill"
                                             onclick="confirmAction('{{ $pendaftar->id }}', '{{ $pendaftar->user->nama_depan . ' ' . $pendaftar->user->nama_belakang }}', 'rejected_kampus')">Tolak</button>
-                                    @elseif ($role == 'perusahaan' && $pendaftar->status == 'approve')
+
+                                            {{-- Jika sudah di approve kampus maka di proses perusahaan apakah di terima atau di tolak --}}
+                                            @elseif ($role == 'perusahaan' && $pendaftar->status == 'approve')
                                         <button class="badge bg-primary text-white rounded-pill"
                                             onclick="confirmAction('{{ $pendaftar->id }}', '{{ $pendaftar->user->nama_depan . ' ' . $pendaftar->user->nama_belakang }}', 'select')">Terima</button>
                                         <button class="badge bg-danger text-white rounded-pill"
@@ -107,10 +113,10 @@
             } else if (action === 'select') {
                 actionText = 'menerima magang';
                 status = 'select';
-            } else if(action === 'rejected_kampus'){
+            } else if (action === 'rejected_kampus') {
                 actionText = 'menolak';
                 status = 'rejected_kampus';
-            } else if(action === 'rejected_perusahaan'){
+            } else if (action === 'rejected_perusahaan') {
                 actionText = 'menolak';
                 status = 'rejected_perusahaan';
             }
