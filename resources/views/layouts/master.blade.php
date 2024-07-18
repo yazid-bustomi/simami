@@ -180,7 +180,7 @@
                 </li>
             @elseif (Auth::user()->role == 'mahasiswa')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('mahasiswa.profile') }}">
+                    <a class="nav-link" href="{{ route('profile.index') }}">
                         <i class="fas fa-fw fa-id-card"></i>
                         <span>Profile</span></a>
                 </li>

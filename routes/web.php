@@ -54,7 +54,7 @@ Route::middleware(['auth', 'mahasiswa'])->group(function () {
     // Mahasiswa daftar lowongan magang
     Route::resource('/magang', LowonganController::class);
     Route::get('/mahasiswa/status', [MahasiswaProfileController::class, 'status'])->name('mahasiswa.status');
-    Route::get('/mahasiswa/profile', [MahasiswaProfileController::class, 'profile'])->name('mahasiswa.profile');
+    Route::resource('/mahasiswa/profile', MahasiswaProfileController::class);
     Route::get('/mahasiswa/dashboard', [MahasiswaProfileController::class, 'dashboard'])->name('mahasiswa.dashboard');
 
     // CRUD lamar and approve magang
