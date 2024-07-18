@@ -10,7 +10,9 @@ use App\Models\Pendaftar;
 use App\Models\Sosmed;
 use App\Models\User;
 use Illuminate\Auth\Events\Validated;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -29,7 +31,13 @@ class MahasiswaProfileController extends Controller
             ->where('id', $idUser)
             ->get();
 
-        return view('mahasiswa.profile', compact('mahasiswas'));
+        foreach ($mahasiswas as $mahasiswa){
+            $tanggalLahir = $mahasiswa->mahasiswaProfile->tanggal_lahir;
+            $mahasiswa;
+        }
+
+
+        return view('mahasiswa.profile', compact('mahasiswa'));
     }
 
     /**
@@ -119,14 +127,20 @@ class MahasiswaProfileController extends Controller
         $user->nama_depan = $request->nama_depan;
         $user->nama_belakang = $request->nama_belakang;
         $user->email = $request->email;
+        $user->save();
+
 
         // update akademik profile
         $user->akademikProfile->nim = $request->nim;
+        $user->akademikProfile->save();
+
+        // update mahasiswa profile
         $user->mahasiswaProfile->jenis_kelamin = $request->jenis_kelamin;
         $user->mahasiswaProfile->agama = $request->agama;
         $user->mahasiswaProfile->tempat_lahir = $request->tempat_lahir;
         $user->mahasiswaProfile->tanggal_lahir = $request->tanggal_lahir;
         $user->mahasiswaProfile->no_hp = $request->no_hp;
+        $user->mahasiswaProfile->save();
 
         // update alamat
         $user->alamat->provinsi = $request->provinsi;
@@ -134,6 +148,7 @@ class MahasiswaProfileController extends Controller
         $user->alamat->desa = $request->desa;
         $user->alamat->alamat = $request->alamat;
         $user->alamat->kode_pos = $request->kode_pos;
+        $user->alamat->save();
 
         // jika sosmed masih kosong maka di create terlebih dahulu
         if (!$user->sosmed) {
@@ -157,10 +172,6 @@ class MahasiswaProfileController extends Controller
             $sosmed->tiktok = $request->tiktok;
             $sosmed->save();
         }
-
-        // save all change
-        $user->save();
-
         // redirect to profile and message success
         return redirect()->route('profile.index')->with('success', 'Profile berhasil di update');
     }
@@ -176,9 +187,36 @@ class MahasiswaProfileController extends Controller
         //
     }
 
-    public function profile()
+    public function profile(Request $request, $id)
     {
+        $user = User::with('mahasiswaProfile')->findOrFail($id);
+
+        // dd($user->toArray());
+
+        $request->validate([
+            'img' => 'image|mimes:png,jpg,jpeg|max:1020',
+        ]);
+
+        if($request->hasFile('img')){
+            // untuk mendapatkan file di folder
+            $filePath = public_path('/img/profile/' . $user->mahasiswaProfile->img);
+
+            // mengecek apakah link img di database dan  file di folder ada maka di hapus dulu
+            if($user->mahasiswaProfile->img && $filePath){
+                unlink($filePath);
+            }
+            // memberi nama dengan date sekarang dan mendapatkan ekstensi filenya sekalian
+            $fileName = time() . '.' . $request->img->extension();
+            $request->img->move(public_path('/img/profile/'), $fileName);
+
+
+            $user->mahasiswaProfile->img = $fileName;
+            $user->mahasiswaProfile->save();
+        }
+        return redirect()->route('profile.index')->with('success', 'Foto Profile Berhasil di Update');
     }
+
+
     public function dashboard()
     {
         return view('mahasiswa.dashboard');

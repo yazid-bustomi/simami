@@ -55,6 +55,7 @@ Route::middleware(['auth', 'mahasiswa'])->group(function () {
     Route::resource('/magang', LowonganController::class);
     Route::get('/mahasiswa/status', [MahasiswaProfileController::class, 'status'])->name('mahasiswa.status');
     Route::resource('/mahasiswa/profile', MahasiswaProfileController::class);
+    Route::post('/mahasiswa/profile/{id}', [MahasiswaProfileController::class, 'profile'])->name('mahasiswa.update.profile');
     Route::get('/mahasiswa/dashboard', [MahasiswaProfileController::class, 'dashboard'])->name('mahasiswa.dashboard');
 
     // CRUD lamar and approve magang

@@ -45,7 +45,7 @@
                                 <input type="number" hidden name="mahasiswa_id" value="{{ Auth::user()->id }}">
                                 <input type="text" name="status" value="pending" hidden>
 
-                                <button type="button" class="btn btn-primary mx-5" onclick="confirmApprove(this, '{{ $lowongan->judul }}')">Lamar Sekarang</button>
+                                <button type="button" class="btn btn-primary mx-5" onclick="confirmApprove(this, '{{ $lowongan->judul }}', '{{ route('profile.index') }}')">Lamar Sekarang</button>
                             </form>
                         </div>
                     </div>
@@ -59,7 +59,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script>
-        function confirmApprove(button, judul) {
+        function confirmApprove(button, judul, routeProfile) {
             Swal.fire({
                 title: `Apakah anda yakin melamar ${judul}?`,
                 text: "Pastikan data profil Anda sudah lengkap untuk di seleksi.",
@@ -76,7 +76,7 @@
                 if (result.isConfirmed) {
                     button.closest('form').submit();
                 } else if(result.isDenied){
-                    Swal.fire("Changes are not saved", "", "info");
+                    window.location.href = routeProfile;
                 }
             });
         }

@@ -62,7 +62,7 @@ class PerusahaanController extends Controller
             'durasi_magang' => 'required|integer|min:1',
             'open_lowongan' => 'required|date|after_or_equal:today',
             'close_lowongan' => 'required|date|after:open_lowongan',
-            'img' => 'image|mimes:jpeg,png,jpg,gif|max:10120',
+            'img' => 'image|mimes:jpeg,png,jpg|max:10120',
         ]);
 
         // jika validasi gagal tampilkan error ini
@@ -79,7 +79,6 @@ class PerusahaanController extends Controller
             $file = $request->file('img');
             $fileName = time() . '.' . $request->img->extension();
             $file->move(public_path('img/post'), $fileName);
-            // Crop the image to fit 1080 x 720 using GD library
         }
 
         // simpan data
@@ -141,16 +140,18 @@ class PerusahaanController extends Controller
             'durasi_magang' => 'required|integer|min:1',
             'open_lowongan' => 'required|date|after_or_equal:today',
             'close_lowongan' => 'required|date|after:open_lowongan',
-            'img' => 'image|mimes:jpeg,png,jpg,gif|max:10120',
+            'img' => 'image|mimes:jpeg,png,jpg,|max:10120',
         ]);
 
         // mengecek apakah ada file yang di upload
         if($request->hasFile('img')){
             $filePath = public_path('/img/post/' . $lowongan->img);
             // jika file sebelumnya ada maka di hapus dahulu, jika tidak langsung di tambahkan
+            // mengecek apakah link img di database dan  file di folder ada maka di hapus dulu
             if($lowongan->img && fileExists($filePath) ){
                 unlink($filePath);
             };
+            // memberi nama dengan date sekarang dan mendapatkan ekstensi filenya sekalian
             $fileName = time() . '.' . $request->img->extension();
             $request->img->move(public_path('/img/post/'), $fileName);
             $lowongan->img = $fileName;

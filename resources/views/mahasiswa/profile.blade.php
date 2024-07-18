@@ -12,13 +12,13 @@
                         @csrf
                         @method('PUT')
                         <div class="card-body">
-                            @isset($mahasiswas)
-                                @foreach ($mahasiswas as $mahasiswa)
+                            @isset($mahasiswa)
+                                {{-- @foreach ($mahasiswas as $mahasiswa) --}}
                                     <p class="text-uppercase text-sm">Information Pribadi</p>
                                     @if (@session('success'))
-                                    <div class="alert-success alert">
-                                        {{ session('success') }}
-                                    </div>
+                                        <div class="alert-success alert">
+                                            {{ session('success') }}
+                                        </div>
                                     @endif
                                     <div class="row">
                                         <div class="col-md-6">
@@ -67,11 +67,9 @@
                                                 <label for="jenis_kelamin" class="form-control-label">Jenis Kelamin</label>
                                                 <select name="jenis_kelamin"
                                                     class="form-control @error('jenis_kelamin') is-invalid @enderror"
-                                                    id="jenis_kelamin"
-                                                    value="{{ old('jenis_kelamin', $mahasiswa->mahasiswaProfile->jenis_kelamin ?? '') }}"
-                                                    required>
-                                                    <option value="laki-laki">Laki - Laki</option>
-                                                    <option value="perempuan">Perempuan</option>
+                                                    id="jenis_kelamin" required>
+                                                    <option value="laki-laki" {{ old('jenis_kelamin', $mahasiswa->mahasiswaProfile->jenis_kelamin ?? '') == 'laki-laki' ? 'selected' : '' }}>Laki - Laki</option>
+                                                    <option value="perempuan" {{ old('jenis_kelamin', $mahasiswa->mahasiswaProfile->jenis_kelamin ?? '') == 'perempuan' ? 'selected' : '' }}>Perempuan</option>
                                                 </select>
                                                 @error('jenis_kelamin')
                                                     <span class="invalid-feedback" role="alert">
@@ -84,14 +82,12 @@
                                             <div class="form-group">
                                                 <label for="agama" class="form-control-label">Agama</label>
                                                 <select name="agama" id="agama"
-                                                    class="form-control @error('agama') is-invalid @enderror"
-                                                    value="{{ old('agama', $mahasiswa->mahasiswaProfile->agama ?? '') }}"
-                                                    required>
-                                                    <option value="islam">Islam</option>
-                                                    <option value="kristen">Kristen</option>
-                                                    <option value="budha">Budha</option>
-                                                    <option value="konghucu">Konghucu</option>
-                                                    <option value="hindu">Hindu</option>
+                                                    class="form-control @error('agama') is-invalid @enderror" required>
+                                                    <option value="islam" {{ old('agama', $mahasiswa->mahasiswaProfile->agama ?? '') == 'islam' ? 'selected' : '' }}>Islam</option>
+                                                    <option value="kristen" {{ old('agama', $mahasiswa->mahasiswaProfile->agama ?? '') == 'kristen' ? 'selected' : '' }}>Kristen</option>
+                                                    <option value="budha" {{ old('agama', $mahasiswa->mahasiswaProfile->agama ?? '') == 'budha' ? 'selected' : '' }}>Budha</option>
+                                                    <option value="konghucu" {{ old('agama', $mahasiswa->mahasiswaProfile->agama ?? '') == 'konghucu' ? 'selected' : '' }}>Konghucu</option>
+                                                    <option value="hindu" {{ old('agama', $mahasiswa->mahasiswaProfile->agama ?? '') == 'hindu' ? 'selected' : '' }}>Hindu</option>
                                                 </select>
                                                 @error('agama')
                                                     <span class="invalid-feedback" role="alert">
@@ -136,8 +132,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="email" class="form-control-label">Email</label>
-                                                <input class="form-control @error('email') is-invalid @enderror" type="email"
-                                                    name="email" id="email"
+                                                <input class="form-control @error('email') is-invalid @enderror"
+                                                    type="email" name="email" id="email"
                                                     value="{{ old('email', $mahasiswa->email ?? '') }}" required>
 
                                                 @error('email')
@@ -334,59 +330,93 @@
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
+                                {{-- @endforeach --}}
                             @endisset
                             <button type="submit" class="btn btn-primary float-right mx-3 mb-4">Update</button>
                     </form>
-
                 </div>
-
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mt-sm-3 ">
             <div class="card card-profile">
-                @foreach ($mahasiswas as $mahasiswa)
-                    <img src="{{ asset('img/post/default.jpg') }}" alt="Image placeholder" class="card-img-top">
-                    <div class="row justify-content-center">
-                        <div class="col-4 col-lg-4 order-lg-2">
-                            <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body pt-0">
-                        <div class="row">
-                            <div class="col">
-                                <div class="d-flex justify-content-center">
-                                    <div class="d-grid text-center mx-4">
-                                        <span class="text-lg font-weight-bolder mx-2">22</span>
-                                        <span class="text-sm opacity-8">Pengalaman</span>
-                                    </div>
-                                    <div class="d-grid text-center mx-4">
-                                        <span class="text-lg font-weight-bolder mx-2">89</span>
-                                        <span class="text-sm opacity-8">Approve</span>
-                                    </div>
+                <form action="{{ route('mahasiswa.update.profile', $idMhs) }}" method="post"
+                    enctype="multipart/form-data">
+                    @csrf
+                    {{-- @foreach ($mahasiswas as $mahasiswa) --}}
+                        {{-- Input image baru --}}
+                        <input type="file" name="img" id="img" class="d-none" accept="image/*" onchange="previewImage(event)">
+
+                        @if ($mahasiswa->mahasiswaProfile->img == null)
+
+                            <label for="img" class="cursor-pointer">
+                                <img id="image-preview" src="{{ asset('img/profile/profile-default.jpg') }}" alt="Image placeholder"
+                                    class="card-img-top rounded rounded-circle" >
+                            </label>
+                        @else
+                            <label for="img" class="cursor-pointer">
+                                <img src="{{ asset('img/profile/' . $mahasiswa->mahasiswaProfile->img) }}"
+                                    alt="Image placeholder" class="card-img-top rounded rounded-circle" id="image-preview">
+                            </label>
+                        @endif
+                        @error('img')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                        <div class="row justify-content-center">
+                            <div class="col-4 col-lg-4 order-lg-2">
+                                <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
                                 </div>
                             </div>
                         </div>
-                        <div class="text-center mt-4">
-                            <h5>{{ $mahasiswa->nama_depan }} {{ $mahasiswa->nama_belakang }}<span
-                                    class="font-weight-light">, 20</span>
-                            </h5>
-                            <div class="h6 font-weight-300">
-                                <i
-                                    class="ni location_pin mr-2"></i>{{ $mahasiswa->akademikProfile->adminKampus->nama_depan }}
-                                {{ $mahasiswa->akademikProfile->adminKampus->nama_belakang }}
+                        <div class="card-body pt-0">
+                            <div class="row mt-4">
+                                <div class="col">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="d-grid text-center mx-4">
+                                            <span class="text-lg font-weight-bolder mx-2">22</span>
+                                            <span class="text-sm opacity-8">Pengalaman</span>
+                                        </div>
+                                        <div class="d-grid text-center mx-4">
+                                            <span class="text-lg font-weight-bolder mx-2">89</span>
+                                            <span class="text-sm opacity-8">Approve</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="h6 mt-4">
-                                <i
-                                    class="ni business_briefcase-24 mr-2"></i>{{ $mahasiswa->akademikProfile->jurusanKampus->nama_jurusan }}
+                            <div class="text-center mt-4">
+                                <h5>{{ $mahasiswa->nama_depan }} {{ $mahasiswa->nama_belakang }}<span
+                                        class="font-weight-light">,
+                                        20</span>
+                                </h5>
+                                <div class="h6 font-weight-300">
+                                    <i
+                                        class="ni location_pin mr-2"></i>{{ $mahasiswa->akademikProfile->adminKampus->nama_depan }}
+                                    {{ $mahasiswa->akademikProfile->adminKampus->nama_belakang }}
+                                </div>
+                                <div class="h6 mt-4">
+                                    <i
+                                        class="ni business_briefcase-24 mr-2"></i>{{ $mahasiswa->akademikProfile->jurusanKampus->nama_jurusan }}
+                                </div>
+
+                                <button type="submit" class="btn btn-primary mt-4">Update Profile</button>
                             </div>
                         </div>
-                    </div>
-                @endforeach
-
+                    {{-- @endforeach --}}
+                </form>
             </div>
         </div>
     </div>
-    </div>
+
+    <script>
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('image-preview');
+                output.src = reader.result;
+                // output.style.display = 'block';
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
 @endsection
