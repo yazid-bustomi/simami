@@ -210,6 +210,7 @@ class KampusController extends Controller
 
     public function profile()
     {
+
         return view('admin_kampus.profile');
     }
 }

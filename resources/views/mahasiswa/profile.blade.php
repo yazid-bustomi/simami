@@ -63,7 +63,7 @@
                                     <div class="col-md-4">
                                         <div class="from-group">
                                             <label for="ipk" class="form-control-label">IPK</label>
-                                            <input type="number" name="ipk" id="ipk"
+                                            <input type="number" name="ipk" id="ipk" step="0.1"
                                                 class="form-control @error('ipk') is-invalid @enderror"
                                                 value="{{ old('ipk', $mahasiswa->akademikProfile->ipk ?? '') }}"
                                                 placeholder="-">

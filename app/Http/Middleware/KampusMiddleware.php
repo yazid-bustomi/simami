@@ -18,6 +18,8 @@ class KampusMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (Auth::check() && (Auth::user()->role == 'kampus' || Auth::user()->role == 'admin'))
-        return $next($request);
+        {
+            return $next($request);
+        } abort('403');
     }
 }

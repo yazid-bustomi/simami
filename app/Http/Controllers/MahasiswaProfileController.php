@@ -94,7 +94,7 @@ class MahasiswaProfileController extends Controller
     public function update(UpdateMahasiswaProfileRequest $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'ipk' => 'integer|min:0',
+            'ipk' => 'min:0',
         ]);
 
         if ($validator->fails()) {
@@ -115,7 +115,7 @@ class MahasiswaProfileController extends Controller
             ->exists();
 
         // jika email di update / tidak sama dengan user awal maka di validate apakah di dalam database ada yang sama
-        if ($request->email !== $user->email) {
+        if ($request->email !== $user->email || $nimExists) {
             $validate = Validator::make($request->all(), [
                 'email' => 'required|unique:users,email',
             ]);
@@ -139,19 +139,30 @@ class MahasiswaProfileController extends Controller
         $user->email = $request->email;
         $user->save();
 
-
         // update akademik profile
         $user->akademikProfile->nim = $request->nim;
         $user->akademikProfile->ipk = $request->ipk;
         $user->akademikProfile->save();
 
-        // update mahasiswa profile
-        $user->mahasiswaProfile->jenis_kelamin = $request->jenis_kelamin;
-        $user->mahasiswaProfile->agama = $request->agama;
-        $user->mahasiswaProfile->tempat_lahir = $request->tempat_lahir;
-        $user->mahasiswaProfile->tanggal_lahir = $request->tanggal_lahir;
-        $user->mahasiswaProfile->no_hp = $request->no_hp;
-        $user->mahasiswaProfile->save();
+        // jika dari user mahasiswa profile kosong maka di create dahulu
+        if (!$user->mahasiswaProfile) {
+            MahasiswaProfile::create([
+                'user_id' => $user->id,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'agama' => $request->agama,
+                'tempat_lahir' => $request->tempat_lahir,
+                'tanggal_lahir' => $request->tanggal_lahir,
+                'no_hp' => $request->no_hp,
+            ]);
+        } else {
+            // update mahasiswa profile
+            $user->mahasiswaProfile->jenis_kelamin = $request->jenis_kelamin;
+            $user->mahasiswaProfile->agama = $request->agama;
+            $user->mahasiswaProfile->tempat_lahir = $request->tempat_lahir;
+            $user->mahasiswaProfile->tanggal_lahir = $request->tanggal_lahir;
+            $user->mahasiswaProfile->no_hp = $request->no_hp;
+            $user->mahasiswaProfile->save();
+        }
 
         // jika alamat masih kosong maka di create terlebih dahulu
         if (!$user->alamat) {
@@ -164,7 +175,7 @@ class MahasiswaProfileController extends Controller
                 'alamat' =>  $request->alamat,
                 'kode_pos' => $request->kode_pos,
             ]);
-        }else {
+        } else {
             // update alamat
             $user->alamat->provinsi = $request->provinsi;
             $user->alamat->kab_kot = $request->kab_kot;
@@ -173,7 +184,6 @@ class MahasiswaProfileController extends Controller
             $user->alamat->alamat = $request->alamat;
             $user->alamat->kode_pos = $request->kode_pos;
             $user->alamat->save();
-
         }
 
         // jika sosmed masih kosong maka di create terlebih dahulu

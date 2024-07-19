@@ -30,7 +30,7 @@
                             <th>Judul</th>
                             <th>Pemagang</th>
                             <th>Durasi</th>
-                            <th>Open Informasi</th>
+                            <th>Close Informasi</th>
                             <th>Pendaftar</th>
                             @if (Auth::user()->role == 'perusahaan')
                                 <th>Aksi</th>
@@ -50,14 +50,14 @@
                                 @if (Auth::user()->role == 'perusahaan')
                                     <td>
                                         <a href="{{ route('lowongan.edit', $lowongan->id) }}"
-                                            class="btn btn-warning btn-sm">
+                                            class="btn btn-warning btn-sm my-2">
                                             <i class="fas fa-edit"></i> Edit
                                         </a>
                                         <form action="{{ route('lowongan.destroy', $lowongan->id) }}" method="POST"
                                             style="display:inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="button" class="btn btn-danger btn-sm"
+                                            <button type="button" class="btn btn-danger btn-sm my-md-2"
                                                 onclick="confirmDelete(this)">
                                                 <i class="fas fa-trash"></i> Delete
                                             </button>

@@ -181,7 +181,7 @@ class PerusahaanController extends Controller
         $lowongan = Lowongan::find($id);
         if ($lowongan) {
             $filePath = public_path('/img/post/' . $lowongan->img);
-            if(file_exists($filePath)){
+            if($filePath && $lowongan->img){
                 unlink($filePath);
             }
             $lowongan->delete();

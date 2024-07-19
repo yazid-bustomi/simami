@@ -155,13 +155,13 @@
                 </li>
             @elseif (Auth::user()->role == 'kampus')
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{{ route('kampus.profile') }}">
                         <i class="fas fa-fw fa-id-card"></i>
                         <span>Profile</span></a>
                 </li>
             @elseif (Auth::user()->role == 'perusahaan')
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{{ route('perusahaan.profile') }}">
                         <i class="fas fa-fw fa-id-card"></i>
                         <span>Profile</span></a>
                 </li>
