@@ -124,19 +124,6 @@
                 </li>
             @endif
 
-
-            @if (Auth::user()->role == 'mahasiswa')
-                <hr class="sidebar-divider">
-
-                <!-- Nav Item - Pengalaman -->
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-fw fa-chart-line"></i>
-                        <span>Pengalaman</span></a>
-                </li>
-            @else
-            @endif
-
             @if (Auth::user()->role == 'kampus' || Auth::user()->role == 'perusahaan')
                 <hr class="sidebar-divider">
 

@@ -25,9 +25,9 @@ class KampusController extends Controller
 
         // menampilkan semua data mahasiswa hanya yang menjadi user mahasiswanya sesuai id admin
         $users = User::with(['alamat', 'jurusanKampus', 'sosmed', 'akademikProfile.jurusanKampus', 'mahasiswaProfile'])
-        ->whereHas('akademikProfile', function ($query) use ($admin_kampus_id){
-            $query->where('admin_kampus_id', $admin_kampus_id);
-        })
+            ->whereHas('akademikProfile', function ($query) use ($admin_kampus_id) {
+                $query->where('admin_kampus_id', $admin_kampus_id);
+            })
             ->get();
         // dd($admin);
         return view('admin_kampus.users.index', compact('users'));
@@ -75,11 +75,11 @@ class KampusController extends Controller
             'password.min' => 'Password harus memiliki minimal 8 karakter.',
         ]);
 
-       if ($validator->fails()){
-        return redirect()->back()->withErrors($validator)->withInput();
-       }
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
-       $user = User::create([
+        $user = User::create([
             'nama_depan' => $request->nama_depan,
             'nama_belakang' => $request->nama_belakang,
             'email' => $request->email,
@@ -114,18 +114,18 @@ class KampusController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-{
-    $mhs = User::with(['akademikProfile'])->find($id); // Retrieve the user by primary key
+    {
+        $mhs = User::with(['akademikProfile'])->find($id); // Retrieve the user by primary key
 
-    $adminId = Auth::user()->id;
-    $jurusan = JurusanKampus::where('user_id', $adminId)->get();
+        $adminId = Auth::user()->id;
+        $jurusan = JurusanKampus::where('user_id', $adminId)->get();
 
-    if (is_null($mhs)) {
-        return redirect()->route('admin_kampus.users.index')->with('error', 'User not found.');
+        if (is_null($mhs)) {
+            return redirect()->route('admin_kampus.users.index')->with('error', 'User not found.');
+        }
+
+        return view('admin_kampus.users.edit', compact('mhs', 'jurusan'));
     }
-
-    return view('admin_kampus.users.edit', compact('mhs', 'jurusan'));
-}
 
 
     /**
@@ -139,14 +139,15 @@ class KampusController extends Controller
     {
         $mhs = User::with('akademikProfile')->findOrFail($id);
 
-        if ($request->email !== $mhs->email){
+        // jika ada perubahan email maka harus di rubah dan verifikasi
+        if ($request->email !== $mhs->email) {
             $validator = Validator::make($request->all(), [
                 'nama_depan' => 'required|string|min:3',
                 'nama_belakang' => 'nullable|string',
-                'jurusan' => 'required|integer',
+                'jurusan' => 'integer|nullable',
                 'email' => 'required|email|unique:users,email',
-                'nim' => 'required|integer',
-                'password' => 'required|min:8', // Ensure password is at least 8 characters
+                'nim' => 'integer|nullable',
+                'password' => 'min:8', // Ensure password is at least 8 characters
             ], [
                 'nama_depan.required' => 'Nama depan wajib diisi.',
                 'nama_depan.string' => 'Nama depan harus berupa string.',
@@ -162,19 +163,30 @@ class KampusController extends Controller
                 'password.min' => 'Password harus memiliki minimal 8 karakter.',
             ]);
 
-            if ($validator->fails())
-            {
+            if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
         }
+        if ($request->nama_depan == null)
+        {
+            return redirect()->back()->withErrors(['nama_depan' => 'Nama depan harus di isi'])->withInput();
+        }
         $mhs->nama_depan = $request->nama_depan;
-        $mhs->nama_belakang = $request->nama_belakang;
         $mhs->email = $request->email;
-        $mhs->password = Hash::make($request->password);
-        $mhs->akademikProfile->jurusan_id = $request->jurusan;
+        $mhs->nama_belakang = $request->nama_belakang;
+        $mhs->akademikProfile->nim = $request->nim;
 
+        // jika ada password maka di perbarui, jika tidak ada maka di lompati aja
+        if ($request->password != null) {
+            $mhs->password = Hash::make($request->password);
+        }
+        // jika jurusan di perbarui, jika tidak maka tetap dari pembuatan pertama
+        if ($request->jurusan != null) {
+            $mhs->akademikProfile->jurusan_id = $request->jurusan;
+        }
+
+        $mhs->akademikProfile->save();
         $mhs->save();
-
         return redirect()->route('user.index')->with('success', 'Mahasiswa berhasil di update');
     }
 
@@ -200,5 +212,4 @@ class KampusController extends Controller
     {
         return view('admin_kampus.profile');
     }
-
 }

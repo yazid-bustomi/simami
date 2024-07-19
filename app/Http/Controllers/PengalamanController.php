@@ -16,6 +16,7 @@ class PengalamanController extends Controller
     public function index()
     {
         //
+        return view('mahasiswa.pengalaman.index');
     }
 
     /**

@@ -16,7 +16,7 @@ class CreateMahasiswaProfilesTable extends Migration
         Schema::create('mahasiswa_profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->double('no_hp')->nullable();
+            $table->string('no_hp')->nullable();
             $table->date('tanggal_lahir')->nullable();
             $table->string('tempat_lahir')->nullable();
             $table->enum('jenis_kelamin', ['laki-laki', 'perempuan']);

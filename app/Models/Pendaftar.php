@@ -18,6 +18,6 @@ class Pendaftar extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'mahasiswa_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

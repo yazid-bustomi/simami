@@ -59,7 +59,7 @@ class LowonganController extends Controller
     {
         //  dd($request->lowongan_id);
 
-        $existingApprove = Pendaftar::where('mahasiswa_id', $request->mahasiswa_id)
+        $existingApprove = Pendaftar::where('user_id', $request->mahasiswa_id)
             ->where('lowongan_id', $request->lowongan_id)
             ->first();
 
@@ -78,7 +78,7 @@ class LowonganController extends Controller
         }
 
         $lowongan = new Pendaftar([
-            'mahasiswa_id' => $request->mahasiswa_id,
+            'user_id' => $request->mahasiswa_id,
             'lowongan_id' => $request->lowongan_id,
             'status' => 'pending'
         ]);

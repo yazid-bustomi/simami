@@ -8,6 +8,7 @@ use App\Http\Controllers\KampusController;
 use App\Http\Controllers\LowonganController;
 use App\Http\Controllers\MahasiswaProfileController;
 use App\Http\Controllers\PendaftarController;
+use App\Http\Controllers\PengalamanController;
 use App\Http\Controllers\PerusahaanController;
 use App\Models\MahasiswaProfile;
 use Illuminate\Support\Facades\Auth;
@@ -55,7 +56,12 @@ Route::middleware(['auth', 'mahasiswa'])->group(function () {
     Route::resource('/magang', LowonganController::class);
     Route::get('/mahasiswa/status', [MahasiswaProfileController::class, 'status'])->name('mahasiswa.status');
     Route::resource('/mahasiswa/profile', MahasiswaProfileController::class);
+
+    // update foto profile
     Route::post('/mahasiswa/profile/{id}', [MahasiswaProfileController::class, 'profile'])->name('mahasiswa.update.profile');
+    // upload CV dan transkip
+    Route::post('/mahasiswa/akademik/{id}', [MahasiswaProfileController::class, 'akademik'])->name('mahasiswa.update.akademik');
+
     Route::get('/mahasiswa/dashboard', [MahasiswaProfileController::class, 'dashboard'])->name('mahasiswa.dashboard');
 
     // CRUD lamar and approve magang

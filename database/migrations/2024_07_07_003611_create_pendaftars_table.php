@@ -15,7 +15,7 @@ class CreatePendaftarsTable extends Migration
     {
         Schema::create('pendaftars', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mahasiswa_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('lowongan_id')->constrained('lowongans')->onDelete('cascade');
             $table->enum('status', ['pending', 'approve', 'select', 'rejected_kampus', 'rejected_perusahaan']);
 

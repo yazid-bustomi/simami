@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreMahasiswaProfileRequest;
 use App\Http\Requests\UpdateMahasiswaProfileRequest;
 use App\Models\AkademikProfile;
+use App\Models\Alamat;
+use App\Models\Lowongan;
 use App\Models\MahasiswaProfile;
 use App\Models\Pendaftar;
 use App\Models\Sosmed;
@@ -31,8 +33,8 @@ class MahasiswaProfileController extends Controller
             ->where('id', $idUser)
             ->get();
 
-        foreach ($mahasiswas as $mahasiswa){
-            $tanggalLahir = $mahasiswa->mahasiswaProfile->tanggal_lahir;
+        foreach ($mahasiswas as $mahasiswa) {
+            $tanggalLahir = $mahasiswa->mahasiswaProfile->tanggal_lahir ?? '';
             $mahasiswa;
         }
 
@@ -91,6 +93,14 @@ class MahasiswaProfileController extends Controller
      */
     public function update(UpdateMahasiswaProfileRequest $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'ipk' => 'integer|min:0',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        };
+
         // mencari user di database sesuai dengan id nya yang mau di update untuk di verifikasi email dan nomer hp
         $user = User::with('mahasiswaProfile', 'akademikProfile', 'alamat', 'sosmed')->findOrFail($id);
 
@@ -132,6 +142,7 @@ class MahasiswaProfileController extends Controller
 
         // update akademik profile
         $user->akademikProfile->nim = $request->nim;
+        $user->akademikProfile->ipk = $request->ipk;
         $user->akademikProfile->save();
 
         // update mahasiswa profile
@@ -142,13 +153,28 @@ class MahasiswaProfileController extends Controller
         $user->mahasiswaProfile->no_hp = $request->no_hp;
         $user->mahasiswaProfile->save();
 
-        // update alamat
-        $user->alamat->provinsi = $request->provinsi;
-        $user->alamat->kab_kot = $request->kab_kot;
-        $user->alamat->desa = $request->desa;
-        $user->alamat->alamat = $request->alamat;
-        $user->alamat->kode_pos = $request->kode_pos;
-        $user->alamat->save();
+        // jika alamat masih kosong maka di create terlebih dahulu
+        if (!$user->alamat) {
+            Alamat::create([
+                'user_id' => $user->id,
+                'provinsi' =>  $request->provinsi,
+                'kab_kot' =>  $request->kab_kot,
+                'kecamatan' =>  $request->kecamatan,
+                'desa' =>  $request->desa,
+                'alamat' =>  $request->alamat,
+                'kode_pos' => $request->kode_pos,
+            ]);
+        }else {
+            // update alamat
+            $user->alamat->provinsi = $request->provinsi;
+            $user->alamat->kab_kot = $request->kab_kot;
+            $user->alamat->desa = $request->desa;
+            $user->alamat->kecamatan = $request->kecamatan;
+            $user->alamat->alamat = $request->alamat;
+            $user->alamat->kode_pos = $request->kode_pos;
+            $user->alamat->save();
+
+        }
 
         // jika sosmed masih kosong maka di create terlebih dahulu
         if (!$user->sosmed) {
@@ -162,8 +188,10 @@ class MahasiswaProfileController extends Controller
                 'tiktok' => $request->tiktok,
             ]);
         } else {
+
             // update sosmed
             $sosmed = $user->sosmed;
+
             $sosmed->instagram = $request->instagram;
             $sosmed->linkedin = $request->linkedin;
             $sosmed->twiter = $request->twiter;
@@ -191,27 +219,32 @@ class MahasiswaProfileController extends Controller
     {
         $user = User::with('mahasiswaProfile')->findOrFail($id);
 
-        // dd($user->toArray());
+        // dd($user->mahasiswaProfile);
 
         $request->validate([
             'img' => 'image|mimes:png,jpg,jpeg|max:1020',
         ]);
 
-        if($request->hasFile('img')){
-            // untuk mendapatkan file di folder
-            $filePath = public_path('/img/profile/' . $user->mahasiswaProfile->img);
-
-            // mengecek apakah link img di database dan  file di folder ada maka di hapus dulu
-            if($user->mahasiswaProfile->img && $filePath){
-                unlink($filePath);
-            }
+        if ($request->hasFile('img')) {
             // memberi nama dengan date sekarang dan mendapatkan ekstensi filenya sekalian
             $fileName = time() . '.' . $request->img->extension();
             $request->img->move(public_path('/img/profile/'), $fileName);
 
+            if ($user->mahasiswaProfile != null) {
+                // untuk mendapatkan file di folder
+                $filePath = public_path('/img/profile/' . $user->mahasiswaProfile->img);
 
-            $user->mahasiswaProfile->img = $fileName;
-            $user->mahasiswaProfile->save();
+                // mengecek apakah link img di database dan  file di folder ada maka di hapus dulu
+                if ($user->mahasiswaProfile->img && $filePath) {
+                    unlink($filePath);
+                }
+                $user->mahasiswaProfile->img = $fileName;
+                $user->mahasiswaProfile->save();
+            }
+            MahasiswaProfile::create([
+                'user_id' => $id,
+                'img' => $fileName,
+            ]);
         }
         return redirect()->route('profile.index')->with('success', 'Foto Profile Berhasil di Update');
     }
@@ -226,7 +259,7 @@ class MahasiswaProfileController extends Controller
     {
         $idUser = Auth::user()->id;
         // dd($idUser);
-        $approve = Pendaftar::where('mahasiswa_id', $idUser)
+        $approve = Pendaftar::where('user_id', $idUser)
             ->with([
                 'lowongan',
                 'user.akademikProfile',
@@ -235,5 +268,45 @@ class MahasiswaProfileController extends Controller
                 'user.akademikProfile.jurusanKampus'
             ])->get();
         return view('mahasiswa.magang.status', compact('approve'));
+    }
+
+    public function akademik(Request $request, $id)
+    {
+        $user = User::with('akademikProfile')->findOrFail($id);
+
+        if ($request->hasFile('cv')) {
+            $request->validate([
+                'cv' => 'file|mimes:pdf|max:1020',
+            ]);
+
+            $cvPath = public_path('/cv/' . $user->akademikProfile->cv);
+
+            if ($user->akademikProfile->cv && $cvPath) {
+                unlink($cvPath);
+            }
+
+            $cvName = time() . '.' . $request->cv->extension();
+            $request->cv->move(public_path('/cv/'), $cvName);
+            $user->akademikProfile->cv = $cvName;
+            $user->akademikProfile->save();
+        }
+
+        if ($request->hasFile('transkip')) {
+            $request->validate([
+                'transkip' => 'mimes:pdf|max:1020|file'
+            ]);
+
+            $transkipPath = public_path('/transkip/' . $user->akademikProfile->transkip);
+
+            if ($transkipPath && $user->akademikProfile->transkip) {
+                unlink($transkipPath);
+            }
+            $transkipName = time() . '.' . $request->transkip->extension();
+            $request->transkip->move(public_path('/transkip/'), $transkipName);
+            $user->akademikProfile->transkip = $transkipName;
+            $user->akademikProfile->save();
+        }
+
+        return redirect()->route('profile.index')->with('upAkademik', 'Update data berhasil');
     }
 }
