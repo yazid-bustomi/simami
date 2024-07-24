@@ -39,9 +39,9 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
-                <div class="sidebar-brand-icon rotate-n-15">
+                {{-- <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
-                </div>
+                </div> --}}
                 <div class="sidebar-brand-text mx-3">SIMAMI</div>
             </a>
 
@@ -85,7 +85,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('user.index') }}">
                         <i class="fas fa-fw fa-user"></i>
-                        <span>User</span></a>
+                        <span>Mahasiswa</span></a>
                 </li>
                 <!-- Divider -->
                 <hr class="sidebar-divider">
@@ -94,7 +94,18 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">
                         <i class="fas fa-fw fa-user"></i>
-                        <span>User All</span></a>
+                        <span>User</span></a>
+                </li>
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+            @endif
+
+
+            @if (Auth::user()->role == 'kampus')
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('jurusan.index') }}">
+                        <i class="fas fa-fw fa-university"></i>
+                        <span>Jurusan</span></a>
                 </li>
                 <!-- Divider -->
                 <hr class="sidebar-divider">
@@ -204,11 +215,11 @@
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span
-                            class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->nama_depan }}
-                            {{ Auth::user()->nama_belakang }}</span>
-                            <div class="topbar-divider d-none d-sm-block"></div>
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span
+                                    class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->nama_depan }}
+                                    {{ Auth::user()->nama_belakang }}</span>
+                                <div class="topbar-divider d-none d-sm-block"></div>
                                 <img class="img-profile rounded-circle" src="{{ asset('img/undraw_profile.svg') }}">
                             </a>
                             <!-- Dropdown - User Information -->

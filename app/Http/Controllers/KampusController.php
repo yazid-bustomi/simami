@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\AkademikProfile;
 use App\Models\JurusanKampus;
+use App\Models\MahasiswaProfile;
+use App\Models\Pendaftar;
+use App\Models\Sosmed;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+
+use function PHPUnit\Framework\fileExists;
 
 class KampusController extends Controller
 {
@@ -70,7 +75,7 @@ class KampusController extends Controller
             'email.unique' => 'Email sudah terdaftar.',
             'nim.required' => 'Nim Harus di isi',
             'nim.integer' => 'Nim tidak boleh diawali dari 0 atau minus',
-            'jurusan.required' => 'Nim Harus di isi',
+            'jurusan.required' => 'Jurusan Harus di isi',
             'password.required' => 'Password wajib diisi.',
             'password.min' => 'Password harus memiliki minimal 8 karakter.',
         ]);
@@ -167,8 +172,7 @@ class KampusController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput();
             }
         }
-        if ($request->nama_depan == null)
-        {
+        if ($request->nama_depan == null) {
             return redirect()->back()->withErrors(['nama_depan' => 'Nama depan harus di isi'])->withInput();
         }
         $mhs->nama_depan = $request->nama_depan;
@@ -210,7 +214,125 @@ class KampusController extends Controller
 
     public function profile()
     {
+        $idUser = Auth::user()->id;
+        $kampus = User::with('jurusanKampus', 'alamat', 'sosmed', 'mahasiswaProfile')->findOrFail($idUser);
+        $countApprove = 0;
 
-        return view('admin_kampus.profile');
+        // mencari semua mahasiswa dan di hitung jumlahnya
+        $allMahasiswa = AkademikProfile::where('admin_kampus_id', $idUser)->get()->count();
+
+        // mencari dari akademik profile yang admin kampus id nya sama dengan id user sekarang dan dipilih semua user pendaftar
+        $approved = User::whereHas('akademikProfile', function ($query) use ($idUser){
+            $query->where('admin_kampus_id', $idUser);
+        })->with('pendaftar')->get();
+
+        foreach ($approved as $approve){
+            foreach($approve->pendaftar as $data){
+                if($data->status == 'select'){
+                    $countApprove++;
+                }
+            }
+        }
+
+
+        return view('admin_kampus.profile', compact('kampus', 'allMahasiswa', 'approved', 'countApprove'));
+    }
+
+
+    public function profileUpdate(Request $request, $id)
+    {
+        $user = User::with('jurusanKampus', 'alamat', 'sosmed', 'mahasiswaProfile')->findOrFail($id);
+
+        if ($request->email !== $user->email) {
+            $validated = Validator::make($request->all(), [
+                'email' => 'unique:users,email',
+            ]);
+
+            if ($validated->fails()) {
+                return redirect()->back()->withErrors(['email', 'Email sudah ada'])->withInput();
+            }
+        // dd($request->toArray());
+
+        }
+        $user->nama_depan = $request->nama_depan;
+        $user->email = $request->email;
+        $user->save();
+
+        $user->alamat->provinsi = $request->provinsi;
+        $user->alamat->kab_kot = $request->kab_kot;
+        $user->alamat->kecamatan = $request->kecamatan;
+        $user->alamat->desa = $request->desa;
+        $user->alamat->kode_pos = $request->kode_pos;
+        $user->alamat->alamat = $request->alamat;
+        $user->alamat->save();
+
+            if (!$user->sosmed) {
+                Sosmed::create([
+                    'user_id' => $id,
+                    'linkedin' => $request->linkedin,
+                    'twiter' => $request->twiter,
+                    'website' => $request->website,
+                    'instagram' => $request->instagram,
+                    'facebook' => $request->facebook,
+                    'tiktok' => $request->tiktok,
+                ]);
+            } else {
+                $user->sosmed->linkedin = $request->linkedin;
+                $user->sosmed->twiter = $request->twiter;
+                $user->sosmed->website = $request->website;
+                $user->sosmed->instagram = $request->instagram;
+                $user->sosmed->facebook = $request->facebook;
+                $user->sosmed->tiktok = $request->tiktok;
+                $user->sosmed->save();
+            }
+
+            if (!$user->mahasiswaProfile){
+                MahasiswaProfile::create([
+                    'user_id' => $id,
+                    'no_hp' => $request->no_hp,
+                ]);
+            }else {
+                $user->mahasiswaProfile->no_hp = $request->no_hp;
+                $user->mahasiswaProfile->save();
+            }
+
+        return redirect()->route('kampus.profile')->with('success', 'Data berhasil di update');
+    }
+
+    public function updateProfile(Request $request, $id)
+    {
+        $user = User::with('mahasiswaProfile')->findOrFail($id);
+        $validated = Validator::make($request->all(),[
+            'img' => 'required|image|mimes:png,jpg|max:1024',
+        ]);
+
+        if($validated->fails()){
+            return redirect()->back()->withErrors($validated)->withInput();
+        }
+        $file = $request->file('img');
+        $fileName = time() . '_' . $file->getClientOriginalName();
+
+        if(!$user->mahasiswaProfile){
+            MahasiswaProfile::make([
+                'user_id' => $id,
+                'img' => $fileName,
+            ]);
+
+            $file->move(public_path('/img/profile/'), $fileName);
+
+        } else {
+            $filePath = public_path('/img/profile/' . $fileName);
+
+            if($user->mahasiswaProfile->img && fileExists($filePath)){
+                $removeFile = public_path('/img/profile/') . $user->mahasiswaProfile->img;
+                unlink($removeFile);
+            }
+
+            $file->move(public_path('/img/profile/'), $fileName);
+            $user->mahasiswaProfile->img = $fileName;
+            $user->mahasiswaProfile->save();
+        }
+
+        return redirect()->back()->with('updateFoto', 'Foto Profile Berhasil di Update');
     }
 }

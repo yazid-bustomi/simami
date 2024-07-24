@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\JurusanKampusController;
 use App\Http\Controllers\KampusController;
 use App\Http\Controllers\LowonganController;
 use App\Http\Controllers\MahasiswaProfileController;
@@ -48,7 +49,10 @@ Route::middleware(['auth', 'kampus'])->group(function () {
     // CRUD User dari Kampus
     Route::resource('/kampus/user', KampusController::class);
     Route::get('/kampus/profile', [KampusController::class, 'profile'])->name('kampus.profile');
+    Route::post('/kampus/profile/{id}', [KampusController::class, 'profileUpdate'])->name('kampus.profile.update');
+    Route::post('/kampus/profile/foto/{id}', [KampusController::class, 'updateProfile'])->name('kampus.foto.update');
     Route::get('/kampus/dashboard', [KampusController::class, 'dashboard'])->name('kampus.dashboard');
+    Route::resource('/kampus/jurusan', JurusanKampusController::class);
 });
 
 Route::middleware(['auth', 'mahasiswa'])->group(function () {
