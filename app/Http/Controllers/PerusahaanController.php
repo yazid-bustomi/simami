@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alamat;
 use App\Models\Lowongan;
+use App\Models\MahasiswaProfile;
+use App\Models\Sosmed;
+use App\Models\User;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 // use Intervention\Image\Facades\Image;
@@ -99,17 +104,6 @@ class PerusahaanController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -144,11 +138,11 @@ class PerusahaanController extends Controller
         ]);
 
         // mengecek apakah ada file yang di upload
-        if($request->hasFile('img')){
+        if ($request->hasFile('img')) {
             $filePath = public_path('/img/post/' . $lowongan->img);
             // jika file sebelumnya ada maka di hapus dahulu, jika tidak langsung di tambahkan
             // mengecek apakah link img di database dan  file di folder ada maka di hapus dulu
-            if($lowongan->img && fileExists($filePath) ){
+            if ($lowongan->img && fileExists($filePath)) {
                 unlink($filePath);
             };
             // memberi nama dengan date sekarang dan mendapatkan ekstensi filenya sekalian
@@ -181,7 +175,7 @@ class PerusahaanController extends Controller
         $lowongan = Lowongan::find($id);
         if ($lowongan) {
             $filePath = public_path('/img/post/' . $lowongan->img);
-            if($filePath && $lowongan->img){
+            if ($filePath && $lowongan->img) {
                 unlink($filePath);
             }
             $lowongan->delete();
@@ -199,8 +193,78 @@ class PerusahaanController extends Controller
 
     public function profile()
     {
-        return view('admin_perusahaan.profile');
+        $user = User::with('alamat', 'sosmed', 'profile',)->findOrFail(Auth::user()->id);
+        return view('admin_perusahaan.profile', compact('user'));
     }
 
+    public function profileUpdate(Request $request, $id)
+    {
+        $user = User::with('alamat', 'sosmed', 'profile')->findOrFail($id);
 
+        if ($request->email !== $user->email) {
+            $validated = Validator::make($request->all(), [
+                'email' => 'unique:users,email'
+            ]);
+
+            if ($validated->fails()) {
+                return redirect()->back()->withErrors(['email' => 'email sudah ada'])->withInput();
+            }
+            $user->email = $request->email;
+        }
+        $user->nama_depan = $request->nama_depan;
+        $user->save();
+
+        if (!$user->alamat) {
+            Alamat::create([
+                'user_id' => $user->id,
+                'provinsi' => $request->provinsi,
+                'kab_kot' => $request->kab_kot,
+                'kecamatan' => $request->kecamatan,
+                'desa' => $request->desa,
+                'alamat' => $request->alamat,
+                'kode_pos' => $request->kode_pos,
+            ]);
+        } else {
+            $user->alamat->provinsi = $request->provinsi;
+            $user->alamat->kab_kot = $request->kab_kot;
+            $user->alamat->kecamatan = $request->kecamatan;
+            $user->alamat->desa = $request->desa;
+            $user->alamat->alamat = $request->alamat;
+            $user->alamat->kode_pos = $request->kode_pos;
+            $user->alamat->save();
+        }
+
+        if (!$user->sosmed) {
+            Sosmed::create([
+                'user_id' => $user->id,
+                'instagram' => $request->instagram,
+                'facebook' => $request->facebook,
+                'tiktok' => $request->tiktok,
+                'twiter' => $request->twiter,
+                'linkedin' => $request->linkedin,
+                'website' => $request->website,
+
+            ]);
+        } else {
+            $user->sosmed->instagram = $request->instagram;
+            $user->sosmed->facebook = $request->facebook;
+            $user->sosmed->tiktok = $request->tiktok;
+            $user->sosmed->twiter = $request->twiter;
+            $user->sosmed->linkedin = $request->linkedin;
+            $user->sosmed->website = $request->website;
+            $user->sosmed->save();
+        }
+
+        if(!$user->profile){
+            MahasiswaProfile::create([
+                'user_id' => $user->id,
+                'no_hp' => $request->no_hp,
+            ]);
+        } else{
+            $user->profile->no_hp = $request->no_hp;
+            $user->profile->save();
+        }
+
+        return redirect()->route('perusahaan.profile')->with('success', 'Data berhasil di update');
+    }
 }

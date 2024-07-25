@@ -20,7 +20,7 @@
                                     </div>
                                 @endif
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="nama_depan" for="nama_depan" class="form-control-label">Nama
                                                 Depan</label>
@@ -34,7 +34,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="nama_belakang" class="form-control-label">Nama Belakang</label>
                                             <input class="form-control @error('nama_belakang') is-invalid @enderror"
@@ -47,6 +47,20 @@
                                             @enderror
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="semester" class="form-control-label">Semester</label>
+                                            <input class="form-control @error('semester') is-invalid @enderror"
+                                                id="semester" name="semester" type="number"
+                                                value="{{ old('semester', $mahasiswa->akademikProfile->semester ?? '') }}" required>
+                                            @error('semester')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="nim" class="form-control-label">NIM</label>
@@ -66,7 +80,7 @@
                                             <input type="number" name="ipk" id="ipk" step="0.1"
                                                 class="form-control @error('ipk') is-invalid @enderror"
                                                 value="{{ old('ipk', $mahasiswa->akademikProfile->ipk ?? '') }}"
-                                                placeholder="-">
+                                                placeholder="-" required>
                                             @error('ipk')
                                                 <span class="invalidpfeedback">
                                                     <strong>{{ $message }}</strong>
@@ -81,10 +95,10 @@
                                                 class="form-control @error('jenis_kelamin') is-invalid @enderror"
                                                 id="jenis_kelamin" required>
                                                 <option value="laki-laki"
-                                                    {{ old('jenis_kelamin', $mahasiswa->mahasiswaProfile->jenis_kelamin ?? '') == 'laki-laki' ? 'selected' : '' }}>
+                                                    {{ old('jenis_kelamin', $mahasiswa->profile->jenis_kelamin ?? '') == 'laki-laki' ? 'selected' : '' }}>
                                                     Laki - Laki</option>
                                                 <option value="perempuan"
-                                                    {{ old('jenis_kelamin', $mahasiswa->mahasiswaProfile->jenis_kelamin ?? '') == 'perempuan' ? 'selected' : '' }}>
+                                                    {{ old('jenis_kelamin', $mahasiswa->profile->jenis_kelamin ?? '') == 'perempuan' ? 'selected' : '' }}>
                                                     Perempuan</option>
                                             </select>
                                             @error('jenis_kelamin')
@@ -100,19 +114,19 @@
                                             <select name="agama" id="agama"
                                                 class="form-control @error('agama') is-invalid @enderror" required>
                                                 <option value="islam"
-                                                    {{ old('agama', $mahasiswa->mahasiswaProfile->agama ?? '') == 'islam' ? 'selected' : '' }}>
+                                                    {{ old('agama', $mahasiswa->profile->agama ?? '') == 'islam' ? 'selected' : '' }}>
                                                     Islam</option>
                                                 <option value="kristen"
-                                                    {{ old('agama', $mahasiswa->mahasiswaProfile->agama ?? '') == 'kristen' ? 'selected' : '' }}>
+                                                    {{ old('agama', $mahasiswa->profile->agama ?? '') == 'kristen' ? 'selected' : '' }}>
                                                     Kristen</option>
                                                 <option value="budha"
-                                                    {{ old('agama', $mahasiswa->mahasiswaProfile->agama ?? '') == 'budha' ? 'selected' : '' }}>
+                                                    {{ old('agama', $mahasiswa->profile->agama ?? '') == 'budha' ? 'selected' : '' }}>
                                                     Budha</option>
                                                 <option value="konghucu"
-                                                    {{ old('agama', $mahasiswa->mahasiswaProfile->agama ?? '') == 'konghucu' ? 'selected' : '' }}>
+                                                    {{ old('agama', $mahasiswa->profile->agama ?? '') == 'konghucu' ? 'selected' : '' }}>
                                                     Konghucu</option>
                                                 <option value="hindu"
-                                                    {{ old('agama', $mahasiswa->mahasiswaProfile->agama ?? '') == 'hindu' ? 'selected' : '' }}>
+                                                    {{ old('agama', $mahasiswa->profile->agama ?? '') == 'hindu' ? 'selected' : '' }}>
                                                     Hindu</option>
                                             </select>
                                             @error('agama')
@@ -127,7 +141,7 @@
                                             <label for="tempat_lahir" class="form-control-label">Tempat Lahir</label>
                                             <input class="form-control @error('tempat_lahir') is-invalid @enderror"
                                                 type="text" name="tempat_lahir" id="tempat_lahir"
-                                                value="{{ old('tempat_lahir', $mahasiswa->mahasiswaProfile->tempat_lahir ?? '') }}"
+                                                value="{{ old('tempat_lahir', $mahasiswa->profile->tempat_lahir ?? '') }}"
                                                 required>
                                             @error('tempat_lahir')
                                                 <span class="invalid-feedback" role="alert">
@@ -141,7 +155,7 @@
                                             <label for="tanggal_lahir" class="form-control-label">Tanggal Lahir</label>
                                             <input class="form-control @error('tanggal_lahir') is-invalid @enderror"
                                                 type="date" name="tanggal_lahir" id="tanggal_lahir"
-                                                value="{{ old('tanggal_lahir', $mahasiswa->mahasiswaProfile->tanggal_lahir ?? '') }}"
+                                                value="{{ old('tanggal_lahir', $mahasiswa->profile->tanggal_lahir ?? '') }}"
                                                 required>
                                             @error('tanggal_lahir')
                                                 <span class="invalid-feedback" role="alert">
@@ -174,7 +188,7 @@
                                             <label for="no_hp" class="form-group-label">No Hp</label>
                                             <input class="form-control @error('no_hp') is-invalid @enderror" type="number"
                                                 name="no_hp" id="no_hp"
-                                                value="{{ old('no_hp', $mahasiswa->mahasiswaProfile->no_hp ?? '') }}"
+                                                value="{{ old('no_hp', $mahasiswa->profile->no_hp ?? '') }}"
                                                 required>
                                             @error('no_hp')
                                                 <span class="invalid-feedback" role="alert">
@@ -367,9 +381,9 @@
                     <input type="file" name="img" id="img" class="d-none" accept="image/*"
                         onchange="previewImage(event)">
 
-                    @if ($mahasiswa->mahasiswaProfile && $mahasiswa->mahasiswaProfile->img)
+                    @if ($mahasiswa->profile && $mahasiswa->profile->img)
                         <label for="img" class="cursor-pointer">
-                            <img src="{{ asset('img/profile/' . $mahasiswa->mahasiswaProfile->img) }}"
+                            <img src="{{ asset('img/profile/' . $mahasiswa->profile->img) }}"
                                 alt="Image placeholder" class="card-img-top rounded rounded-circle" id="image-preview">
                         </label>
                     @else

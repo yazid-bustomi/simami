@@ -42,6 +42,7 @@ Route::middleware(['auth', 'perusahaan'])->group(function () {
     Route::resource('/perusahaan/lowongan', PerusahaanController::class);
     // profile perusahaan
     Route::get('/perusahaan/profile', [PerusahaanController::class, 'profile'])->name('perusahaan.profile');
+    Route::post('/perusahaan/profile/{id}', [PerusahaanController::class, 'profileUpdate'])->name('perusahaan.profile.update');
     Route::get('/perusahaan/dashboard', [PerusahaanController::class, 'dashboard'])->name('perusahaan.dashboard');
 });
 

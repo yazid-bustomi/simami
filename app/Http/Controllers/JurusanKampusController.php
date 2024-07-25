@@ -55,28 +55,6 @@ class JurusanKampusController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\JurusanKampus  $jurusanKampus
-     * @return \Illuminate\Http\Response
-     */
-    public function show(JurusanKampus $jurusanKampus)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\JurusanKampus  $jurusanKampus
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(JurusanKampus $jurusanKampus)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateJurusanKampusRequest  $request

@@ -102,17 +102,6 @@ class KampusController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -249,9 +238,8 @@ class KampusController extends Controller
             ]);
 
             if ($validated->fails()) {
-                return redirect()->back()->withErrors(['email', 'Email sudah ada'])->withInput();
+                return redirect()->back()->withErrors(['email' => 'Email sudah ada'])->withInput();
             }
-        // dd($request->toArray());
 
         }
         $user->nama_depan = $request->nama_depan;

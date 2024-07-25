@@ -13,7 +13,7 @@ class CreateMahasiswaProfilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('mahasiswa_profiles', function (Blueprint $table) {
+        Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('no_hp')->nullable();
@@ -33,6 +33,6 @@ class CreateMahasiswaProfilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mahasiswa_profiles');
+        Schema::dropIfExists('profiles');
     }
 }

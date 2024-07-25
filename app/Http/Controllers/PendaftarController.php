@@ -21,16 +21,15 @@ class PendaftarController extends Controller
 
         // untuk role perusahaan mengambil data sesuai dengan id user perusahaan
         if (Auth::user()->role == 'perusahaan') {
-            $pendaftars = Pendaftar::with(['lowongan', 'user', 'user.mahasiswaProfile', 'user.akademikProfile', 'user.akademikProfile.jurusanKampus', 'user.akademikProfile.adminKampus', 'user.alamat'])
+            $pendaftars = Pendaftar::with(['lowongan', 'user', 'user.akademikProfile', 'user.akademikProfile.jurusanKampus', 'user.akademikProfile.adminKampus', 'user.alamat', 'user.profile'])
             ->whereHas('lowongan', function ($query) use ($idUser){
                 $query->where('user_id', $idUser);
-            })
-            ->get();
+            })->get();
             return view('mahasiswa.pendaftar.index', compact('pendaftars'));
 
             // untuk role kampus mengambil data sesuai id by admin kampus
         } elseif (Auth::user()->role == 'kampus') {
-            $pendaftars = Pendaftar::with(['lowongan', 'user', 'user.mahasiswaProfile', 'user.akademikProfile', 'user.akademikProfile.jurusanKampus', 'user.akademikProfile.adminKampus', 'user.alamat'])
+            $pendaftars = Pendaftar::with(['lowongan', 'user', 'user.profile', 'user.akademikProfile', 'user.akademikProfile.jurusanKampus', 'user.akademikProfile.adminKampus', 'user.alamat'])
             ->whereHas('user.akademikProfile', function ($query) use ($idUser){
                 $query->where('admin_kampus_id', $idUser);
             })
@@ -39,7 +38,7 @@ class PendaftarController extends Controller
 
             // untuk role mahasiswa menampilkan semua lowongan magang
         } elseif(Auth::user()->role == 'mahasiswa') {
-            $pendaftars = Pendaftar::with(['lowongan', 'user', 'user.mahasiswaProfile', 'user.akademikProfile', 'user.akademikProfile.jurusanKampus', 'user.akademikProfile.adminKampus', 'user.alamat'])
+            $pendaftars = Pendaftar::with(['lowongan', 'user', 'user.profile', 'user.akademikProfile', 'user.akademikProfile.jurusanKampus', 'user.akademikProfile.adminKampus', 'user.alamat'])
             ->get();
             return view('mahasiswa.pendaftar.index', compact('pendaftars'));
 
@@ -47,51 +46,6 @@ class PendaftarController extends Controller
         {
 
         }
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StorePendaftarRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StorePendaftarRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Pendaftar  $pendaftar
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Pendaftar $pendaftar)
-    {
-        // dd($pendaftar->toArray());
-
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Pendaftar  $pendaftar
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Pendaftar $pendaftar)
-    {
-        //
     }
 
     /**

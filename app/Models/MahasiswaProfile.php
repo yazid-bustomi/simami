@@ -10,6 +10,7 @@ class MahasiswaProfile extends Model
     use HasFactory;
 
     protected $guarded;
+    protected $table = 'profiles';
 
 
     public function user()

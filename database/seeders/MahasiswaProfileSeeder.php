@@ -15,7 +15,7 @@ class MahasiswaProfileSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('mahasiswa_profiles')->insert([
+        DB::table('profiles')->insert([
             [
                 'user_id' => '9',
                 'no_hp' => '085000000000',

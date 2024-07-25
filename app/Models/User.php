@@ -63,7 +63,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(JurusanKampus::class);
     }
 
-    public function mahasiswaProfile()
+    public function profile()
     {
         return $this->hasOne(MahasiswaProfile::class);
     }

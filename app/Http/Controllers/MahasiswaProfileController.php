@@ -29,59 +29,17 @@ class MahasiswaProfileController extends Controller
     {
         //
         $idUser = Auth::user()->id;
-        $mahasiswas = User::with(['akademikProfile', 'mahasiswaProfile', 'alamat', 'sosmed', 'akademikProfile.adminKampus', 'akademikProfile.jurusanKampus'])
+        $mahasiswas = User::with(['akademikProfile', 'profile', 'alamat', 'sosmed', 'akademikProfile.adminKampus', 'akademikProfile.jurusanKampus'])
             ->where('id', $idUser)
             ->get();
 
         foreach ($mahasiswas as $mahasiswa) {
-            $tanggalLahir = $mahasiswa->mahasiswaProfile->tanggal_lahir ?? '';
+            $tanggalLahir = $mahasiswa->profile->tanggal_lahir ?? '';
             $mahasiswa;
         }
 
 
         return view('mahasiswa.profile', compact('mahasiswa'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreMahasiswaProfileRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreMahasiswaProfileRequest $request)
-    {
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\MahasiswaProfile  $mahasiswaProfile
-     * @return \Illuminate\Http\Response
-     */
-    public function show(MahasiswaProfile $mahasiswaProfile)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\MahasiswaProfile  $mahasiswaProfile
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(MahasiswaProfile $mahasiswaProfile)
-    {
-        //
     }
 
     /**
@@ -102,7 +60,7 @@ class MahasiswaProfileController extends Controller
         };
 
         // mencari user di database sesuai dengan id nya yang mau di update untuk di verifikasi email dan nomer hp
-        $user = User::with('mahasiswaProfile', 'akademikProfile', 'alamat', 'sosmed')->findOrFail($id);
+        $user = User::with('profile', 'akademikProfile', 'alamat', 'sosmed')->findOrFail($id);
 
         // mencari nim yang sama dengan satu kampus
         $nimExists = DB::table('akademik_profiles')
@@ -141,11 +99,12 @@ class MahasiswaProfileController extends Controller
 
         // update akademik profile
         $user->akademikProfile->nim = $request->nim;
+        $user->akademikProfile->semester = $request->semester;
         $user->akademikProfile->ipk = $request->ipk;
         $user->akademikProfile->save();
 
         // jika dari user mahasiswa profile kosong maka di create dahulu
-        if (!$user->mahasiswaProfile) {
+        if (!$user->profile) {
             MahasiswaProfile::create([
                 'user_id' => $user->id,
                 'jenis_kelamin' => $request->jenis_kelamin,
@@ -156,12 +115,12 @@ class MahasiswaProfileController extends Controller
             ]);
         } else {
             // update mahasiswa profile
-            $user->mahasiswaProfile->jenis_kelamin = $request->jenis_kelamin;
-            $user->mahasiswaProfile->agama = $request->agama;
-            $user->mahasiswaProfile->tempat_lahir = $request->tempat_lahir;
-            $user->mahasiswaProfile->tanggal_lahir = $request->tanggal_lahir;
-            $user->mahasiswaProfile->no_hp = $request->no_hp;
-            $user->mahasiswaProfile->save();
+            $user->profile->jenis_kelamin = $request->jenis_kelamin;
+            $user->profile->agama = $request->agama;
+            $user->profile->tempat_lahir = $request->tempat_lahir;
+            $user->profile->tanggal_lahir = $request->tanggal_lahir;
+            $user->profile->no_hp = $request->no_hp;
+            $user->profile->save();
         }
 
         // jika alamat masih kosong maka di create terlebih dahulu
@@ -214,22 +173,12 @@ class MahasiswaProfileController extends Controller
         return redirect()->route('profile.index')->with('success', 'Profile berhasil di update');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\MahasiswaProfile  $mahasiswaProfile
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(MahasiswaProfile $mahasiswaProfile)
-    {
-        //
-    }
 
     public function profile(Request $request, $id)
     {
-        $user = User::with('mahasiswaProfile')->findOrFail($id);
+        $user = User::with('profile')->findOrFail($id);
 
-        // dd($user->mahasiswaProfile);
+        // dd($user->profile);
 
         $request->validate([
             'img' => 'image|mimes:png,jpg,jpeg|max:1020',
@@ -240,16 +189,16 @@ class MahasiswaProfileController extends Controller
             $fileName = time() . '.' . $request->img->extension();
             $request->img->move(public_path('/img/profile/'), $fileName);
 
-            if ($user->mahasiswaProfile != null) {
+            if ($user->profile != null) {
                 // untuk mendapatkan file di folder
-                $filePath = public_path('/img/profile/' . $user->mahasiswaProfile->img);
+                $filePath = public_path('/img/profile/' . $user->profile->img);
 
                 // mengecek apakah link img di database dan  file di folder ada maka di hapus dulu
-                if ($user->mahasiswaProfile->img && $filePath) {
+                if ($user->profile->img && $filePath) {
                     unlink($filePath);
                 }
-                $user->mahasiswaProfile->img = $fileName;
-                $user->mahasiswaProfile->save();
+                $user->profile->img = $fileName;
+                $user->profile->save();
             }
             MahasiswaProfile::create([
                 'user_id' => $id,
