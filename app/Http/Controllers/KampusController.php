@@ -29,7 +29,7 @@ class KampusController extends Controller
         $admin_kampus_id = Auth::user()->id;
 
         // menampilkan semua data mahasiswa hanya yang menjadi user mahasiswanya sesuai id admin
-        $users = User::with(['alamat', 'jurusanKampus', 'sosmed', 'akademikProfile.jurusanKampus', 'mahasiswaProfile'])
+        $users = User::with(['alamat', 'jurusanKampus', 'sosmed', 'akademikProfile.jurusanKampus', 'profile'])
             ->whereHas('akademikProfile', function ($query) use ($admin_kampus_id) {
                 $query->where('admin_kampus_id', $admin_kampus_id);
             })
@@ -204,7 +204,7 @@ class KampusController extends Controller
     public function profile()
     {
         $idUser = Auth::user()->id;
-        $kampus = User::with('jurusanKampus', 'alamat', 'sosmed', 'mahasiswaProfile')->findOrFail($idUser);
+        $kampus = User::with('jurusanKampus', 'alamat', 'sosmed', 'profile')->findOrFail($idUser);
         $countApprove = 0;
 
         // mencari semua mahasiswa dan di hitung jumlahnya

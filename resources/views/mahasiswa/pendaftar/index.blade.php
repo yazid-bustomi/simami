@@ -23,7 +23,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Lowongan</th>
+                            <th>Posisi Magang</th>
                             <th>Nama</th>
                             <th>No Hp</th>
                             @if (Auth::user()->role == 'perusahaan')

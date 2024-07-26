@@ -16,10 +16,10 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Lowongan</th>
-                            <th>No Hp</th>
-                            <th>Semester</th>
-                            <th>Ipk</th>
+                            <th>PT</th>
+                            <th>Posisi Magang</th>
+                            <th>Durasi</th>
+                            <th>Batas Pendaftaran</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -27,7 +27,7 @@
                         @php
                             $no = 1;
                         @endphp
-                        @foreach ($approve as $data)
+                        {{-- @foreach ($approve as $data)
                             <tr>
                                 <td>{{ $no }}</td>
                                 <td>{{ $data->lowongan->judul }}</td>
@@ -52,7 +52,7 @@
                             @php
                                 $no++;
                             @endphp
-                        @endforeach
+                        @endforeach --}}
                     </tbody>
                 </table>
             </div>
