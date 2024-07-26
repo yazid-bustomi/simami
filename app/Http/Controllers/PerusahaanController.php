@@ -267,4 +267,19 @@ class PerusahaanController extends Controller
 
         return redirect()->route('perusahaan.profile')->with('success', 'Data berhasil di update');
     }
+
+    public function fotoUpdate(Request $request, $id){
+        $fotoUser = User::where('id', $id)->with('profile')->get();
+
+        $fileName = time() . '-' . $request->originalName;
+
+        dd($request->toArray());
+
+        if(!$fotoUser->profile){
+            MahasiswaProfile::make([
+                'user_id' => $id,
+
+            ]);
+        }
+    }
 }

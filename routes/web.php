@@ -43,6 +43,7 @@ Route::middleware(['auth', 'perusahaan'])->group(function () {
     // profile perusahaan
     Route::get('/perusahaan/profile', [PerusahaanController::class, 'profile'])->name('perusahaan.profile');
     Route::post('/perusahaan/profile/{id}', [PerusahaanController::class, 'profileUpdate'])->name('perusahaan.profile.update');
+    Route::post('/perusahaan/profile/foto/{id}', [PerusahaanController::class, 'fotoUpdate'])->name('perusahaan.foto.update');
     Route::get('/perusahaan/dashboard', [PerusahaanController::class, 'dashboard'])->name('perusahaan.dashboard');
 });
 
