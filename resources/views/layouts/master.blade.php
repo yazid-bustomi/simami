@@ -151,7 +151,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('mahasiswa.status') }}">
                         <i class="fas fa-fw fa-users"></i>
-                        <span>Pendaftar</span></a>
+                        <span>Pendaftaran</span></a>
                 </li>
             @endif
 

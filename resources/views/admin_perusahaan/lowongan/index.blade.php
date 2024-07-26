@@ -27,10 +27,10 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Judul</th>
-                            <th>Pemagang</th>
+                            <th>Posisi Magang</th>
+                            <th>Kebutuhan</th>
                             <th>Durasi</th>
-                            <th>Close Informasi</th>
+                            <th>Batas Pendaftaran</th>
                             <th>Pendaftar</th>
                             @if (Auth::user()->role == 'perusahaan')
                                 <th>Aksi</th>
@@ -43,10 +43,10 @@
                             <tr>
                                 <td>{{ $no }}</td>
                                 <td>{{ $lowongan->judul }}</td>
-                                <td>{{ $lowongan->pemagang }}</td>
+                                <td>{{ $lowongan->pemagang }} Orang</td>
                                 <td>{{ $lowongan->durasi_magang }} bulan</td>
                                 <td>{{ $lowongan->close_lowongan }}</td>
-                                <td>{{ $lowongan->pendaftar()->count() }}</td>
+                                <td>{{ $lowongan->pendaftar()->count() }} Mahasiswa</td>
                                 @if (Auth::user()->role == 'perusahaan')
                                     <td>
                                         <a href="{{ route('lowongan.edit', $lowongan->id) }}"

@@ -266,7 +266,7 @@
                         </div>
                     </div>
                     <div class="card-body pt-0">
-                        <div class="row mt-4">
+                        {{-- <div class="row mt-4">
                             <div class="col">
                                 <div class="d-flex justify-content-center">
                                     <div class="d-grid text-center mx-4">
@@ -275,25 +275,13 @@
                                     </div>
                                     <div class="d-grid text-center mx-4">
                                         <span class="text-lg font-weight-bolder mx-2">12</span>
-                                        <span class="text-sm opacity-8">Magang</span>
+                                        <span class="text-sm opacity-8">Diterima Magang</span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="text-center mt-4">
-                            {{-- <h5>{{ $mahasiswa->nama_depan }} {{ $mahasiswa->nama_belakang }}<span class="font-weight-light">,
-                                20</span>
-                        </h5>
-                        <div class="h6 font-weight-300">
-                            <i class="ni location_pin mr-2"></i>{{ $mahasiswa->akademikProfile->adminKampus->nama_depan }}
-                            {{ $mahasiswa->akademikProfile->adminKampus->nama_belakang }}
-                        </div>
-                        <div class="h6 mt-4">
-                            <i
-                                class="ni business_briefcase-24 mr-2"></i>{{ $mahasiswa->akademikProfile->jurusanKampus->nama_jurusan }}
                         </div> --}}
-
-                            <button type="submit" class="btn btn-primary mt-4">Update Profile</button>
+                        <div class="text-center mt-1">
+                            <button type="submit" class="btn btn-primary mt-2">Update Profile</button>
                         </div>
                     </div>
                 </div>
