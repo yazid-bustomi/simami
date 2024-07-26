@@ -217,12 +217,11 @@ class MahasiswaProfileController extends Controller
     public function status()
     {
         $idUser = Auth::user()->id;
-        // dd($idUser);
         $approve = Pendaftar::where('user_id', $idUser)
             ->with([
                 'lowongan',
                 'user.akademikProfile',
-                'user.mahasiswaProfile',
+                'user.profile',
                 'user.akademikProfile.adminKampus',
                 'user.akademikProfile.jurusanKampus'
             ])->get();

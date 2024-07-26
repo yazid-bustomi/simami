@@ -245,49 +245,47 @@
                         <input type="file" name="img" id="img" class="d-none" accept="image/*"
                             onchange="previewImage(event)">
 
-                        @if ($user->profile && $user->profile->img)
-                            <label for="img" class="cursor-pointer">
-                                <img src="{{ asset('img/profile/' . $user->profile->img) }}" alt="Image placeholder"
-                                    class="card-img-top rounded rounded-circle" id="image-preview">
-                            </label>
-                        @else
-                            <label for="img" class="cursor-pointer">
-                                <img id="image-preview" src="{{ asset('img/profile/profile-default.jpg') }}"
-                                    alt="Image placeholder" class="card-img-top rounded rounded-circle">
-                            </label>
-                        @endif
-                        @error('img')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                        <div class="row justify-content-center">
-                            <div class="col-4 col-lg-4 order-lg-2">
-                                <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
-                                </div>
+                    {{-- @if ($mahasiswa->mahasiswaProfile && $mahasiswa->mahasiswaProfile->img)
+                    <label for="img" class="cursor-pointer">
+                        <img src="{{ asset('img/profile/' . $mahasiswa->mahasiswaProfile->img) }}"
+                            alt="Image placeholder" class="card-img-top rounded rounded-circle" id="image-preview">
+                    </label>
+                @else --}}
+                    <label for="img" class="cursor-pointer">
+                        <img id="image-preview" src="{{ asset('img/profile/profile-default.jpg') }}"
+                            alt="Image placeholder" class="card-img-top rounded rounded-circle">
+                    </label>
+                    {{-- @endif
+                @error('img')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror --}}
+                    <div class="row justify-content-center">
+                        <div class="col-4 col-lg-4 order-lg-2">
+                            <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
                             </div>
                         </div>
-                        <div class="card-body pt-0">
-                            <div class="row mt-4">
-                                <div class="col">
-                                    <div class="d-flex justify-content-center">
-                                        <div class="d-grid text-center mx-4">
-                                            <span class="text-lg font-weight-bolder mx-2">22</span>
-                                            <span class="text-sm opacity-8">Lowongan</span>
-                                        </div>
-                                        <div class="d-grid text-center mx-4">
-                                            <span class="text-lg font-weight-bolder mx-2">12</span>
-                                            <span class="text-sm opacity-8">Magang</span>
-                                        </div>
+                    </div>
+                    <div class="card-body pt-0">
+                        {{-- <div class="row mt-4">
+                            <div class="col">
+                                <div class="d-flex justify-content-center">
+                                    <div class="d-grid text-center mx-4">
+                                        <span class="text-lg font-weight-bolder mx-2">22</span>
+                                        <span class="text-sm opacity-8">Lowongan</span>
+                                    </div>
+                                    <div class="d-grid text-center mx-4">
+                                        <span class="text-lg font-weight-bolder mx-2">12</span>
+                                        <span class="text-sm opacity-8">Magang</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-center mt-4">
-                                <button type="submit" class="btn btn-primary mt-4">Update Profile</button>
-                            </div>
+                        </div> --}}
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary mt-4">Update Profile</button>
                         </div>
-                    </form>
-
+                    </div>
                 </div>
             </div>
         </div>

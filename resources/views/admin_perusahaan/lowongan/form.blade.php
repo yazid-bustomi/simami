@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-8">
             <div class="form-group">
-                <label for="judul" class="form-control-label">Judul Magang</label>
+                <label for="judul" class="form-control-label">Posisi Magang</label>
                 <input class="form-control @error('judul') is-invalid @enderror" id="judul" name="judul"
                     type="text" value="{{ old('judul', $lowongan->judul ?? '') }}" required>
                 @error('judul')
@@ -18,7 +18,7 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label for="pemagang" class="form-control-label">Jumlah Magang</label>
+                <label for="pemagang" class="form-control-label">Jumlah Kebutuhan Peserta</label>
                 <input class="form-control @error('pemagang') is-invalid @enderror" id="pemagang" name="pemagang"
                     type="number" value="{{ old('pemagang', $lowongan->pemagang ?? '') }}" required>
                 @error('pemagang')
@@ -30,7 +30,7 @@
         </div>
         <div class="col-md-12">
             <div class="form-group">
-                <label for="kriteria" class="form-control-label">Kriteria Magang</label>
+                <label for="kriteria" class="form-control-label">Kriteria Peserta</label>
                 <textarea class="form-control @error('kriteria') is-invalid @enderror" id="kriteria" name="kriteria" rows="10"
                     required>{{ old('kriteria', $lowongan->kriteria ?? '') }}</textarea>
                 @error('kriteria')
@@ -66,7 +66,7 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label for="open_lowongan" class="form-control-label">Open Lowongan</label>
+                <label for="open_lowongan" class="form-control-label">Mulai Pendaftaran</label>
                 <input class="form-control @error('open_lowongan') is-invalid @enderror" name="open_lowongan"
                     type="date" value="{{ old('open_lowongan', $lowongan->open_lowongan ?? '') }}" required>
                 @error('open_lowongan')
@@ -78,7 +78,7 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label for="close_lowongan" class="form-control-label">Close Lowongan</label>
+                <label for="close_lowongan" class="form-control-label">Batas Pendaftaran</label>
                 <input class="form-control @error('close_lowongan') is-invalid @enderror" name="close_lowongan"
                     type="date" value="{{ old('close_lowongan', $lowongan->close_lowongan ?? '') }}" required>
                 @error('close_lowongan')
@@ -90,7 +90,7 @@
         </div>
         <div class="col-md-12">
             <div class="form-group">
-                <label for="img" class="form-control-label">Upload Gambar</label>
+                <label for="img" class="form-control-label">Upload Flyer (Jika ada)</label>
                 <input class="form-control @error('img') is-invalid @enderror" id="img" name="img"
                     type="file" accept="image/*" onchange="previewImage(event)">
                 @error('img')
