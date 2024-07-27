@@ -111,7 +111,7 @@
                 actionText = 'mengajukan magang';
                 status = 'approve';
             } else if (action === 'select') {
-                actionText = 'menerima magang';
+                actionText = 'menerima mahasiswa';
                 status = 'select';
             } else if (action === 'rejected_kampus') {
                 actionText = 'menolak';

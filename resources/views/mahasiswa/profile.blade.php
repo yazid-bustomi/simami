@@ -374,6 +374,12 @@
         </div>
         <div class="col-md-4 mt-sm-3 ">
             <div class="card card-profile">
+                @if (session('profileSuccess'))
+                <div class="alert alert-success">
+                    {{ session('profileSuccess') }}
+                </div>
+
+                @endif
                 <form action="{{ route('mahasiswa.update.profile', $idMhs) }}" method="post"
                     enctype="multipart/form-data">
                     @csrf
@@ -404,7 +410,7 @@
                         </div>
                     </div>
                     <div class="card-body pt-0">
-                       
+
                         <div class="text-center mt-2">
                             <h5>{{ $mahasiswa->nama_depan }} {{ $mahasiswa->nama_belakang }}</h5>
                             <div class="h6 font-weight-300">
@@ -424,7 +430,7 @@
             </div>
         </div>
         <!-- New Card for CV and Transcript Upload -->
-        <div class="col-md-8 mt-4">
+        {{-- <div class="col-md-8 mt-4">
             <div class="card">
                 <div class="card-body">
                     <p class="text-uppercase text-sm">Upload CV dan Transkrip Nilai</p>
@@ -463,7 +469,7 @@
 
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 
     <script>
@@ -476,47 +482,5 @@
             }
             reader.readAsDataURL(event.target.files[0]);
         }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const cvInput = document.getElementById('cv');
-            const transkipInput = document.getElementById('transkip');
-
-            const cvFilename = document.getElementById('cv_filename').value;
-            const transkipFilename = document.getElementById('transkip_filename').value;
-
-            const cvFilenameDisplay = document.getElementById('cv_filename_display');
-            const transkipFilenameDisplay = document.getElementById('transkip_filename_display');
-
-            if (cvFilename) {
-                const cvUrl = '{{ url('storage/cv/' . $mahasiswa->akademikProfile->cv) }}';
-                cvFilenameDisplay.innerHTML = `Current file: <a href="${cvUrl}" target="_blank">Download CV</a>`;
-            } else {
-                cvFilenameDisplay.textContent = 'No file chosen';
-            }
-
-            if (transkipFilename) {
-                const transkipUrl = '{{ url('storage/cv/' . $mahasiswa->akademikProfile->transkip) }}';
-                transkipFilenameDisplay.innerHTML =
-                    `Current file: <a href="${transkipUrl}" target="_blank">Download Transkrip Nilai</a>`;
-            } else {
-                transkipFilenameDisplay.textContent = 'No file chosen';
-            }
-
-            cvInput.addEventListener('change', function() {
-                if (cvInput.files.length > 0) {
-                    cvFilenameDisplay.textContent = 'Chosen file: ' + cvInput.files[0].name;
-                } else {
-                    cvFilenameDisplay.textContent = 'No file chosen';
-                }
-            });
-
-            transkipInput.addEventListener('change', function() {
-                if (transkipInput.files.length > 0) {
-                    transkipFilenameDisplay.textContent = 'Chosen file: ' + transkipInput.files[0].name;
-                } else {
-                    transkipFilenameDisplay.textContent = 'No file chosen';
-                }
-            });
-        });
     </script>
 @endsection

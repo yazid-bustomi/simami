@@ -50,27 +50,27 @@
 
             @if (Auth::user()->role == 'admin')
                 <!-- Nav Item Admin - Dashboard -->
-                <li class="nav-item active">
+                <li class="nav-item {{ Request::routeIs('admin.dashboard') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('admin.dashboard') }}">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li>
             @elseif (Auth::user()->role == 'kampus')
                 <!-- Nav Item Kampus - Dashboard -->
-                <li class="nav-item active">
+                <li class="nav-item {{ Request::routeIs('kampus.dashboard') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('kampus.dashboard') }}">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li>
             @elseif (Auth::user()->role == 'perusahaan')
                 <!-- Nav Item Perusahaan - Dashboard -->
-                <li class="nav-item active">
+                <li class="nav-item {{ Request::routeIs('perusahaan.dashboard') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('perusahaan.dashboard') }}">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li>
             @elseif (Auth::user()->role == 'mahasiswa')
-                <li class="nav-item">
+                <li class="nav-item {{ Request::routeIs('mahasiswa.dashboard') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('mahasiswa.dashboard') }}">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
@@ -82,7 +82,7 @@
             {{-- Nav Item User --}}
             @if (Auth::user()->role == 'kampus')
                 <!-- Nav Item - User - By Kampus -->
-                <li class="nav-item">
+                <li class="nav-item {{ Request::routeIs('user.index') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('user.index') }}">
                         <i class="fas fa-fw fa-user"></i>
                         <span>Mahasiswa</span></a>
@@ -91,7 +91,7 @@
                 <hr class="sidebar-divider">
             @elseif (Auth::user()->role == 'admin')
                 <!-- Nav Item - User - By Kampus -->
-                <li class="nav-item">
+                <li class="nav-item {{ Request::routeIs('users.index') ? 'active' : '' }}">
                     <a class="nav-link" href="#">
                         <i class="fas fa-fw fa-user"></i>
                         <span>User</span></a>
@@ -102,7 +102,7 @@
 
 
             @if (Auth::user()->role == 'kampus')
-                <li class="nav-item">
+                <li class="nav-item {{ Request::routeIs('jurusan.index') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('jurusan.index') }}">
                         <i class="fas fa-fw fa-university"></i>
                         <span>Jurusan</span></a>
@@ -114,21 +114,21 @@
 
             @if (Auth::user()->role == 'mahasiswa')
                 <!-- Nav Item - Lowongan -->
-                <li class="nav-item">
+                <li class="nav-item {{ Request::routeIs('magang.index') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('magang.index') }}">
                         <i class="fas fa-fw fa-briefcase"></i>
                         <span>Lowongan</span></a>
                 </li>
             @elseif (Auth::user()->role == 'kampus')
                 <!-- Nav Item - Lowongan -->
-                <li class="nav-item">
+                <li class="nav-item {{ Request::routeIs('lowongan.index') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('lowongan.index') }}">
                         <i class="fas fa-fw fa-briefcase"></i>
                         <span>Lowongan</span></a>
                 </li>
             @elseif (Auth::user()->role == 'perusahaan')
                 <!-- Nav Item - Lowongan -->
-                <li class="nav-item">
+                <li class="nav-item {{ Request::routeIs('lowongan.index') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('lowongan.index') }}">
                         <i class="fas fa-fw fa-briefcase"></i>
                         <span>Lowongan</span></a>
@@ -139,7 +139,7 @@
                 <hr class="sidebar-divider">
 
                 <!-- Nav Item - Pnedaftar by kampus dan perusahaan -->
-                <li class="nav-item">
+                <li class="nav-item {{ Request::routeIs('pendaftar.index') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('pendaftar.index') }}">
                         <i class="fas fa-fw fa-users"></i>
                         <span>Pendaftar</span></a>
@@ -148,7 +148,7 @@
                 <hr class="sidebar-divider">
 
                 <!-- Nav Item - Pnedaftar by kampus dan perusahaan -->
-                <li class="nav-item">
+                <li class="nav-item {{ Request::routeIs('mahasiswa.status') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('mahasiswa.status') }}">
                         <i class="fas fa-fw fa-users"></i>
                         <span>Pendaftaran</span></a>
@@ -159,25 +159,25 @@
             <hr class="sidebar-divider">
 
             @if (Auth::user()->role == 'admin')
-                <li class="nav-item">
+                <li class="nav-item {{ Request::routeIs('') ? 'active' : '' }}">
                     <a class="nav-link" href="#">
                         <i class="fas fa-fw fa-id-card"></i>
                         <span>Profile</span></a>
                 </li>
             @elseif (Auth::user()->role == 'kampus')
-                <li class="nav-item">
+                <li class="nav-item {{ Request::routeIs('kampus.profile') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('kampus.profile') }}">
                         <i class="fas fa-fw fa-id-card"></i>
                         <span>Profile</span></a>
                 </li>
             @elseif (Auth::user()->role == 'perusahaan')
-                <li class="nav-item">
+                <li class="nav-item {{ Request::routeIs('perusahaan.profile') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('perusahaan.profile') }}">
                         <i class="fas fa-fw fa-id-card"></i>
                         <span>Profile</span></a>
                 </li>
             @elseif (Auth::user()->role == 'mahasiswa')
-                <li class="nav-item">
+                <li class="nav-item {{ Request::routeIs('profile.index') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('profile.index') }}">
                         <i class="fas fa-fw fa-id-card"></i>
                         <span>Profile</span></a>
@@ -220,7 +220,8 @@
                                     class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->nama_depan }}
                                     {{ Auth::user()->nama_belakang }}</span>
                                 <div class="topbar-divider d-none d-sm-block"></div>
-                                <img class="img-profile rounded-circle" src="{{ asset('img/undraw_profile.svg') }}">
+                                <img class="img-profile rounded-circle"
+                                src="{{ Auth::user()->profile->img ? asset('img/profile/' . Auth::user()->profile->img) : asset('img/profile/profile-default.jpg') }}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -319,6 +320,19 @@
 
     <!-- SweetAlert JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.nav-item');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function () {
+                    navLinks.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
 
     @yield('script')
 </body>

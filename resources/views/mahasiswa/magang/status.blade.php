@@ -19,6 +19,7 @@
                             <th>PT</th>
                             <th>Posisi Magang</th>
                             <th>Durasi</th>
+                            <th>Tgl Mendaftar</th>
                             <th>Batas Pendaftaran</th>
                             <th>Status</th>
                         </tr>

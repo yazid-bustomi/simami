@@ -35,7 +35,7 @@ class PerusahaanController extends Controller
             return view('admin_perusahaan.lowongan.index', compact('lowongans'));
         } else {
             // menampilkan semua data yang di upload oleh perusahaan
-            $lowongans = Lowongan::with('pendaftar')->get();
+            $lowongans = Lowongan::with('pendaftar', 'user')->get();
             return view('admin_perusahaan.lowongan.index', compact('lowongans'));
         }
     }
@@ -132,7 +132,7 @@ class PerusahaanController extends Controller
             'rincian' => 'required|string',
             'pemagang' => 'required|integer|min:1',
             'durasi_magang' => 'required|integer|min:1',
-            'open_lowongan' => 'required|date|after_or_equal:today',
+            'open_lowongan' => 'required|date',
             'close_lowongan' => 'required|date|after:open_lowongan',
             'img' => 'image|mimes:jpeg,png,jpg,|max:10120',
         ]);
@@ -255,12 +255,12 @@ class PerusahaanController extends Controller
             $user->sosmed->save();
         }
 
-        if(!$user->profile){
+        if (!$user->profile) {
             MahasiswaProfile::create([
                 'user_id' => $user->id,
                 'no_hp' => $request->no_hp,
             ]);
-        } else{
+        } else {
             $user->profile->no_hp = $request->no_hp;
             $user->profile->save();
         }
@@ -268,18 +268,43 @@ class PerusahaanController extends Controller
         return redirect()->route('perusahaan.profile')->with('success', 'Data berhasil di update');
     }
 
-    public function fotoUpdate(Request $request, $id){
-        $fotoUser = User::where('id', $id)->with('profile')->get();
+    public function fotoUpdate(Request $request, $id)
+    {
+        $foto = User::with('profile')->findOrFail($id);
 
-        $fileName = time() . '-' . $request->originalName;
+        $validated = Validator::make($request->all(),[
+            'img' => 'mimes:png,jpg|max:1020'
+        ]);
+        if($validated->fails()){
+            return redirect()->back()->withErrors(['img' => 'Harus file img dan maximal ukuran 10MB']);
+        }
 
-        dd($request->toArray());
+        $fileName = time() . '-' . $request->img->getClientOriginalName();  // untuk membuat nama file yang baru di upload
+        $file = $request->file('img');                                      // untuk inisialisasi data image yang di upload untuk di move ke local
+        $filePath = public_path('/img/profile/') . $foto->profile->img;     // untuk membuat file pathnya buat pengkondisian apakah ada filenya
 
-        if(!$fotoUser->profile){
+        // jika tidak ada profile maka buat terlebih dahulu
+        if (!$foto->profile) {
             MahasiswaProfile::make([
                 'user_id' => $id,
-
+                'img' => $fileName,
             ]);
+            $file->move(public_path('/img/profile/'), $fileName);
+
+        } else {
+            // jika ada file dengan key img ada yang di upload maka di eksekusi
+            if ($request->hasFile('img')) {
+                if ($filePath && $foto->profile->img) {
+                    unlink($filePath);
+                }
+
+                $foto->profile->img = $fileName;
+                $foto->profile->save();
+                $file->move(public_path('/img/profile/'), $fileName);
+
+            }
         }
+
+        return redirect()->back()->with('uploadSuccess', 'Foto profile berhasil di upload');
     }
 }

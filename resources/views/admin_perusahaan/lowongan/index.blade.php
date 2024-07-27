@@ -27,6 +27,9 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            @if (Auth::user()->role == 'kampus')
+                                <th>PT</th>
+                            @endif
                             <th>Posisi Magang</th>
                             <th>Kebutuhan</th>
                             <th>Durasi</th>
@@ -42,6 +45,9 @@
                         @foreach ($lowongans as $lowongan)
                             <tr>
                                 <td>{{ $no }}</td>
+                                @if (Auth::user()->role == 'kampus')
+                                    <td>{{ $lowongan->user->nama_depan . ' ' . $lowongan->user->nama_belakang }}</td>
+                                @endif
                                 <td>{{ $lowongan->judul }}</td>
                                 <td>{{ $lowongan->pemagang }} Orang</td>
                                 <td>{{ $lowongan->durasi_magang }} bulan</td>

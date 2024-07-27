@@ -174,11 +174,10 @@ class MahasiswaProfileController extends Controller
     }
 
 
+    // update foto profile
     public function profile(Request $request, $id)
     {
         $user = User::with('profile')->findOrFail($id);
-
-        // dd($user->profile);
 
         $request->validate([
             'img' => 'image|mimes:png,jpg,jpeg|max:1020',
@@ -205,7 +204,7 @@ class MahasiswaProfileController extends Controller
                 'img' => $fileName,
             ]);
         }
-        return redirect()->route('profile.index')->with('success', 'Foto Profile Berhasil di Update');
+        return redirect()->route('profile.index')->with('profileSuccess', 'Foto Profile Berhasil di Update');
     }
 
 

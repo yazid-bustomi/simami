@@ -230,7 +230,7 @@ class KampusController extends Controller
 
     public function profileUpdate(Request $request, $id)
     {
-        $user = User::with('jurusanKampus', 'alamat', 'sosmed', 'mahasiswaProfile')->findOrFail($id);
+        $user = User::with('jurusanKampus', 'alamat', 'sosmed', 'profile')->findOrFail($id);
 
         if ($request->email !== $user->email) {
             $validated = Validator::make($request->all(), [
@@ -274,14 +274,14 @@ class KampusController extends Controller
                 $user->sosmed->save();
             }
 
-            if (!$user->mahasiswaProfile){
+            if (!$user->profile){
                 MahasiswaProfile::create([
                     'user_id' => $id,
                     'no_hp' => $request->no_hp,
                 ]);
             }else {
-                $user->mahasiswaProfile->no_hp = $request->no_hp;
-                $user->mahasiswaProfile->save();
+                $user->profile->no_hp = $request->no_hp;
+                $user->profile->save();
             }
 
         return redirect()->route('kampus.profile')->with('success', 'Data berhasil di update');
@@ -289,7 +289,7 @@ class KampusController extends Controller
 
     public function updateProfile(Request $request, $id)
     {
-        $user = User::with('mahasiswaProfile')->findOrFail($id);
+        $user = User::with('profile')->findOrFail($id);
         $validated = Validator::make($request->all(),[
             'img' => 'required|image|mimes:png,jpg|max:1024',
         ]);
@@ -300,7 +300,7 @@ class KampusController extends Controller
         $file = $request->file('img');
         $fileName = time() . '_' . $file->getClientOriginalName();
 
-        if(!$user->mahasiswaProfile){
+        if(!$user->profile){
             MahasiswaProfile::make([
                 'user_id' => $id,
                 'img' => $fileName,
@@ -311,14 +311,14 @@ class KampusController extends Controller
         } else {
             $filePath = public_path('/img/profile/' . $fileName);
 
-            if($user->mahasiswaProfile->img && fileExists($filePath)){
-                $removeFile = public_path('/img/profile/') . $user->mahasiswaProfile->img;
+            if($user->profile->img && fileExists($filePath)){
+                $removeFile = public_path('/img/profile/') . $user->profile->img;
                 unlink($removeFile);
             }
 
             $file->move(public_path('/img/profile/'), $fileName);
-            $user->mahasiswaProfile->img = $fileName;
-            $user->mahasiswaProfile->save();
+            $user->profile->img = $fileName;
+            $user->profile->save();
         }
 
         return redirect()->back()->with('updateFoto', 'Foto Profile Berhasil di Update');
