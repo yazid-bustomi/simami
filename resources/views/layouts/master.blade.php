@@ -221,7 +221,8 @@
                                     {{ Auth::user()->nama_belakang }}</span>
                                 <div class="topbar-divider d-none d-sm-block"></div>
                                 <img class="img-profile rounded-circle"
-                                src="{{ Auth::user()->profile->img ? asset('img/profile/' . Auth::user()->profile->img) : asset('img/profile/profile-default.jpg') }}">
+
+                                src="{{ Auth::user()->profile && Auth::user()->profile->img ? asset('img/profile/' . Auth::user()->profile->img) : asset('img/profile/profile-default.jpg') }}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

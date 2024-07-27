@@ -24,17 +24,7 @@ class JurusanKampusSeeder extends Seeder
             [
                 // jurusan itb user id 2
                 'user_id' => '2',
-                'nama_jurusan' => 'Kedokteran'
-            ],
-            [
-                // jurusan itb user id 2
-                'user_id' => '2',
                 'nama_jurusan' => 'Multimedia'
-            ],
-            [
-                // jurusan itb user id 2
-                'user_id' => '2',
-                'nama_jurusan' => 'Pertanian'
             ],
             [
                 // jurusan its user id 3
@@ -44,27 +34,7 @@ class JurusanKampusSeeder extends Seeder
             [
                 // jurusan its user id 3
                 'user_id' => '3',
-                'nama_jurusan' => 'Industri'
-            ],
-            [
-                // jurusan its user id 3
-                'user_id' => '3',
-                'nama_jurusan' => 'Pergudangan'
-            ],
-            [
-                // jurusan itn user id 4
-                'user_id' => '4',
-                'nama_jurusan' => 'Pendidikan'
-            ],
-            [
-                // jurusan itby user id 5
-                'user_id' => '5',
-                'nama_jurusan' => 'STI'
-            ],
-            [
-                // jurusan itby user id 5
-                'user_id' => '5',
-                'nama_jurusan' => 'SI'
+                'nama_jurusan' => 'Fisika'
             ],
         ]);
     }

@@ -17,10 +17,10 @@ class CreateAlamatsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('provinsi');
-            $table->string('kab_kot');
-            $table->string('kecamatan');
-            $table->string('desa');
-            $table->string('alamat');
+            $table->string('kab_kot')->nullable();
+            $table->string('kecamatan')->nullable();
+            $table->string('desa')->nullable();
+            $table->string('alamat')->nullable();
             $table->integer('kode_pos');
             $table->timestamps();
         });

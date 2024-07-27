@@ -18,105 +18,41 @@ class LowonganSeeder extends Seeder
         //
         DB::table('lowongans')->insert([
             [
-                'user_id' => '6',
-                'judul' => 'Produksi',
-                'rincian' => 'rincian untuk lowongan Produksi',
-                'kriteria' => 'Kriteria untuk lowongan Produksi',
+                'user_id' => 4,
+                'judul' => 'Web Developer Intern',
+                'rincian' => 'Membantu dalam pengembangan dan pemeliharaan situs web perusahaan.
+                Berkolaborasi dengan tim untuk merancang, mengembangkan, dan menguji fitur baru.
+                Menganalisis dan memperbaiki bug yang ditemukan.
+                Menyediakan dokumentasi teknis untuk kode yang dikembangkan.',
+                'kriteria' => 'Mahasiswa jurusan Teknik Informatika, Ilmu Komputer, atau jurusan terkait.
+                Menguasai HTML, CSS, JavaScript, dan framework seperti Laravel atau React.
+                Memiliki pengalaman dengan version control system (Git).
+                Mampu bekerja dalam tim dan berkomunikasi dengan baik.
+                Kreatif dan memiliki kemampuan problem-solving yang baik.',
                 'pemagang' => '2',
                 'durasi_magang' => '3',
                 'open_lowongan' => Carbon::now(),
                 'close_lowongan' => Carbon::now()->addDays(10),
             ],
             [
-                'user_id' => 6,
-                'judul' => 'Administrasi',
-                'rincian' => 'rincian untuk lowongan Administrasi',
-                'kriteria' => 'kriteria untuk lowongan Administrasi',
+                'user_id' => 5,
+                'judul' => 'Digital Marketing',
+                'rincian' => 'Mengelola akun media sosial perusahaan dan konten blog.
+                Membuat dan mengimplementasikan strategi pemasaran digital.
+                Menganalisis kinerja kampanye digital dan memberikan laporan.
+                Berkontribusi dalam brainstorming ide-ide kampanye pemasaran.',
+                'kriteria' => 'Mahasiswa jurusan Pemasaran, Komunikasi, atau jurusan terkait.
+                Memahami dasar-dasar pemasaran digital, SEO, dan SEM.
+                Familiar dengan media sosial dan alat analitik (Google Analytics).
+                Memiliki kemampuan menulis konten yang menarik.
+                Kreatif dan mampu bekerja dengan pengawasan minimal.
+                ',
                 'pemagang' => 5,
                 'durasi_magang' => '2',
                 'open_lowongan' => Carbon::now(),
                 'close_lowongan' => Carbon::now()->addDays(10),
             ],
-            [
-                'user_id' => '7',
-                'judul' => 'Pemasaran',
-                'rincian' => 'rincian untuk lowongan Pemasaran',
-                'kriteria' => 'kriteria untuk lowongan Pemasaran',
-                'pemagang' => 9,
-                'durasi_magang' => '1',
-                'open_lowongan' => Carbon::now(),
-                'close_lowongan' => Carbon::now()->addDays(10),
-            ],
-            [
-                'user_id' => 7,
-                'judul' => 'Desain Grafis',
-                'rincian' => 'rincian untuk lowongan Desain Grafis',
-                'kriteria' => 'kriteria untuk lowongan Desain Grafis',
-                'pemagang' => 3,
-                'durasi_magang' => '6',
-                'open_lowongan' => Carbon::now(),
-                'close_lowongan' => Carbon::now()->addDays(10),
-            ],
-            [
-                'user_id' => 7,
-                'judul' => 'Teknik Informatika',
-                'rincian' => 'rincian untuk lowongan Teknik Informatika',
-                'kriteria' => 'kriteria untuk lowongan Teknik Informatika',
-                'pemagang' => 6,
-                'durasi_magang' => '5',
-                'open_lowongan' => Carbon::now(),
-                'close_lowongan' => Carbon::now()->addDays(10),
-            ],
-            [
-                'user_id' => 8,
-                'judul' => 'Jurnalistik',
-                'rincian' => 'rincian untuk lowongan Jurnalistik',
-                'kriteria' => 'kriteria untuk lowongan Jurnalistik',
-                'pemagang' => 2,
-                'durasi_magang' => '3',
-                'open_lowongan' => Carbon::now(),
-                'close_lowongan' => Carbon::now()->addDays(10),
-            ],
-            [
-                'user_id' => 8,
-                'judul' => 'Fotografi',
-                'rincian' => 'rincian untuk lowongan Fotografi',
-                'kriteria' => 'kriteria untuk lowongan Fotografi',
-                'pemagang' => 10,
-                'durasi_magang' => '2',
-                'open_lowongan' => Carbon::now(),
-                'close_lowongan' => Carbon::now()->addDays(10),
-            ],
-            [
-                'user_id' => 8,
-                'judul' => 'Pengembangan Produk',
-                'rincian' => 'rincian untuk lowongan Pengembangan Produk',
-                'kriteria' => 'kriteria untuk lowongan Pengembangan Produk',
-                'pemagang' => 14,
-                'durasi_magang' => '5',
-                'open_lowongan' => Carbon::now(),
-                'close_lowongan' => Carbon::now()->addDays(10),
-            ],
-            [
-                'user_id' => 6,
-                'judul' => 'Keuangan',
-                'rincian' => 'rincian untuk lowongan Keuangan',
-                'kriteria' => 'kriteria untuk lowongan Keuangan',
-                'pemagang' => 1,
-                'durasi_magang' => '7',
-                'open_lowongan' => Carbon::now(),
-                'close_lowongan' => Carbon::now()->addDays(10),
-            ],
-            [
-                'user_id' => 7,
-                'judul' => 'HRD',
-                'rincian' => 'rincian untuk lowongan HRD',
-                'kriteria' => 'kriteria untuk lowongan HRD',
-                'pemagang' => 4,
-                'durasi_magang' => '5',
-                'open_lowongan' => Carbon::now(),
-                'close_lowongan' => Carbon::now()->addDays(10),
-            ],
+
         ]);
     }
 }
