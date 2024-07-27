@@ -84,7 +84,7 @@ class LowonganController extends Controller
      */
     public function show($id)
     {
-        $lowongan = Lowongan::find($id);
+        $lowongan = Lowongan::with('user', 'user.sosmed', 'user.alamat')->find($id);
         // Check if the lowongan exists
         if (!$lowongan) {
             return redirect()->route('magang.index')->withErrors(['error' => 'Lowongan tidak ditemukan.']);

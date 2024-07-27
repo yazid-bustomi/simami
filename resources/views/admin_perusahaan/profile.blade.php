@@ -94,7 +94,7 @@
                                         <label for="kecamatan" class="form-control-label">Kecamatan</label>
                                         <input class="form-control @error('kecamatan') is-invalid @enderror" type="text"
                                             id="kecamatan" name="kecamatan"
-                                            value="{{ old('kecamatan', $user->alamat->kecamatan ?? '') }}" required>
+                                            value="{{ old('kecamatan', $user->alamat->kecamatan ?? '') }}" >
                                         @error('kecamatan')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -107,7 +107,7 @@
                                         <label for="desa" class="form-control-label">Desa</label>
                                         <input type="text" name="desa" id="desa"
                                             class="form-control @error('desa') is-invalid @enderror"
-                                            value="{{ old('desa', $user->alamat->desa ?? '') }}" required>
+                                            value="{{ old('desa', $user->alamat->desa ?? '') }}" >
                                         @error('desa')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

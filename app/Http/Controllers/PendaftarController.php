@@ -81,10 +81,5 @@ class PendaftarController extends Controller
     {
         //
     }
-    // public function status(){
-    //     $idUser = Auth::user()->id;
-    //     $approvLamaran = Pendaftar::where('mahasiswa_id', $idUser)->get();
-    //     dd($approvLamaran->toArray());
-    //     return view('mahasiswa.pendaftar.status');
-    // }
+
 }

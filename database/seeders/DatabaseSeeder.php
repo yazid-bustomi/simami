@@ -57,7 +57,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 // 4
-                'nama_depan' => 'PT. Teknologi Indonesia',
+                'nama_depan' => 'PT. Teknologi Indonesia Sentosa',
                 'nama_belakang' => null,
                 'email' => 'teknologi@gmail.com',
                 'email_verified_at' => now(),
@@ -112,6 +112,7 @@ class DatabaseSeeder extends Seeder
             MahasiswaProfileSeeder::class,
             LowonganSeeder::class,
             PendaftarSeeder::class,
+            SosmedSeeder::class,
         ]);
     }
 }
