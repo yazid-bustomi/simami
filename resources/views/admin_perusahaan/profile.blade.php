@@ -278,14 +278,13 @@
                                 <button type="submit" class="btn btn-primary mt-1">Update Profile</button>
                             </div>
                         </div>
+                    </form>
                 </div>
             </div>
         </div>
 
     </div>
-@endsection
 
-@section('script')
     <script>
         function previewImage(event) {
             var reader = new FileReader();
