@@ -287,7 +287,7 @@
                                             <input type="text" name="linkedin" id="linkedin"
                                                 class="form-control @error('linkedin') is-invalid @enderror"
                                                 value="{{ old('linkedin', $mahasiswa->sosmed->linkedin ?? '') }}"
-                                                placeholder="Username Linkedin">
+                                                placeholder="Link Linkedin">
                                             @error('linkedin')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -301,7 +301,7 @@
                                             <input type="text" name="twiter" id="twiter"
                                                 class="form-control @error('twiter') is-invalid @enderror"
                                                 value="{{ old('twiter', $mahasiswa->sosmed->twiter ?? '') }}"
-                                                placeholder="Username Twiter">
+                                                placeholder="Link Twiter">
                                             @error('twiter')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -315,7 +315,7 @@
                                             <input type="text" name="website" id="website"
                                                 class="form-control @error('website') is-invalid @enderror"
                                                 value="{{ old('website', $mahasiswa->sosmed->website ?? '') }}"
-                                                placeholder="www.simami.com">
+                                                placeholder="Link Website">
                                             @error('website')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -329,7 +329,7 @@
                                             <input type="text" name="instagram" id="instagram"
                                                 class="form-control @error('instagram') is-invalid @enderror"
                                                 value="{{ old('instagram', $mahasiswa->sosmed->instagram ?? '') }}"
-                                                placeholder="Username Instagram">
+                                                placeholder="Link Instagram">
                                             @error('instagram')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -343,7 +343,7 @@
                                             <input type="text" name="facebook" id="facebook"
                                                 class="form-control @error('facebook') is-invalid @enderror"
                                                 value="{{ old('facebook', $mahasiswa->sosmed->facebook ?? '') }}"
-                                                placeholder="Username Facebook">
+                                                placeholder="Link Facebook">
                                             @error('facebook')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -357,7 +357,7 @@
                                             <input type="text" name="tiktok" id="tiktok"
                                                 class="form-control @error('tiktok') is-invalid @enderror"
                                                 value="{{ old('tiktok', $mahasiswa->sosmed->tiktok ?? '') }}"
-                                                placeholder="Username Tiktok">
+                                                placeholder="Link Tiktok">
                                             @error('tiktok')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>

@@ -17,19 +17,17 @@ class SosmedSeeder extends Seeder
         DB::table('sosmeds')->insert([
             [
                 'user_id' => 4,
-                'instagram' => 'fintechid',
-                'facebook' => 'fintechID',
-                'twiter' => 'Ffintechid',
-                'linkedin' => 'asosiasi-fintech-indonesia',
-                'website' => 'fintech.id'
+                'instagram' => 'https://www.instagram.com/infogoto/',
+                'twiter' => 'https://x.com/gojektech',
+                'linkedin' => 'https://id.linkedin.com/company/gotogroup',
+                'website' => 'https://www.gotocompany.com/'
             ],
             [
                 'user_id' => 5,
-                'instagram' => 'emerhub.id',
-                'facebook' => 'emerhub',
-                'twiter' => 'Femerhub',
-                'linkedin' => 'companies-house-group',
-                'website' => 'companieshouse.id'
+                'instagram' => 'https://www.instagram.com/diginusantara/',
+                'facebook' => 'https://web.facebook.com/diginusantara',
+                'linkedin' => 'https://www.linkedin.com/company/diginusantara',
+                'website' => 'https://www.diginusantara.com/'
             ]
         ]);
     }

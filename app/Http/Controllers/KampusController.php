@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\AkademikProfile;
 use App\Models\JurusanKampus;
+use App\Models\Lowongan;
 use App\Models\MahasiswaProfile;
 use App\Models\Pendaftar;
 use App\Models\Sosmed;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -198,7 +200,40 @@ class KampusController extends Controller
 
     public function dashboard()
     {
-        return view('admin_kampus.dashboard');
+        $id = Auth::user()->id;
+        $dateNow = Carbon::now();
+        $allUser = AkademikProfile::where('admin_kampus_id', $id)->get();
+
+        $openInformasi = Lowongan::where('close_lowongan', '>', $dateNow)->get();
+
+        $mhsApplay = AkademikProfile::where('admin_kampus_id', $id)
+        ->with(['user.pendaftar' => function($query){
+            $query->whereIn('status', ['pending']);
+        }])
+        ->get();
+
+
+        $mhsReject = AkademikProfile::where('admin_kampus_id', $id)
+        ->with(['user.pendaftar' => function($query){
+            $query->whereIn('status', ['rejected_kampus', 'rejected_perusahaan']);
+        }])
+        ->get();
+
+        $mhsApprove = AkademikProfile::where('admin_kampus_id', $id)
+        ->with(['user.pendaftar' => function($query){
+            $query->where('status', 'approve');
+        }])
+        ->get();
+
+        $mhsSelect = AkademikProfile::where('admin_kampus_id', $id)
+        ->with(['user.pendaftar' => function($query){
+            $query->where('status', 'select');
+        }])
+        ->get();
+
+        // dd($mhsReject);
+        // dd($mhsSelect->toArray());
+        return view('admin_kampus.dashboard', compact('allUser', 'openInformasi', 'mhsApplay', 'mhsReject', 'mhsApprove', 'mhsSelect'));
     }
 
     public function profile()

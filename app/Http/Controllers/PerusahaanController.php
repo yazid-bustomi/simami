@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Alamat;
 use App\Models\Lowongan;
 use App\Models\MahasiswaProfile;
+use App\Models\Pendaftar;
 use App\Models\Sosmed;
 use App\Models\User;
 use Illuminate\Auth\Events\Validated;
@@ -187,8 +188,31 @@ class PerusahaanController extends Controller
     {
         // untuk mendapatkan user id
         $idPt = Auth::user()->id;
-        $magang = Lowongan::where('user_id', $idPt);
-        return view('admin_perusahaan.dashboard', compact('magang'));
+
+        // memuat semua lowongan yang sudah di upload oleh user PT
+        $lowongans = Lowongan::where('user_id', $idPt)->count();
+
+        // query lowongan sesuai dengan user idnya   => logikanya ketika sudah di pilih sesuai status maka di load masukkan query dengan with
+        $pending = Lowongan::where('user_id', $idPt)
+        // dipilih yang tabel pendaftar dan diseleksi statusnya approve
+        ->whereHas('pendaftar', function($query){
+            $query->where('status', 'approve');
+        })
+        // memuat hasil query sesuai dengan stausnya
+        ->with(['pendaftar' => function($query){
+            $query->where('status', 'approve');
+        }])
+        ->count();
+
+        $select = Lowongan::where('user_id', $idPt)
+        ->whereHas('pendaftar', function($query){
+            $query->where('status', 'select');
+        })
+        ->with(['pendaftar' => function($query){
+            $query->where('status', 'select');
+        }])->count();
+
+        return view('admin_perusahaan.dashboard', compact('lowongans', 'pending', 'select'));
     }
 
     public function profile()

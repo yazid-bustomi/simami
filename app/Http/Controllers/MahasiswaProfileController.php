@@ -147,26 +147,53 @@ class MahasiswaProfileController extends Controller
 
         // jika sosmed masih kosong maka di create terlebih dahulu
         if (!$user->sosmed) {
-            Sosmed::create([
-                'user_id' => $user->id,
-                'instagram' => 'https://www.instagram.com/' . $request->instagram,
-                'linkedin' => 'https://www.linkedin.com/in/' . $request->linkedin,
-                'twiter' => 'https://twitter.com/' . $request->twiter,
-                'website' => 'https://' . $request->website,
-                'facebook' => 'https://www.facebook.com/' . $request->facebook,
-                'tiktok' => 'https://www.tiktok.com/@' . $request->tiktok,
-            ]);
+            $sosmedData = ['user_id' => $user->id];
+
+            // jika salah satu yang di inputkan maka hanya itu saja yang di insert
+            if ($request->filled('instagram')) {
+                $sosmedData['instagram'] = 'https://www.instagram.com/' . $request->instagram;
+            }
+            if ($request->filled('linkedin')) {
+                $sosmedData['linkedin'] = 'https://www.linkedin.com/in/' . $request->linkedin;
+            }
+            if ($request->filled('twiter')) {
+                $sosmedData['twiter'] = 'https://twitter.com/' . $request->twiter;
+            }
+            if ($request->filled('website')) {
+                $sosmedData['website'] = 'https://' . $request->website;
+            }
+            if ($request->filled('facebook')) {
+                $sosmedData['facebook'] = 'https://www.facebook.com/' . $request->facebook;
+            }
+            if ($request->filled('tiktok')) {
+                $sosmedData['tiktok'] = 'https://www.tiktok.com/@' . $request->tiktok;
+            }
+            Sosmed::create($sosmedData);
+
         } else {
 
             // update sosmed
             $sosmed = $user->sosmed;
 
-            $sosmed->instagram = 'https://www.instagram.com/' .  $request->instagram;
-            $sosmed->linkedin = 'https://www.linkedin.com/in/' .  $request->linkedin;
-            $sosmed->twiter = 'https://twitter.com/' .  $request->twiter;
-            $sosmed->website = 'https://' .  $request->website;
-            $sosmed->facebook = 'https://www.facebook.com/' .  $request->facebook;
-            $sosmed->tiktok = 'https://www.tiktok.com/@' .  $request->tiktok;
+            // jika salah satu yang di perbarui maka hanya itu saja yang di perbarui
+            if($request->filled('instagram')){
+                $sosmed->instagram = 'https://www.instagram.com/' .  $request->instagram;
+            }
+            if($request->filled('linkedin')){
+                $sosmed->linkedin = 'https://www.linkedin.com/in/' .  $request->linkedin;
+            }
+            if($request->filled('twiter')){
+                $sosmed->twiter = 'https://twitter.com/' .  $request->twiter;
+            }
+            if($request->filled('website')){
+                $sosmed->website = 'https://' .  $request->website;
+            }
+            if($request->filled('facebook')){
+                $sosmed->facebook = 'https://www.facebook.com/' .  $request->facebook;
+            }
+            if($request->filled('tiktok')){
+                $sosmed->tiktok = 'https://www.tiktok.com/@' .  $request->tiktok;
+            }
             $sosmed->save();
         }
         // redirect to profile and message success
@@ -211,7 +238,16 @@ class MahasiswaProfileController extends Controller
 
     public function dashboard()
     {
-        return view('mahasiswa.dashboard');
+        $id = Auth::user()->id;
+        $allAplications = Pendaftar::where('user_id', $id)->count();
+        $pendingAplications = Pendaftar::where('user_id', $id)->where('status', 'pending')->count();
+        $confirmAplications = Pendaftar::where('user_id', $id)->where('status', 'select')->count();
+        $rejectKampusAplications = Pendaftar::where('user_id', $id)->where('status', 'rejected_kampus')->count();
+        $rejectPerusahaanApplications = Pendaftar::where('user_id', $id)->where('status', 'rejected_perusahaan')->count();
+        $allReject = $rejectKampusAplications + $rejectPerusahaanApplications;
+
+        // dd($confirmAplications);
+        return view('mahasiswa.dashboard', compact('allAplications', 'confirmAplications', 'allReject'));
     }
 
     public function status()
@@ -226,7 +262,7 @@ class MahasiswaProfileController extends Controller
                 'user.akademikProfile.adminKampus',
                 'user.akademikProfile.jurusanKampus'
             ])->get();
-                // dd($approve->toArray());
+        // dd($approve->toArray());
         return view('mahasiswa.magang.status', compact('approve'));
     }
 

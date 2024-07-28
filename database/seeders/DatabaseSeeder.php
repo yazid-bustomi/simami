@@ -57,9 +57,9 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 // 4
-                'nama_depan' => 'PT. Teknologi Indonesia Sentosa',
+                'nama_depan' => 'PT GoTo Gojek Tokopedia Tbk',
                 'nama_belakang' => null,
-                'email' => 'teknologi@gmail.com',
+                'email' => 'goto@gmail.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
                 'role' => 'perusahaan',
