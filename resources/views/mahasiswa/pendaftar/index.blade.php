@@ -193,9 +193,7 @@
 
             Swal.fire({
                 title: `${user.nama_depan} ${user.nama_belakang}`,
-                imageUrl: `/public/profile/${user.profile.img || 'profile-default.jpg'}`,
-                imageWidth: 400,
-                imageHeight: 200,
+                imageUrl: `/img/profile/${user.profile.img || 'profile-default.jpg'}`,
                 imageAlt: "Foto Profile",
                 html: `
                 <div class="card-body">
