@@ -237,21 +237,21 @@ class PerusahaanController extends Controller
         if (!$user->sosmed) {
             Sosmed::create([
                 'user_id' => $user->id,
-                'instagram' => $request->instagram,
-                'facebook' => $request->facebook,
-                'tiktok' => $request->tiktok,
-                'twiter' => $request->twiter,
-                'linkedin' => $request->linkedin,
-                'website' => $request->website,
+                'instagram' => 'https://www.instagram.com/' .  $request->instagram,
+                'facebook' => 'https://www.facebook.com/' .  $request->facebook,
+                'tiktok' => 'https://www.tiktok.com/@' .  $request->tiktok,
+                'twiter' => 'https://twitter.com/' .  $request->twiter,
+                'linkedin' => 'https://www.linkedin.com/company/' . $request->linkedin,
+                'website' => 'https://' .  $request->website,
 
             ]);
         } else {
-            $user->sosmed->instagram = $request->instagram;
-            $user->sosmed->facebook = $request->facebook;
-            $user->sosmed->tiktok = $request->tiktok;
-            $user->sosmed->twiter = $request->twiter;
-            $user->sosmed->linkedin = $request->linkedin;
-            $user->sosmed->website = $request->website;
+            $user->sosmed->instagram = 'https://www.instagram.com/' .  $request->instagram;
+            $user->sosmed->facebook =   'https://www.facebook.com/' .  $request->facebook;
+            $user->sosmed->tiktok =  'https://www.tiktok.com/@' .  $request->tiktok;
+            $user->sosmed->twiter = 'https://twitter.com/' .  $request->twiter;
+            $user->sosmed->linkedin = 'https://www.linkedin.com/company/' . $request->linkedin;
+            $user->sosmed->website = 'https://' .  $request->website;
             $user->sosmed->save();
         }
 

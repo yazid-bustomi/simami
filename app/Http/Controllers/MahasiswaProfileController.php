@@ -149,24 +149,24 @@ class MahasiswaProfileController extends Controller
         if (!$user->sosmed) {
             Sosmed::create([
                 'user_id' => $user->id,
-                'instagram' => $request->instagram,
-                'linkedin' => $request->linkedin,
-                'twiter' => $request->twiter,
-                'website' => $request->website,
-                'facebook' => $request->facebook,
-                'tiktok' => $request->tiktok,
+                'instagram' => 'https://www.instagram.com/' . $request->instagram,
+                'linkedin' => 'https://www.linkedin.com/in/' . $request->linkedin,
+                'twiter' => 'https://twitter.com/' . $request->twiter,
+                'website' => 'https://' . $request->website,
+                'facebook' => 'https://www.facebook.com/' . $request->facebook,
+                'tiktok' => 'https://www.tiktok.com/@' . $request->tiktok,
             ]);
         } else {
 
             // update sosmed
             $sosmed = $user->sosmed;
 
-            $sosmed->instagram = $request->instagram;
-            $sosmed->linkedin = $request->linkedin;
-            $sosmed->twiter = $request->twiter;
-            $sosmed->website = $request->website;
-            $sosmed->facebook = $request->facebook;
-            $sosmed->tiktok = $request->tiktok;
+            $sosmed->instagram = 'https://www.instagram.com/' .  $request->instagram;
+            $sosmed->linkedin = 'https://www.linkedin.com/in/' .  $request->linkedin;
+            $sosmed->twiter = 'https://twitter.com/' .  $request->twiter;
+            $sosmed->website = 'https://' .  $request->website;
+            $sosmed->facebook = 'https://www.facebook.com/' .  $request->facebook;
+            $sosmed->tiktok = 'https://www.tiktok.com/@' .  $request->tiktok;
             $sosmed->save();
         }
         // redirect to profile and message success
@@ -185,7 +185,8 @@ class MahasiswaProfileController extends Controller
 
         if ($request->hasFile('img')) {
             // memberi nama dengan date sekarang dan mendapatkan ekstensi filenya sekalian
-            $fileName = time() . '.' . $request->img->extension();
+            $file = $request->file('img');
+            $fileName = time() . '_' . $file->getClientOriginalName();
             $request->img->move(public_path('/img/profile/'), $fileName);
 
             if ($user->profile != null) {

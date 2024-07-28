@@ -17,6 +17,11 @@
                     {{ session('success') }}
                 </div>
             @endif
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
 
             <div class="table-responsive">
                 <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
@@ -75,20 +80,23 @@
                                         <button class="badge bg-danger text-white rounded-pill"
                                             onclick="confirmAction('{{ $pendaftar->id }}', '{{ $pendaftar->user->nama_depan . ' ' . $pendaftar->user->nama_belakang }}', 'rejected_kampus')">Tolak</button>
 
-                                            {{-- Jika sudah di approve kampus maka di proses perusahaan apakah di terima atau di tolak --}}
-                                            @elseif ($role == 'perusahaan' && $pendaftar->status == 'approve')
+                                        {{-- Jika sudah di approve kampus maka di proses perusahaan apakah di terima atau di tolak --}}
+                                    @elseif ($role == 'perusahaan' && $pendaftar->status == 'approve')
                                         <button class="badge bg-primary text-white rounded-pill"
                                             onclick="confirmAction('{{ $pendaftar->id }}', '{{ $pendaftar->user->nama_depan . ' ' . $pendaftar->user->nama_belakang }}', 'select')">Terima</button>
                                         <button class="badge bg-danger text-white rounded-pill"
                                             onclick="confirmAction('{{ $pendaftar->id }}', '{{ $pendaftar->user->nama_depan . ' ' . $pendaftar->user->nama_belakang }}', 'rejected_perusahaan')">Tolak</button>
                                     @endif
-                                    <a href="#" class="badge bg-info text-white rounded-pill">Detail</a>
+                                    <button class="badge bg-info text-white rounded-pill"
+                                        onclick="showDetail({{ $pendaftar->user }})">Detail</button>
 
                                     <form id="action-form-{{ $pendaftar->id }}"
                                         action="{{ route('pendaftar.update', ['pendaftar' => $pendaftar->id]) }}"
                                         method="POST" class="d-none">
                                         @csrf
                                         @method('PATCH')
+                                        <input type="number" name="lowongan_id" value="{{ $pendaftar->lowongan_id }}"
+                                            hidden>
                                     </form>
                                 </td>
                             </tr>
@@ -147,6 +155,83 @@
                 }
             });
         }
+
+        function showDetail(user) {
+            const socialMediaLinks = [{
+                platform: 'LinkedIn',
+                url: user.sosmed?.linkedin,
+                icon: 'fab fa-linkedin'
+            }, {
+                platform: 'Twitter',
+                url: user.sosmed?.twiter,
+                icon: 'fab fa-twitter'
+            }, {
+                platform: 'Instagram',
+                url: user.sosmed?.instagram,
+                icon: 'fab fa-instagram'
+            }, {
+                platform: 'TikTok',
+                url: user.sosmed?.tiktok,
+                icon: 'fab fa-tiktok'
+            }, {
+                platform: 'Facebook',
+                url: user.sosmed?.facebook,
+                icon: 'fab fa-facebook'
+            }, {
+                platform: 'Website',
+                url: user.sosmed?.website,
+                icon: 'fab fa-globe'
+            }];
+
+            const socialMediaHtml = socialMediaLinks
+                .filter(link => link.url)
+                .map(link => `
+                        <a href="${link.url}" class="card-link" target="_blank">
+                        <i class="${link.icon} mb-3"></i> ${link.platform}
+                        </a>`).join('');
+
+
+            Swal.fire({
+                title: `${user.nama_depan} ${user.nama_belakang}`,
+                imageUrl: `/public/profile/${user.profile.img || 'profile-default.jpg'}`,
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: "Foto Profile",
+                html: `
+                <div class="card-body">
+                    <p class="card-text">Dusun Kedungwaru Lor Rt.01 Rw.03 Jawa Timur Kabupaten Pasuruan Kecamatan Winongan Desa Sidepan 57182</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>No Hp:</strong> ${user.profile.no_hp || ''}</li>
+                    <li class="list-group-item"><strong>Email:</strong> ${user.email}</li>
+                    <li class="list-group-item"><strong>Jenis Kelamin:</strong> ${user.profile.jenis_kelamin || ''}</li>
+                    <li class="list-group-item"><strong>Tempat, Tanggal Lahir:</strong> ${user.profile.tempat_lahir || ''}, ${user.profile.tanggal_lahir || ''}</li>
+                    <li class="list-group-item"><strong>Agama:</strong> ${user.profile.agama || ''}</li>
+                    <li class="list-group-item"><strong>Kampus:</strong> ${user.akademik_profile.admin_kampus.nama_depan || ''}</li>
+                    <li class="list-group-item"><strong>Jurusan:</strong> ${user.akademik_profile.jurusan_kampus.nama_jurusan || ''}</li>
+                    <li class="list-group-item"><strong>NIM:</strong> ${user.akademik_profile.nim || ''}</li>
+                    <li class="list-group-item"><strong>IPK:</strong> ${user.akademik_profile.ipk !== null ? user.akademik_profile.ipk : '-'}</li>
+                </ul>
+                <div class="card-body">
+                    ${socialMediaHtml}
+            `,
+                showCloseButton: true,
+                focusConfirm: false,
+                confirmButtonText: 'Close',
+            });
+        }
+        // <p><strong>Nama:</strong> ${user.nama_depan} ${user.nama_belakang}</p>
+        //         <p><strong>Alamat:</strong> ${user.alamat.alamat} ${user.alamat.provinsi} ${user.alamat.kab_kot} ${user.alamat.kecamatan} ${user.alamat.desa} ${user.alamat.kode_pos}</p>
+        //         <p><strong>Email:</strong> ${user.email}</p>
+        //         <p><strong>Telepon:</strong> ${user.profile.no_hp}</p>
+        //         <p><strong>Social Media:</strong></p>
+        //         <ul>
+        //         <li><strong><Website :/strong><a href="http://${user.sosmed.website} target="_blank">${user.sosmed.website}</a></li>
+        // <li><strong>Linkedin :</strong><a href="https://www.linkedin.com/company/${user.sosmed.linkedin} target="_blank">${user.sosmed.linkedin}</a></li>
+        //  <li><strong>Twitter :</strong><a href="https://twitter.com/${user.sosmed.twiter} target="_blank">${user.sosmed.twiter}</a></li>
+        // <li><strong>Instagram :</strong><a href="https://www.instagram.com/${user.sosmed.instagram} target="_blank">${user.sosmed.instagram}</a></li>
+        // <li><strong>Facebook :</strong><a href="https://www.facebook.com/${user.sosmed.facebook} target="_blank">${user.sosmed.facebook}</a></li>
+        //                 </ul>
     </script>
 @endsection
 

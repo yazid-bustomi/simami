@@ -300,8 +300,10 @@ class KampusController extends Controller
         $file = $request->file('img');
         $fileName = time() . '_' . $file->getClientOriginalName();
 
+
         if(!$user->profile){
-            MahasiswaProfile::make([
+
+            MahasiswaProfile::create([
                 'user_id' => $id,
                 'img' => $fileName,
             ]);

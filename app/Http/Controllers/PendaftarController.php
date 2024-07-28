@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePendaftarRequest;
 use App\Http\Requests\UpdatePendaftarRequest;
+use App\Models\Lowongan;
 use App\Models\Pendaftar;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +22,7 @@ class PendaftarController extends Controller
 
         // untuk role perusahaan mengambil data sesuai dengan id user perusahaan
         if (Auth::user()->role == 'perusahaan') {
-            $pendaftars = Pendaftar::with(['lowongan', 'user', 'user.akademikProfile', 'user.akademikProfile.jurusanKampus', 'user.akademikProfile.adminKampus', 'user.alamat', 'user.profile'])
+            $pendaftars = Pendaftar::with(['lowongan', 'user', 'user.akademikProfile', 'user.akademikProfile.jurusanKampus', 'user.akademikProfile.adminKampus', 'user.alamat', 'user.profile', 'user.sosmed'])
             ->whereHas('lowongan', function ($query) use ($idUser){
                 $query->where('user_id', $idUser);
             })->get();
@@ -29,17 +30,12 @@ class PendaftarController extends Controller
 
             // untuk role kampus mengambil data sesuai id by admin kampus
         } elseif (Auth::user()->role == 'kampus') {
-            $pendaftars = Pendaftar::with(['lowongan', 'user', 'user.profile', 'user.akademikProfile', 'user.akademikProfile.jurusanKampus', 'user.akademikProfile.adminKampus', 'user.alamat'])
+            $pendaftars = Pendaftar::with(['lowongan', 'user', 'user.profile', 'user.akademikProfile', 'user.akademikProfile.jurusanKampus', 'user.akademikProfile.adminKampus', 'user.alamat', 'user.sosmed'])
             ->whereHas('user.akademikProfile', function ($query) use ($idUser){
                 $query->where('admin_kampus_id', $idUser);
             })
             ->get();
-            return view('mahasiswa.pendaftar.index', compact('pendaftars'));
-
-            // untuk role mahasiswa menampilkan semua lowongan magang
-        } elseif(Auth::user()->role == 'mahasiswa') {
-            $pendaftars = Pendaftar::with(['lowongan', 'user', 'user.profile', 'user.akademikProfile', 'user.akademikProfile.jurusanKampus', 'user.akademikProfile.adminKampus', 'user.alamat'])
-            ->get();
+            // dd($pendaftars->toArray());
             return view('mahasiswa.pendaftar.index', compact('pendaftars'));
 
         } else // untuk role admin masih belum
@@ -63,9 +59,18 @@ class PendaftarController extends Controller
 
         $pendaftar = Pendaftar::findOrFail($pendaftar->id);
 
-        // Update status
-        $pendaftar->status = $request->input('status');
-        $pendaftar->save();
+        if($request->input('status') === 'select'){
+            $limit = Lowongan::findOrFail($request->lowongan_id);
+            $allApprove = Pendaftar::where('lowongan_id', $request->lowongan_id)->where('status', 'select')->get();
+            // dd($allApprove->count());
+
+            if($allApprove->count() >= $limit->pemagang){
+                return redirect()->back()->with('error', 'Penerima magang lebih dari kapasitas lowongan magang');
+            };
+        }
+            // Update status
+            $pendaftar->status = $request->input('status');
+            $pendaftar->save();
 
         // Redirect atau berikan respon sesuai kebutuhan
         return redirect()->route('pendaftar.index')->with('success', 'Status berhasil diperbarui');

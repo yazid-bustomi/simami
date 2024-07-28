@@ -42,37 +42,37 @@
                         @if (!empty($lowongan->user->sosmed->website))
                             <p class="card-text">
                                 <i class="mdi mdi-web"></i> Website :
-                                <a href="http://{{ $lowongan->user->sosmed->website }}" target="_blank">{{ $lowongan->user->sosmed->website }}</a>
+                                <a href="{{ $lowongan->user->sosmed->website }}" target="_blank">{{ $lowongan->user->sosmed->website }}</a>
                             </p>
                         @endif
                         @if (!empty($lowongan->user->sosmed->linkedin))
                             <p class="card-text">
                                 <i class="mdi mdi-linkedin"></i> LinkedIn :
-                                <a href="https://www.linkedin.com/company/{{ $lowongan->user->sosmed->linkedin }}" target="_blank">{{ $lowongan->user->sosmed->linkedin }}</a>
+                                <a href="{{ $lowongan->user->sosmed->linkedin }}" target="_blank">{{ $lowongan->user->sosmed->linkedin }}</a>
                             </p>
                         @endif
                         @if (!empty($lowongan->user->sosmed->twiter))
                             <p class="card-text">
                                 <i class="mdi mdi-twitter"></i> Twitter :
-                                <a href="https://twitter.com/{{ $lowongan->user->sosmed->twiter }}" target="_blank">{{ $lowongan->user->sosmed->twiter }}</a>
+                                <a href="{{ $lowongan->user->sosmed->twiter }}" target="_blank">{{ $lowongan->user->sosmed->twiter }}</a>
                             </p>
                         @endif
                         @if (!empty($lowongan->user->sosmed->instagram))
                             <p class="card-text">
                                 <i class="mdi mdi-instagram"></i> Instagram :
-                                <a href="https://www.instagram.com/{{ $lowongan->user->sosmed->instagram }}" target="_blank">{{ $lowongan->user->sosmed->instagram }}</a>
+                                <a href="{{ $lowongan->user->sosmed->instagram }}" target="_blank">{{ $lowongan->user->sosmed->instagram }}</a>
                             </p>
                         @endif
                         @if (!empty($lowongan->user->sosmed->facebook))
                             <p class="card-text">
                                 <i class="mdi mdi-facebook"></i> Facebook :
-                                <a href="https://www.facebook.com/{{ $lowongan->user->sosmed->facebook }}" target="_blank">{{ $lowongan->user->sosmed->facebook }}</a>
+                                <a href="{{ $lowongan->user->sosmed->facebook }}" target="_blank">{{ $lowongan->user->sosmed->facebook }}</a>
                             </p>
                         @endif
                         @if (!empty($lowongan->user->sosmed->tiktok))
                             <p class="card-text">
                                 <i class="mdi mdi-tiktok"></i> Tiktok :
-                                <a href="{{'https://www.tiktok.com/@' . $lowongan->user->sosmed->tiktok }}" target="_blank">{{ $lowongan->user->sosmed->tiktok }}</a>
+                                <a href="{{$lowongan->user->sosmed->tiktok }}" target="_blank">{{ $lowongan->user->sosmed->tiktok }}</a>
                             </p>
                         @endif
                     @endif
