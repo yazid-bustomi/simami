@@ -17,6 +17,7 @@ class CreatePendaftarsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('lowongan_id')->constrained('lowongans')->onDelete('cascade');
+            $table->date('date_approve');
             $table->enum('status', ['pending', 'approve', 'select', 'rejected_kampus', 'rejected_perusahaan']);
 
             /**

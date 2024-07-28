@@ -28,13 +28,15 @@
                         @php
                             $no = 1;
                         @endphp
-                        {{-- @foreach ($approve as $data)
+
+                        @foreach ($approve as $data)
                             <tr>
                                 <td>{{ $no }}</td>
+                                <td>{{ $data->lowongan->user->nama_depan }}</td>
                                 <td>{{ $data->lowongan->judul }}</td>
-                                <td>{{ $data->user->mahasiswaProfile->no_hp ?? '-' }}</td>
-                                <td>{{ $data->user->akademikProfile->semester ?? '-' }}</td>
-                                <td>{{ $data->user->akademikProfile->ipk ?? '-' }}</td>
+                                <td>{{ $data->lowongan->durasi_magang }}</td>
+                                <td>{{ $data->date_approve }}</td>
+                                <td>{{ $data->lowongan->close_lowongan }}</td>
                                 <td>
                                     @if ($data->status == 'pending')
                                         <div class="text-info">Seleksi Kampus</div>
@@ -53,7 +55,7 @@
                             @php
                                 $no++;
                             @endphp
-                        @endforeach --}}
+                        @endforeach
                     </tbody>
                 </table>
             </div>

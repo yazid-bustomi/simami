@@ -219,11 +219,13 @@ class MahasiswaProfileController extends Controller
         $approve = Pendaftar::where('user_id', $idUser)
             ->with([
                 'lowongan',
+                'lowongan.user',
                 'user.akademikProfile',
                 'user.profile',
                 'user.akademikProfile.adminKampus',
                 'user.akademikProfile.jurusanKampus'
             ])->get();
+                // dd($approve->toArray());
         return view('mahasiswa.magang.status', compact('approve'));
     }
 

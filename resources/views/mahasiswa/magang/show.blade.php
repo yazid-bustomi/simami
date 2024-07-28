@@ -41,37 +41,37 @@
                         @if (!empty($lowongan->user->sosmed))
                         @if (!empty($lowongan->user->sosmed->website))
                             <p class="card-text">
-                                <i class="mdi mdi-web"></i> Website:
+                                <i class="mdi mdi-web"></i> Website :
                                 <a href="http://{{ $lowongan->user->sosmed->website }}" target="_blank">{{ $lowongan->user->sosmed->website }}</a>
                             </p>
                         @endif
                         @if (!empty($lowongan->user->sosmed->linkedin))
                             <p class="card-text">
-                                <i class="mdi mdi-linkedin"></i> LinkedIn:
+                                <i class="mdi mdi-linkedin"></i> LinkedIn :
                                 <a href="https://www.linkedin.com/company/{{ $lowongan->user->sosmed->linkedin }}" target="_blank">{{ $lowongan->user->sosmed->linkedin }}</a>
                             </p>
                         @endif
                         @if (!empty($lowongan->user->sosmed->twiter))
                             <p class="card-text">
-                                <i class="mdi mdi-twitter"></i> Twitter:
+                                <i class="mdi mdi-twitter"></i> Twitter :
                                 <a href="https://twitter.com/{{ $lowongan->user->sosmed->twiter }}" target="_blank">{{ $lowongan->user->sosmed->twiter }}</a>
                             </p>
                         @endif
                         @if (!empty($lowongan->user->sosmed->instagram))
                             <p class="card-text">
-                                <i class="mdi mdi-instagram"></i> Instagram:
+                                <i class="mdi mdi-instagram"></i> Instagram :
                                 <a href="https://www.instagram.com/{{ $lowongan->user->sosmed->instagram }}" target="_blank">{{ $lowongan->user->sosmed->instagram }}</a>
                             </p>
                         @endif
                         @if (!empty($lowongan->user->sosmed->facebook))
                             <p class="card-text">
-                                <i class="mdi mdi-facebook"></i> Facebook:
+                                <i class="mdi mdi-facebook"></i> Facebook :
                                 <a href="https://www.facebook.com/{{ $lowongan->user->sosmed->facebook }}" target="_blank">{{ $lowongan->user->sosmed->facebook }}</a>
                             </p>
                         @endif
                         @if (!empty($lowongan->user->sosmed->tiktok))
                             <p class="card-text">
-                                <i class="mdi mdi-tiktok"></i> Tiktok:
+                                <i class="mdi mdi-tiktok"></i> Tiktok :
                                 <a href="{{'https://www.tiktok.com/@' . $lowongan->user->sosmed->tiktok }}" target="_blank">{{ $lowongan->user->sosmed->tiktok }}</a>
                             </p>
                         @endif
@@ -79,19 +79,19 @@
 
                         <hr>
 
-                        <p class="card-text"><i class="mdi mdi-briefcase"></i> Pemagang: {{ $lowongan->pemagang }} Orang
+                        <p class="card-text"><i class="mdi mdi-briefcase"></i> Kebutuhan magang : {{ $lowongan->pemagang }} Orang
                         </p>
-                        <p class="card-text"><i class="mdi mdi-clock"></i> Durasi: {{ $lowongan->durasi_magang }} bulan</p>
-                        <p class="card-text"><i class="mdi mdi-calendar-check"></i> Penutupan:
+                        <p class="card-text"><i class="mdi mdi-clock"></i> Durasi : {{ $lowongan->durasi_magang }} bulan</p>
+                        <p class="card-text"><i class="mdi mdi-calendar-check"></i> Penutupan :
                             {{ $lowongan->days_remaining }} Hari</p>
                         <hr>
 
 
 
-                        <h6 class="card-subtitle mb-2 text-muted">Kriteria:</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Kriteria :</h6>
                         <p class="card-text">{!! nl2br(e($lowongan->kriteria ?? '')) !!}</p>
                         <hr>
-                        <h6 class="card-subtitle mb-2 text-muted">Rincian Kegiatan:</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Rincian Kegiatan :</h6>
                         <p class="card-text">{!! nl2br(e($lowongan->rincian ?? '')) !!}</p>
                         <hr>
                         <div class="text-center">

@@ -70,6 +70,7 @@ class LowonganController extends Controller
         $lowongan = new Pendaftar([
             'user_id' => $request->mahasiswa_id,
             'lowongan_id' => $request->lowongan_id,
+            'date_approve' => date(now()),
             'status' => 'pending'
         ]);
         $lowongan->save();
