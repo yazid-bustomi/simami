@@ -239,14 +239,13 @@ class MahasiswaProfileController extends Controller
     public function dashboard()
     {
         $id = Auth::user()->id;
-        $allAplications = Pendaftar::where('user_id', $id)->count();
-        $pendingAplications = Pendaftar::where('user_id', $id)->where('status', 'pending')->count();
-        $confirmAplications = Pendaftar::where('user_id', $id)->where('status', 'select')->count();
-        $rejectKampusAplications = Pendaftar::where('user_id', $id)->where('status', 'rejected_kampus')->count();
-        $rejectPerusahaanApplications = Pendaftar::where('user_id', $id)->where('status', 'rejected_perusahaan')->count();
-        $allReject = $rejectKampusAplications + $rejectPerusahaanApplications;
+        $allAplications = Pendaftar::where('status', 'approve')
+        ->where('user_id', $id)
+        ->count();
 
-        // dd($confirmAplications);
+        $confirmAplications = Pendaftar::where('user_id', $id)->where('status', 'select')->count();
+        $allReject = Pendaftar::where('user_id', $id)->whereIn('status', ['rejected_kampus', 'rejected_perusahaan'])->count();
+
         return view('mahasiswa.dashboard', compact('allAplications', 'confirmAplications', 'allReject'));
     }
 

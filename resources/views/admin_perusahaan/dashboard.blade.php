@@ -10,8 +10,8 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Mahasiswa Seleksi</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $pending }}</div>
+                                Mahasiswa Mendaftar</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $pending === 0 ? '0' : $pending->pendaftar->count()}}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-solid fa-business-time  fa-2x text-primary"></i>
@@ -20,6 +20,61 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Mahasiswa Seleksi</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $approv === 0 ? '0' : $approv->pendaftar->count() }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user-check fa-2x text-info"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Requests Card Example -->
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Jumlah Pemagang</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $allSelect === 0 ? '0' : $allSelect }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar-check fa-2x text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-danger shadow h-100 py-2">
+                {{-- <a href="{{ route('mahasiswa.status') }}" class="text-decoration-none"> --}}
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                    Total Ditolak</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $reject === 0 ? '0' : $reject->pendaftar->count() }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-calendar-times fa-2x text-danger"></i>
+                            </div>
+                        </div>
+                    </div>
+                {{-- </a> --}}
+            </div>
+        </div>
+
 
         <!-- Earnings (Monthly) Card Example -->
         <div class="col-xl-4 col-md-6 mb-4">
@@ -33,25 +88,6 @@
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-briefcase fa-2x text-warning"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Pending Requests Card Example -->
-        <div class="col-xl-4 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Jumlah Pemagang</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $select }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-calendar-check fa-2x text-success"></i>
                         </div>
                     </div>
                 </div>

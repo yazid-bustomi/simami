@@ -202,9 +202,9 @@ class KampusController extends Controller
     {
         $id = Auth::user()->id;
         $dateNow = Carbon::now();
-        $allUser = AkademikProfile::where('admin_kampus_id', $id)->get();
+        $allUser = AkademikProfile::where('admin_kampus_id', $id)->count();
 
-        $openInformasi = Lowongan::where('close_lowongan', '>', $dateNow)->get();
+        $openInformasi = Lowongan::where('close_lowongan', '>', $dateNow)->count();
 
         $mhsApplay = AkademikProfile::where('admin_kampus_id', $id)
         ->with(['user.pendaftar' => function($query){
@@ -212,12 +212,21 @@ class KampusController extends Controller
         }])
         ->get();
 
+        foreach($mhsApplay as $applay){
+               $applay;
+        }
 
-        $mhsReject = AkademikProfile::where('admin_kampus_id', $id)
+
+        $mhsRejects = AkademikProfile::where('admin_kampus_id', $id)
         ->with(['user.pendaftar' => function($query){
             $query->whereIn('status', ['rejected_kampus', 'rejected_perusahaan']);
         }])
         ->get();
+
+        foreach($mhsRejects as $reject){
+           $reject;
+        }
+
 
         $mhsApprove = AkademikProfile::where('admin_kampus_id', $id)
         ->with(['user.pendaftar' => function($query){
@@ -225,15 +234,22 @@ class KampusController extends Controller
         }])
         ->get();
 
+        foreach($mhsApprove as $approve){
+            $approve;
+        }
+
         $mhsSelect = AkademikProfile::where('admin_kampus_id', $id)
         ->with(['user.pendaftar' => function($query){
             $query->where('status', 'select');
         }])
         ->get();
+        foreach($mhsSelect as $select){
+            $select;
+        }
 
         // dd($mhsReject);
         // dd($mhsSelect->toArray());
-        return view('admin_kampus.dashboard', compact('allUser', 'openInformasi', 'mhsApplay', 'mhsReject', 'mhsApprove', 'mhsSelect'));
+        return view('admin_kampus.dashboard', compact('allUser', 'openInformasi', 'applay', 'reject', 'approve', 'select'));
     }
 
     public function profile()

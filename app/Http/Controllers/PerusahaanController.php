@@ -189,30 +189,80 @@ class PerusahaanController extends Controller
         // untuk mendapatkan user id
         $idPt = Auth::user()->id;
 
-        // memuat semua lowongan yang sudah di upload oleh user PT
-        $lowongans = Lowongan::where('user_id', $idPt)->count();
+        // query semua lowongan
+        $lowongans = Lowongan::where('user_id', $idPt)->count();  // memuat semua lowongan yang sudah di upload oleh user PT
 
-        // query lowongan sesuai dengan user idnya   => logikanya ketika sudah di pilih sesuai status maka di load masukkan query dengan with
-        $pending = Lowongan::where('user_id', $idPt)
-        // dipilih yang tabel pendaftar dan diseleksi statusnya approve
-        ->whereHas('pendaftar', function($query){
+        // query mahasiswa seleksi perusahaan
+        $approved = Lowongan::where('user_id', $idPt) // query lowongan sesuai dengan user idnya   => logikanya ketika sudah di pilih sesuai status maka di load masukkan query dengan with
+        ->whereHas('pendaftar', function($query){ // dipilih yang tabel pendaftar dan diseleksi statusnya approve
             $query->where('status', 'approve');
         })
-        // memuat hasil query sesuai dengan stausnya
-        ->with(['pendaftar' => function($query){
+        ->with(['pendaftar' => function($query){ // memuat hasil query sesuai dengan stausnya
             $query->where('status', 'approve');
         }])
-        ->count();
+        ->get();
 
-        $select = Lowongan::where('user_id', $idPt)
+        if($approved->count() == 0){
+            $approv = 0;
+        }else{
+            foreach($approved as $approv){
+                $approv;
+            }
+        }
+
+        // mahasiswa masih baru mendaftar ke lowongan
+        $pendings = Lowongan::where('user_id', $idPt)
         ->whereHas('pendaftar', function($query){
-            $query->where('status', 'select');
+            $query->where('status', 'pending');
         })
         ->with(['pendaftar' => function($query){
-            $query->where('status', 'select');
-        }])->count();
+            $query->where('status', 'pending');
+        }])
+        ->get();
 
-        return view('admin_perusahaan.dashboard', compact('lowongans', 'pending', 'select'));
+        if($pendings->count() == 0){
+            $pending = 0;
+        }else{
+            foreach($pendings as $pending){
+                $pending;
+            }
+
+        }
+
+
+
+        $rejects = Lowongan::where('user_id', $idPt)
+        ->whereHas('pendaftar', function($query){
+            $query->whereIn('status', ['rejected_kampus', 'rejected_perusahaan']);
+        })->with(['pendaftar' => function($query){
+            $query->whereIn('status', ['rejected_kampus', 'rejected_perusahaan']);
+        }])
+        ->get();
+        if($rejects->count() == 0){
+            $reject = 0;
+        }else{
+            foreach($rejects as $reject){
+                $reject;
+            }
+        };
+
+        // query mahasiswa di terima
+        $selects = User::where('id', $idPt)
+        ->with(['lowongan.pendaftar' => function($query){
+            $query->where('status', 'select');
+        }])
+       ->get();
+
+       $allSelect = 0;
+       foreach($selects as $select){
+        foreach($select->lowongan as $lowongan){
+            foreach($lowongan->pendaftar as $status){
+                $allSelect++;
+            }
+        }
+       }
+
+        return view('admin_perusahaan.dashboard', compact('lowongans', 'approv', 'allSelect', 'pending', 'reject'));
     }
 
     public function profile()
