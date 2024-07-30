@@ -18,6 +18,7 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Name</th>
                             <th>Nim</th>
                             <th>Emaio</th>
@@ -27,10 +28,9 @@
                         </tr>
                     </thead>
                    <tbody>
-                    @foreach ($users as $user)
+                    {{-- @foreach ($users as $user)
                         {{ $user }}
-                    @endforeach
-                    <tr></tr>
+                    @endforeach --}}
                    </tbody>
                 </table>
             </div>

@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateJurusanKampusRequest;
 use App\Models\AkademikProfile;
 use App\Models\JurusanKampus;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class JurusanKampusController extends Controller
@@ -40,18 +41,19 @@ class JurusanKampusController extends Controller
      * @param  \App\Http\Requests\StoreJurusanKampusRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreJurusanKampusRequest $request)
+    public function store(Request $request)
     {
+        $idUser = Auth::user()->id;
         $request->validate([
-            'jurusan' => 'required|string|max:255',
+            'nama_jurusan' => 'required|string|max:255',
         ]);
 
-        $idUser = Auth::user()->id;
-        JurusanKampus::create([
-            'user_id' => $idUser,
-            'nama_jurusan' => $request->jurusan,
-        ]);
-        return redirect()->route('jurusan.index')->with('success', 'Berhasil menambahkan jurusan');
+        $jurusan = new JurusanKampus();
+        $jurusan->user_id = $idUser;
+        $jurusan->nama_jurusan = $request->nama_jurusan;
+        $jurusan->save();
+
+        return response()->json(['success' => 'Jurusan berhasil ditambahkan']);
     }
 
     /**
@@ -61,13 +63,11 @@ class JurusanKampusController extends Controller
      * @param  \App\Models\JurusanKampus  $jurusanKampus
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateJurusanKampusRequest $request, JurusanKampus $jurusanKampus)
+    public function update(UpdateJurusanKampusRequest $request, $id)
     {
-
-        $jurusan = JurusanKampus::findOrFail($jurusanKampus);
-        $jurusan->update([
-            'nama_jurusan' => $request->nama_jurusan,
-        ]);
+        $jurusan = JurusanKampus::findOrFail($id);
+        $jurusan->nama_jurusan = $request->nama_jurusan;
+        $jurusan->save();
         return response()->json(['success' => 'Data berhasil diupdate']);
     }
 
@@ -77,8 +77,11 @@ class JurusanKampusController extends Controller
      * @param  \App\Models\JurusanKampus  $jurusanKampus
      * @return \Illuminate\Http\Response
      */
-    public function destroy(JurusanKampus $jurusanKampus)
+    public function destroy($id)
     {
-        dd($jurusanKampus->toArray());
+        $jurusan = JurusanKampus::findOrFail($id);
+        $jurusan->delete();
+
+        return response()->json(['success' => 'Data berhasil dihapus']);
     }
 }

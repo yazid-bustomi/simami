@@ -89,16 +89,40 @@
                 </li>
                 <!-- Divider -->
                 <hr class="sidebar-divider">
-            @elseif (Auth::user()->role == 'admin')
-                <!-- Nav Item - User - By Kampus -->
+            @endif
+
+            <!-- Nav Item - User - By Kampus -->
+            @if (Auth::user()->role == 'admin')
                 <li class="nav-item {{ Request::routeIs('users.index') ? 'active' : '' }}">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-fw fa-user"></i>
-                        <span>User</span></a>
+                    <a class="nav-link" href="{{ route('users.index') }}">
+                        <i class="fas fa-fw fa-university"></i>
+                        <span>Kampus</span></a>
                 </li>
                 <!-- Divider -->
                 <hr class="sidebar-divider">
+
+
+                <li class="nav-item {{ Request::routeIs('users.index') ? 'active' : '' }}">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-fw fa-building"></i>
+                        <span>Perusahaan</span></a>
+                </li>
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+
+                <li class="nav-item {{ Request::routeIs('users.index') ? 'active' : '' }}">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-fw fa-user"></i>
+                        <span>Mahasiswa</span></a>
+                </li>
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+
+
             @endif
+
 
 
             @if (Auth::user()->role == 'kampus')
@@ -133,9 +157,16 @@
                         <i class="fas fa-fw fa-briefcase"></i>
                         <span>Lowongan</span></a>
                 </li>
+            @elseif (Auth::user()->role == 'admin')
+                <!-- Nav Item - Lowongan -->
+                <li class="nav-item {{ Request::routeIs('lowongan.index') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('lowongan.index') }}">
+                        <i class="fas fa-fw fa-briefcase"></i>
+                        <span>Lowongan</span></a>
+                </li>
             @endif
 
-            @if (Auth::user()->role == 'kampus' || Auth::user()->role == 'perusahaan')
+            @if (Auth::user()->role == 'kampus' || Auth::user()->role == 'perusahaan' || Auth::user()->role == 'admin')
                 <hr class="sidebar-divider">
 
                 <!-- Nav Item - Pnedaftar by kampus dan perusahaan -->
@@ -221,8 +252,7 @@
                                     {{ Auth::user()->nama_belakang }}</span>
                                 <div class="topbar-divider d-none d-sm-block"></div>
                                 <img class="img-profile rounded-circle"
-
-                                src="{{ Auth::user()->profile && Auth::user()->profile->img ? asset('img/profile/' . Auth::user()->profile->img) : asset('img/profile/profile-default.jpg') }}">
+                                    src="{{ Auth::user()->profile && Auth::user()->profile->img ? asset('img/profile/' . Auth::user()->profile->img) : asset('img/profile/profile-default.jpg') }}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -323,11 +353,11 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const navLinks = document.querySelectorAll('.nav-item');
 
             navLinks.forEach(link => {
-                link.addEventListener('click', function () {
+                link.addEventListener('click', function() {
                     navLinks.forEach(nav => nav.classList.remove('active'));
                     this.classList.add('active');
                 });

@@ -8,6 +8,7 @@ use App\Models\MahasiswaProfile;
 use App\Models\Pendaftar;
 use App\Models\Sosmed;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -188,9 +189,12 @@ class PerusahaanController extends Controller
     {
         // untuk mendapatkan user id
         $idPt = Auth::user()->id;
+        $dateNow = Carbon::today();
 
         // query semua lowongan
-        $lowongans = Lowongan::where('user_id', $idPt)->count();  // memuat semua lowongan yang sudah di upload oleh user PT
+        $openLowongan = Lowongan::where('user_id', $idPt)->where('close_lowongan', '>=', $dateNow)->count();  // memuat semua lowongan yang sudah di upload oleh user PT
+
+        $closeLowongan = Lowongan::where('user_id', $idPt)->whereDate('close_lowongan', '<', $dateNow)->count();
 
         // query mahasiswa seleksi perusahaan
         $approved = Lowongan::where('user_id', $idPt) // query lowongan sesuai dengan user idnya   => logikanya ketika sudah di pilih sesuai status maka di load masukkan query dengan with
@@ -262,7 +266,7 @@ class PerusahaanController extends Controller
         }
        }
 
-        return view('admin_perusahaan.dashboard', compact('lowongans', 'approv', 'allSelect', 'pending', 'reject'));
+        return view('admin_perusahaan.dashboard', compact('closeLowongan', 'openLowongan', 'approv', 'allSelect', 'pending', 'reject'));
     }
 
     public function profile()
