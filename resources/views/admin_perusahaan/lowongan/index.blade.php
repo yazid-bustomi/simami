@@ -23,12 +23,12 @@
                 </div>
             @endif
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>No</th>
-                            @if (Auth::user()->role == 'kampus')
-                                <th>PT</th>
+                            @if (Auth::user()->role == 'kampus' || 'admin')
+                                <th>Perusahaan</th>
                             @endif
                             <th>Posisi Magang</th>
                             <th>Kebutuhan</th>
@@ -45,7 +45,7 @@
                         @foreach ($lowongans as $lowongan)
                             <tr>
                                 <td>{{ $no }}</td>
-                                @if (Auth::user()->role == 'kampus')
+                                @if (Auth::user()->role == 'kampus' || 'admin')
                                     <td>{{ $lowongan->user->nama_depan . ' ' . $lowongan->user->nama_belakang }}</td>
                                 @endif
                                 <td>{{ $lowongan->judul }}</td>

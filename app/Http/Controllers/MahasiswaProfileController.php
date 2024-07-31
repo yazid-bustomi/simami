@@ -151,22 +151,22 @@ class MahasiswaProfileController extends Controller
 
             // jika salah satu yang di inputkan maka hanya itu saja yang di insert
             if ($request->filled('instagram')) {
-                $sosmedData['instagram'] = 'https://www.instagram.com/' . $request->instagram;
+                $sosmedData['instagram'] = $request->instagram;
             }
             if ($request->filled('linkedin')) {
-                $sosmedData['linkedin'] = 'https://www.linkedin.com/in/' . $request->linkedin;
+                $sosmedData['linkedin'] = $request->linkedin;
             }
             if ($request->filled('twiter')) {
-                $sosmedData['twiter'] = 'https://twitter.com/' . $request->twiter;
+                $sosmedData['twiter'] = $request->twiter;
             }
             if ($request->filled('website')) {
-                $sosmedData['website'] = 'https://' . $request->website;
+                $sosmedData['website'] = $request->website;
             }
             if ($request->filled('facebook')) {
-                $sosmedData['facebook'] = 'https://www.facebook.com/' . $request->facebook;
+                $sosmedData['facebook'] =  $request->facebook;
             }
             if ($request->filled('tiktok')) {
-                $sosmedData['tiktok'] = 'https://www.tiktok.com/@' . $request->tiktok;
+                $sosmedData['tiktok'] = $request->tiktok;
             }
             Sosmed::create($sosmedData);
 
@@ -177,22 +177,22 @@ class MahasiswaProfileController extends Controller
 
             // jika salah satu yang di perbarui maka hanya itu saja yang di perbarui
             if($request->filled('instagram')){
-                $sosmed->instagram = 'https://www.instagram.com/' .  $request->instagram;
+                $sosmed->instagram = $request->instagram;
             }
             if($request->filled('linkedin')){
-                $sosmed->linkedin = 'https://www.linkedin.com/in/' .  $request->linkedin;
+                $sosmed->linkedin = $request->linkedin;
             }
             if($request->filled('twiter')){
-                $sosmed->twiter = 'https://twitter.com/' .  $request->twiter;
+                $sosmed->twiter = $request->twiter;
             }
             if($request->filled('website')){
-                $sosmed->website = 'https://' .  $request->website;
+                $sosmed->website =  $request->website;
             }
             if($request->filled('facebook')){
-                $sosmed->facebook = 'https://www.facebook.com/' .  $request->facebook;
+                $sosmed->facebook = $request->facebook;
             }
             if($request->filled('tiktok')){
-                $sosmed->tiktok = 'https://www.tiktok.com/@' .  $request->tiktok;
+                $sosmed->tiktok = $request->tiktok;
             }
             $sosmed->save();
         }

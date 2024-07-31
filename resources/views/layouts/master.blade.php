@@ -79,6 +79,36 @@
 
             <hr class="sidebar-divider">
 
+
+            <!-- Nav Item - User - By Kampus -->
+            @if (Auth::user()->role == 'admin')
+                <li class="nav-item {{ Request::routeIs('kampus.index') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('kampus.index') }}">
+                        <i class="fas fa-fw fa-university"></i>
+                        <span>Kampus</span></a>
+                </li>
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+
+                <li class="nav-item {{ Request::routeIs('perusahaan.index') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('perusahaan.index') }}">
+                        <i class="fas fa-fw fa-building"></i>
+                        <span>Perusahaan</span></a>
+                </li>
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+
+                <li class="nav-item {{ Request::routeIs('mahasiswa.index') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('mahasiswa.index') }}">
+                        <i class="fas fa-fw fa-user"></i>
+                        <span>Mahasiswa</span></a>
+                </li>
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+            @endif
+
             {{-- Nav Item User --}}
             @if (Auth::user()->role == 'kampus')
                 <!-- Nav Item - User - By Kampus -->
@@ -87,51 +117,14 @@
                         <i class="fas fa-fw fa-user"></i>
                         <span>Mahasiswa</span></a>
                 </li>
-                <!-- Divider -->
-                <hr class="sidebar-divider">
-            @endif
-
-            <!-- Nav Item - User - By Kampus -->
-            @if (Auth::user()->role == 'admin')
-                <li class="nav-item {{ Request::routeIs('users.index') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('users.index') }}">
-                        <i class="fas fa-fw fa-university"></i>
-                        <span>Kampus</span></a>
-                </li>
-                <!-- Divider -->
                 <hr class="sidebar-divider">
 
 
-                <li class="nav-item {{ Request::routeIs('users.index') ? 'active' : '' }}">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-fw fa-building"></i>
-                        <span>Perusahaan</span></a>
-                </li>
-                <!-- Divider -->
-                <hr class="sidebar-divider">
-
-
-                <li class="nav-item {{ Request::routeIs('users.index') ? 'active' : '' }}">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-fw fa-user"></i>
-                        <span>Mahasiswa</span></a>
-                </li>
-                <!-- Divider -->
-                <hr class="sidebar-divider">
-
-
-
-            @endif
-
-
-
-            @if (Auth::user()->role == 'kampus')
                 <li class="nav-item {{ Request::routeIs('jurusan.index') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('jurusan.index') }}">
                         <i class="fas fa-fw fa-university"></i>
                         <span>Jurusan</span></a>
                 </li>
-                <!-- Divider -->
                 <hr class="sidebar-divider">
             @endif
 

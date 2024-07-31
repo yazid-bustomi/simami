@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\AdminKampusController;
+use App\Http\Controllers\AdminKampusController as ControllersAdminKampusController;
+use App\Http\Controllers\AdminMahasiswaController;
+use App\Http\Controllers\AdminPerusahaanController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\HomeController;
@@ -35,6 +39,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('/admin/users', AdminController::class);
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
+    Route::resource('/admin/kampus', ControllersAdminKampusController::class);
+    Route::resource('/admin/perusahaan', AdminPerusahaanController::class);
+    Route::resource('/admin/mahasiswa', AdminMahasiswaController::class);
 });
 
 Route::middleware(['auth', 'perusahaan'])->group(function () {
