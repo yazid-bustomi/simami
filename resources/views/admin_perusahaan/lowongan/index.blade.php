@@ -27,7 +27,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            @if (Auth::user()->role == 'kampus' || 'admin')
+                            @if (Auth::user()->role == 'kampus' )
                                 <th>Perusahaan</th>
                             @endif
                             <th>Posisi Magang</th>
@@ -45,7 +45,7 @@
                         @foreach ($lowongans as $lowongan)
                             <tr>
                                 <td>{{ $no }}</td>
-                                @if (Auth::user()->role == 'kampus' || 'admin')
+                                @if (Auth::user()->role == 'kampus')
                                     <td>{{ $lowongan->user->nama_depan . ' ' . $lowongan->user->nama_belakang }}</td>
                                 @endif
                                 <td>{{ $lowongan->judul }}</td>
