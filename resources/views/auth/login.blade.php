@@ -42,17 +42,26 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <input type="password"
-                                            class="form-control form-control-user @error('password') is-invalid @enderror"
-                                            id="password" placeholder="Password" name="password" required
-                                            autocomplete="current-password">
+                                        <div class="input-group">
+                                            <input type="password"
+                                                class="form-control form-control-user @error('password') is-invalid @enderror"
+                                                id="password" placeholder="Password" name="password" required
+                                                autocomplete="current-password">
 
-                                        @error('password')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" onclick="togglePassword()">
+                                                    <i class="fa fa-eye" id="togglePasswordIcon"></i>
+                                                </span>
+                                            </div>
+
+                                            @error('password')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
                                     </div>
+
                                     <div class="form-group">
                                         <div class="custom-control custom-checkbox small">
                                             <input type="checkbox" class="custom-control-input" id="remember"
@@ -85,4 +94,20 @@
         </div>
 
     </div>
+
+    <script>
+        function togglePassword() {
+            var passwordField = document.getElementById("password");
+            var toggleIcon = document.getElementById("togglePasswordIcon");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                toggleIcon.classList.remove("fa-eye");
+                toggleIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                toggleIcon.classList.remove("fa-eye-slash");
+                toggleIcon.classList.add("fa-eye");
+            }
+        }
+    </script>
 @endsection

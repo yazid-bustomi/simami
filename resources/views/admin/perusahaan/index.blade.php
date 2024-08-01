@@ -9,7 +9,7 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h5 class="font-weight-bold text-dark m-0 mx-4">Daftar Perusahaan</h5>
-            <a href="#" class="btn btn-primary btn-sm mr-4">
+            <a href="{{ route('perusahaan.create') }}" class="btn btn-primary btn-sm mr-4">
                 <i class="fas fa-plus-circle fa-sm fa-fw mr-2"></i> Tambah Perusahaan
             </a>
         </div>
@@ -30,6 +30,9 @@
                             $no = 1;
                         @endphp
                         @foreach ($companys as $company)
+                        @php
+                            $allJob = 0;
+                        @endphp
                             <tr>
                                 <td>{{ $no }}</td>
                                 <td>{{ $company->nama_depan ?? '' }}</td>
@@ -45,10 +48,14 @@
 
                                     @foreach ($company->lowongan as $lowongan)
                                         @if ($lowongan->close_lowongan >= $dateNow)
-                                        {{ $lowongan }}
+                                                @php
+                                                    $allJob++
+                                                @endphp
                                         @endif
                                     @endforeach
+                                    {{ $allJob }}
                                 </td>
+                                <td>{{ $company->lowongan->count() }}</td>
                             </tr>
                             @php
                                 $no++;

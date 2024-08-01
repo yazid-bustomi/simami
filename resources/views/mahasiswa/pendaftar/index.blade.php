@@ -218,18 +218,7 @@
                 confirmButtonText: 'Close',
             });
         }
-        // <p><strong>Nama:</strong> ${user.nama_depan} ${user.nama_belakang}</p>
-        //         <p><strong>Alamat:</strong> ${user.alamat.alamat} ${user.alamat.provinsi} ${user.alamat.kab_kot} ${user.alamat.kecamatan} ${user.alamat.desa} ${user.alamat.kode_pos}</p>
-        //         <p><strong>Email:</strong> ${user.email}</p>
-        //         <p><strong>Telepon:</strong> ${user.profile.no_hp}</p>
-        //         <p><strong>Social Media:</strong></p>
-        //         <ul>
-        //         <li><strong><Website :/strong><a href="http://${user.sosmed.website} target="_blank">${user.sosmed.website}</a></li>
-        // <li><strong>Linkedin :</strong><a href="https://www.linkedin.com/company/${user.sosmed.linkedin} target="_blank">${user.sosmed.linkedin}</a></li>
-        //  <li><strong>Twitter :</strong><a href="https://twitter.com/${user.sosmed.twiter} target="_blank">${user.sosmed.twiter}</a></li>
-        // <li><strong>Instagram :</strong><a href="https://www.instagram.com/${user.sosmed.instagram} target="_blank">${user.sosmed.instagram}</a></li>
-        // <li><strong>Facebook :</strong><a href="https://www.facebook.com/${user.sosmed.facebook} target="_blank">${user.sosmed.facebook}</a></li>
-        //                 </ul>
+
     </script>
 @endsection
 

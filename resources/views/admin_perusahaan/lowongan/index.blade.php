@@ -9,7 +9,7 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h5 class="font-weight-bold text-dark m-0 mx-4">Daftar Lowongan Magang</h5>
-            @if (Auth::user()->role == 'perusahaan' || Auth::user()->role == 'admin')
+            @if (Auth::user()->role == 'perusahaan')
                 <a href="{{ route('lowongan.create') }}" class="btn btn-primary btn-sm mr-4">
                     <i class="fas fa-plus-circle fa-sm fa-fw mr-2"></i> Tambah Lowongan
                 </a>
@@ -27,7 +27,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            @if (Auth::user()->role == 'kampus' )
+                            @if (Auth::user()->role == 'kampus' || Auth::user()->role == 'admin')
                                 <th>Perusahaan</th>
                             @endif
                             <th>Posisi Magang</th>
@@ -45,7 +45,7 @@
                         @foreach ($lowongans as $lowongan)
                             <tr>
                                 <td>{{ $no }}</td>
-                                @if (Auth::user()->role == 'kampus')
+                                @if (Auth::user()->role == 'kampus' || Auth::user()->role == 'admin')
                                     <td>{{ $lowongan->user->nama_depan . ' ' . $lowongan->user->nama_belakang }}</td>
                                 @endif
                                 <td>{{ $lowongan->judul }}</td>
