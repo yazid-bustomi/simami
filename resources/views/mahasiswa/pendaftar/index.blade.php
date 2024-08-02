@@ -31,7 +31,7 @@
                             <th>Posisi Magang</th>
                             <th>Nama</th>
                             <th>No Hp</th>
-                            @if (Auth::user()->role == 'perusahaan')
+                            @if (Auth::user()->role == 'perusahaan' || Auth::user()->role == 'admin')
                                 <th>Instansi</th>
                                 <th>Jurusan</th>
                             @endif
@@ -53,7 +53,7 @@
                                 <td>{{ $pendaftar->lowongan->judul }}</td>
                                 <td>{{ $pendaftar->user->nama_depan }} {{ $pendaftar->user->nama_belakang }}</td>
                                 <td>{{ $pendaftar->user->mahasiswaProfile->no_hp ?? '-' }}</td>
-                                @if (Auth::user()->role == 'perusahaan')
+                                @if (Auth::user()->role == 'perusahaan' || Auth::user()->role == 'admin')
                                     <td>{{ $pendaftar->user->akademikProfile->adminKampus->nama_depan ?? '-' }}</td>
                                     <td>{{ $pendaftar->user->akademikProfile->jurusanKampus->nama_jurusan ?? '-' }}</td>
                                 @endif
@@ -218,7 +218,6 @@
                 confirmButtonText: 'Close',
             });
         }
-
     </script>
 @endsection
 

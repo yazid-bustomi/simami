@@ -1,10 +1,10 @@
-<form action="{{ route('perusahaan.store') }}" method="post">
+<form action="{{ route('kampus.store') }}" method="post">
     @csrf
 
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <label for="nama_depan" class="form-control-label ">Nama Perusahaan</label>
+                <label for="nama_depan" class="form-control-label ">Nama Kampus</label>
                 <input class="form-control @error('nama_depan') is-invalid @enderror" name="nama_depan" id="nama_depan" type="text"
                      onfocusout="defocused(this)"
                     value="{{ old('nama_depan') }}">

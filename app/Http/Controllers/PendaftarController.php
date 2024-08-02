@@ -26,6 +26,7 @@ class PendaftarController extends Controller
             ->whereHas('lowongan', function ($query) use ($idUser){
                 $query->where('user_id', $idUser);
             })->get();
+
             return view('mahasiswa.pendaftar.index', compact('pendaftars'));
 
             // untuk role kampus mengambil data sesuai id by admin kampus
@@ -35,12 +36,15 @@ class PendaftarController extends Controller
                 $query->where('admin_kampus_id', $idUser);
             })
             ->get();
-            // dd($pendaftars->toArray());
+
             return view('mahasiswa.pendaftar.index', compact('pendaftars'));
 
-        } else // untuk role admin masih belum
+        } elseif(Auth::user()->role == 'admin') // untuk role admin masih belum
         {
-
+            $pendaftars = Pendaftar::with(['lowongan', 'user', 'user.akademikProfile', 'user.akademikProfile.jurusanKampus', 'user.akademikProfile.adminKampus', 'user.alamat', 'user.profile', 'user.sosmed'])->get();
+            return view('mahasiswa.pendaftar.index', compact('pendaftars'));
+        }else{
+            abort('403');
         }
     }
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\AkademikProfile;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AdminKampusController extends Controller
 {
@@ -31,7 +33,7 @@ class AdminKampusController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.kampus.create');
     }
 
     /**
@@ -42,7 +44,33 @@ class AdminKampusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'nama_depan' => 'required',
+            'email' => 'required|unique:users,email|email',
+            'password' => 'required|min:8'
+        ];
+
+        $validated = Validator::make($request->all(),$rules, [
+            'nama_depan.required' => 'Nama harus di isi',
+            'email.required' => 'Email harus di isi',
+            'email.unique' => 'Email sudah terdaftar',
+            'email.email' => 'Email harus berupa email valid',
+            'password.required' => 'Password wajib di isi',
+            'password.min' => 'Password minimal 8 karakter'
+        ]);
+
+        if($validated->fails()){
+            return redirect()->back()->withErrors($validated)->withInput();
+        }
+
+        User::create([
+            'nama_depan' => $request->nama_depan,
+            'email' => $request->email,
+            'role' => 'kampus',
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('kampus.index')->with('success', 'Kampus berhasil di tambahkan');
     }
 
     /**

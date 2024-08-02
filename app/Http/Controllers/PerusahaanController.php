@@ -30,6 +30,7 @@ class PerusahaanController extends Controller
     {
         // untuk mendapatkan user id
         $idPt = Auth::user()->id;
+        $dateNow = Carbon::today();
 
         if (Auth::user()->role == 'perusahaan') {
             // menampilkan hanya yang di upload sendiri lowongannya
@@ -38,7 +39,7 @@ class PerusahaanController extends Controller
         } else {
             // menampilkan semua data yang di upload oleh perusahaan
             $lowongans = Lowongan::with('pendaftar', 'user')->get();
-            return view('admin_perusahaan.lowongan.index', compact('lowongans'));
+            return view('admin_perusahaan.lowongan.index', compact('lowongans', 'dateNow'));
         }
     }
 

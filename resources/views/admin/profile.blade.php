@@ -23,13 +23,6 @@
                                         onfocus="focused(this)" onfocusout="defocused(this)">
                                 </div>
                             </div>
-                            {{-- <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="tempat_lahir" class="form-control-label">Tempat Lahir</label>
-                                    <input class="form-control" id="tempat_lahir" name="tempat_lahir" type="text" value="Pasuruan" onfocus="focused(this)"
-                                        onfocusout="defocused(this)">
-                                </div>
-                            </div> --}}
 
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -61,28 +54,6 @@
                                 </div>
                             </div>
 
-
-                            {{-- <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="tanggal_lahir" class="form-control-label">Tanggal Lahir</label>
-                                    <input class="form-control" id="tanggal_lahir" name="tanggal_lahir" type="text" value="2002" onfocus="focused(this)"
-                                        onfocusout="defocused(this)">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="jenis_kelamin" class="form-control-label">Jenis Kelamin</label>
-                                    <input class="form-control" id="jenis_kelamin" name="jenis_kelamin" type="text" value="Pasuruan" onfocus="focused(this)"
-                                        onfocusout="defocused(this)">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="agama" class="form-control-label">Agama</label>
-                                    <input class="form-control" type="text" id="agama" name="agama" value="Islam" onfocus="focused(this)"
-                                        onfocusout="defocused(this)">
-                                </div>
-                            </div> --}}
                         </div>
                         <hr class="horizontal dark">
                         <p class="text-uppercase text-sm">Contact Information</p>

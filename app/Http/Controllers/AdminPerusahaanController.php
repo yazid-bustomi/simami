@@ -18,7 +18,6 @@ class AdminPerusahaanController extends Controller
      */
     public function index()
     {
-        //
         $companys = User::where('role', 'perusahaan')
             ->with('lowongan', 'lowongan.pendaftar', 'profile', 'sosmed', 'alamat')
             ->get();
@@ -50,12 +49,13 @@ class AdminPerusahaanController extends Controller
         $validator = Validator::make($request->all(), [
             'nama_depan' => 'required',
             'email' => 'unique:users,email|email|required',
-            'password' => 'required',
+            'password' => 'required|min:8',
         ], [
             'nama_depan.required' => 'Nama perusahaan harus di isi',
             'email.unique' => 'Email sudah terdaftar',
             'email.email' => 'Email harus berupa email yang valid',
             'password.required' => 'Password harus di isi',
+            'password.min' => 'Password minimal 8 karakter'
         ]);
 
         if($validator->fails()){
@@ -65,7 +65,7 @@ class AdminPerusahaanController extends Controller
         User::create([
             'nama_depan' => $request->nama_depan,
             'email' => $request->email,
-            'role' => 'kampus',
+            'role' => 'perusahaan',
             'password' => Hash::make($request->password),
         ]);
         return redirect()->route('perusahaan.index')->with('success', 'Perusahaan berhasil di tambahkan');

@@ -9,11 +9,16 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h5 class="font-weight-bold text-dark m-0 mx-4">Daftar Kampus</h5>
-            <a href="#" class="btn btn-primary btn-sm mr-4">
+            <a href="{{ route('kampus.create') }}" class="btn btn-primary btn-sm mr-4">
                 <i class="fas fa-plus-circle fa-sm fa-fw mr-2"></i> Tambah Kampus
             </a>
         </div>
         <div class="card-body">
+            @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
             <div class="table-responsive">
                 <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
                     <thead>

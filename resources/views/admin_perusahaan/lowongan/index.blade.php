@@ -13,7 +13,6 @@
                 <a href="{{ route('lowongan.create') }}" class="btn btn-primary btn-sm mr-4">
                     <i class="fas fa-plus-circle fa-sm fa-fw mr-2"></i> Tambah Lowongan
                 </a>
-            @else
             @endif
         </div>
         <div class="card-body">
@@ -43,6 +42,7 @@
                     <tbody>
                         @php $no = 1 @endphp
                         @foreach ($lowongans as $lowongan)
+                            {{-- @if ($lowongan->close_lowongan >= $dateNow) --}}
                             <tr>
                                 <td>{{ $no }}</td>
                                 @if (Auth::user()->role == 'kampus' || Auth::user()->role == 'admin')
@@ -72,6 +72,7 @@
                                 @endif
                             </tr>
                             @php $no++ @endphp
+                            {{-- @endif --}}
                         @endforeach
                     </tbody>
                 </table>

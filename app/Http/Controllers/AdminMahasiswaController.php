@@ -16,6 +16,7 @@ class AdminMahasiswaController extends Controller
     {
         $mahasiswas = User::where('role', 'mahasiswa')->with('profile', 'alamat', 'sosmed', 'pendaftar', 'akademikProfile.adminKampus', 'akademikProfile.jurusanKampus')->get();
 
+        // dd($mahasiswas->toArray());
         return view('admin.mahasiswa.index', compact('mahasiswas'));
     }
 

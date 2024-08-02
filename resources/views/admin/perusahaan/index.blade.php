@@ -12,8 +12,15 @@
             <a href="{{ route('perusahaan.create') }}" class="btn btn-primary btn-sm mr-4">
                 <i class="fas fa-plus-circle fa-sm fa-fw mr-2"></i> Tambah Perusahaan
             </a>
+
         </div>
         <div class="card-body">
+            @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
@@ -30,9 +37,9 @@
                             $no = 1;
                         @endphp
                         @foreach ($companys as $company)
-                        @php
-                            $allJob = 0;
-                        @endphp
+                            @php
+                                $allJob = 0;
+                            @endphp
                             <tr>
                                 <td>{{ $no }}</td>
                                 <td>{{ $company->nama_depan ?? '' }}</td>
@@ -45,18 +52,18 @@
                                     {{ $company->alamat->kode_pos ?? '' }}
                                 </td>
                                 <td>
-
                                     @foreach ($company->lowongan as $lowongan)
                                         @if ($lowongan->close_lowongan >= $dateNow)
-                                                @php
-                                                    $allJob++
-                                                @endphp
+                                            @php
+                                                $allJob++;
+                                            @endphp
                                         @endif
                                     @endforeach
                                     {{ $allJob }}
                                 </td>
                                 <td>{{ $company->lowongan->count() }}</td>
                             </tr>
+
                             @php
                                 $no++;
                             @endphp
