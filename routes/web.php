@@ -39,6 +39,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('/admin/users', AdminController::class);
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
+    Route::post('/admin/profile/{id}', [AdminController::class, 'update'])->name('admin.profile.update');
+    Route::post('/admin/profile/foto/{id}', [AdminController::class, 'updateImage'])->name('admin.foto.update');
     Route::resource('/admin/kampus', ControllersAdminKampusController::class);
     Route::resource('/admin/perusahaan', AdminPerusahaanController::class);
     Route::resource('/admin/mahasiswa', AdminMahasiswaController::class);

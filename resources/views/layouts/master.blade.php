@@ -183,8 +183,8 @@
             <hr class="sidebar-divider">
 
             @if (Auth::user()->role == 'admin')
-                <li class="nav-item {{ Request::routeIs('') ? 'active' : '' }}">
-                    <a class="nav-link" href="#">
+                <li class="nav-item {{ Request::routeIs('admin.profile') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('admin.profile') }}">
                         <i class="fas fa-fw fa-id-card"></i>
                         <span>Profile</span></a>
                 </li>
