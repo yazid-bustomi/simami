@@ -207,48 +207,62 @@ class KampusController extends Controller
         $openInformasi = Lowongan::where('close_lowongan', '>', $dateNow)->count();
 
         $mhsApplay = AkademikProfile::where('admin_kampus_id', $id)
-        ->with(['user.pendaftar' => function($query){
-            $query->whereIn('status', ['pending']);
-        }])
-        ->get();
+            ->with(['user.pendaftar' => function ($query) {
+                $query->whereIn('status', ['pending']);
+            }])
+            ->get();
 
-        foreach($mhsApplay as $applay){
-               $applay;
+        if ($mhsApplay->isEmpty()) {
+            $applay = 0;
+        } else {
+            foreach ($mhsApplay as $applay) {
+                $applay->user->pendaftar->count();
+            }
         }
 
 
         $mhsRejects = AkademikProfile::where('admin_kampus_id', $id)
-        ->with(['user.pendaftar' => function($query){
-            $query->whereIn('status', ['rejected_kampus', 'rejected_perusahaan']);
-        }])
-        ->get();
+            ->with(['user.pendaftar' => function ($query) {
+                $query->whereIn('status', ['rejected_kampus', 'rejected_perusahaan']);
+            }])
+            ->get();
 
-        foreach($mhsRejects as $reject){
-           $reject;
+        if ($mhsRejects->isEmpty()) {
+            $reject = 0;
+        } else {
+            foreach ($mhsRejects as $reject) {
+                $reject->user->pendaftar->count();
+            }
         }
 
 
         $mhsApprove = AkademikProfile::where('admin_kampus_id', $id)
-        ->with(['user.pendaftar' => function($query){
-            $query->where('status', 'approve');
-        }])
-        ->get();
+            ->with(['user.pendaftar' => function ($query) {
+                $query->where('status', 'approve');
+            }])
+            ->get();
 
-        foreach($mhsApprove as $approve){
-            $approve;
+        if($mhsApprove->isEmpty()){
+            $approve = 0;
+        }else{
+            foreach ($mhsApprove as $approve) {
+                $approve->user->pendaftar->count();
+            }
         }
 
         $mhsSelect = AkademikProfile::where('admin_kampus_id', $id)
-        ->with(['user.pendaftar' => function($query){
-            $query->where('status', 'select');
-        }])
-        ->get();
-        foreach($mhsSelect as $select){
-            $select;
+            ->with(['user.pendaftar' => function ($query) {
+                $query->where('status', 'select');
+            }])
+            ->get();
+        if($mhsSelect->isEmpty()){
+            $select = 0;
+        }else{
+            foreach ($mhsSelect as $select) {
+                $select->user->pendaftar->count();
+            }
         }
 
-        // dd($mhsReject);
-        // dd($mhsSelect->toArray());
         return view('admin_kampus.dashboard', compact('allUser', 'openInformasi', 'applay', 'reject', 'approve', 'select'));
     }
 
@@ -262,13 +276,13 @@ class KampusController extends Controller
         $allMahasiswa = AkademikProfile::where('admin_kampus_id', $idUser)->get()->count();
 
         // mencari dari akademik profile yang admin kampus id nya sama dengan id user sekarang dan dipilih semua user pendaftar
-        $approved = User::whereHas('akademikProfile', function ($query) use ($idUser){
+        $approved = User::whereHas('akademikProfile', function ($query) use ($idUser) {
             $query->where('admin_kampus_id', $idUser);
         })->with('pendaftar')->get();
 
-        foreach ($approved as $approve){
-            foreach($approve->pendaftar as $data){
-                if($data->status == 'select'){
+        foreach ($approved as $approve) {
+            foreach ($approve->pendaftar as $data) {
+                if ($data->status == 'select') {
                     $countApprove++;
                 }
             }
@@ -291,7 +305,6 @@ class KampusController extends Controller
             if ($validated->fails()) {
                 return redirect()->back()->withErrors(['email' => 'Email sudah ada'])->withInput();
             }
-
         }
         $user->nama_depan = $request->nama_depan;
         $user->email = $request->email;
@@ -305,35 +318,35 @@ class KampusController extends Controller
         $user->alamat->alamat = $request->alamat;
         $user->alamat->save();
 
-            if (!$user->sosmed) {
-                Sosmed::create([
-                    'user_id' => $id,
-                    'linkedin' => $request->linkedin,
-                    'twiter' => $request->twiter,
-                    'website' => $request->website,
-                    'instagram' => $request->instagram,
-                    'facebook' => $request->facebook,
-                    'tiktok' => $request->tiktok,
-                ]);
-            } else {
-                $user->sosmed->linkedin = $request->linkedin;
-                $user->sosmed->twiter = $request->twiter;
-                $user->sosmed->website = $request->website;
-                $user->sosmed->instagram = $request->instagram;
-                $user->sosmed->facebook = $request->facebook;
-                $user->sosmed->tiktok = $request->tiktok;
-                $user->sosmed->save();
-            }
+        if (!$user->sosmed) {
+            Sosmed::create([
+                'user_id' => $id,
+                'linkedin' => $request->linkedin,
+                'twiter' => $request->twiter,
+                'website' => $request->website,
+                'instagram' => $request->instagram,
+                'facebook' => $request->facebook,
+                'tiktok' => $request->tiktok,
+            ]);
+        } else {
+            $user->sosmed->linkedin = $request->linkedin;
+            $user->sosmed->twiter = $request->twiter;
+            $user->sosmed->website = $request->website;
+            $user->sosmed->instagram = $request->instagram;
+            $user->sosmed->facebook = $request->facebook;
+            $user->sosmed->tiktok = $request->tiktok;
+            $user->sosmed->save();
+        }
 
-            if (!$user->profile){
-                MahasiswaProfile::create([
-                    'user_id' => $id,
-                    'no_hp' => $request->no_hp,
-                ]);
-            }else {
-                $user->profile->no_hp = $request->no_hp;
-                $user->profile->save();
-            }
+        if (!$user->profile) {
+            MahasiswaProfile::create([
+                'user_id' => $id,
+                'no_hp' => $request->no_hp,
+            ]);
+        } else {
+            $user->profile->no_hp = $request->no_hp;
+            $user->profile->save();
+        }
 
         return redirect()->route('kampus.profile')->with('success', 'Data berhasil di update');
     }
@@ -341,18 +354,18 @@ class KampusController extends Controller
     public function updateProfile(Request $request, $id)
     {
         $user = User::with('profile')->findOrFail($id);
-        $validated = Validator::make($request->all(),[
+        $validated = Validator::make($request->all(), [
             'img' => 'required|image|mimes:png,jpg|max:1024',
         ]);
 
-        if($validated->fails()){
+        if ($validated->fails()) {
             return redirect()->back()->withErrors($validated)->withInput();
         }
         $file = $request->file('img');
         $fileName = time() . '_' . $file->getClientOriginalName();
 
 
-        if(!$user->profile){
+        if (!$user->profile) {
 
             MahasiswaProfile::create([
                 'user_id' => $id,
@@ -360,11 +373,10 @@ class KampusController extends Controller
             ]);
 
             $file->move(public_path('/img/profile/'), $fileName);
-
         } else {
             $filePath = public_path('/img/profile/' . $fileName);
 
-            if($user->profile->img && fileExists($filePath)){
+            if ($user->profile->img && fileExists($filePath)) {
                 $removeFile = public_path('/img/profile/') . $user->profile->img;
                 unlink($removeFile);
             }

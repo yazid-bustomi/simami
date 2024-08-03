@@ -111,19 +111,17 @@
 
             {{-- Nav Item User --}}
             @if (Auth::user()->role == 'kampus')
-                <!-- Nav Item - User - By Kampus -->
-                <li class="nav-item {{ Request::routeIs('user.index') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('user.index') }}">
-                        <i class="fas fa-fw fa-user"></i>
-                        <span>Mahasiswa</span></a>
-                </li>
-                <hr class="sidebar-divider">
-
-
                 <li class="nav-item {{ Request::routeIs('jurusan.index') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('jurusan.index') }}">
                         <i class="fas fa-fw fa-university"></i>
                         <span>Jurusan</span></a>
+                </li>
+                <hr class="sidebar-divider">
+
+                <li class="nav-item {{ Request::routeIs('user.index') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('user.index') }}">
+                        <i class="fas fa-fw fa-user"></i>
+                        <span>Mahasiswa</span></a>
                 </li>
                 <hr class="sidebar-divider">
             @endif

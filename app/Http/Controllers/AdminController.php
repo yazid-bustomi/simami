@@ -149,17 +149,6 @@ class AdminController extends Controller
         return redirect()->route('admin.profile')->with('success', 'Profile berhasil di update');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
     public function dashboard()
     {
         return view('admin.dashboard');

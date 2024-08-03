@@ -23,75 +23,102 @@
                             </div>
                         @endif
                         <div class="d-flex justify-content-between align-items-start mb-2">
-                            <h4 class="card-title fw-bold mt-4">{{ $lowongan->judul }}</h4>
+                            <h4 class="card-title fw-bold mt-4"><strong>{{ $lowongan->judul }}</strong></h4>
                             <a href="{{ route('magang.index') }}" class="btn btn-secondary">
                                 <i class="fas fa-arrow-left"></i><span class="d-none d-sm-inline">Kembali</span>
                             </a>
                         </div>
-                        <h5 class="card-subtitle mb-2 text-muted">Perusahaan:</h5>
-                        <p class="card-text fw-bold">{{ $lowongan->user->nama_depan }}</p>
-                        <p class="card-text"><i class="mdi mdi-map-marker"></i> Alamat:
-                            {{ $lowongan->user->alamat->alamat }}
-                            {{ $lowongan->user->alamat->provinsi }}
-                            {{ $lowongan->user->alamat->kab_kot }}
-                            {{ $lowongan->user->alamat->kecamatan }}
-                            {{ $lowongan->user->alamat->desa }}
-                            {{ $lowongan->user->alamat->kode_pos }}
-                        </p>
+                        <h5 class="card-subtitle mb-2 text-muted"><strong>Perusahaan:</strong></h5>
+                        <p class="card-text fw-bold">{{ $lowongan->user->nama_depan ?? '' }}</p>
+                        @if (!empty($lowongan->user->alamat))
+                            <p class="card-text"><i class="mdi mdi-map-marker"></i> <strong>Alamat:</strong>
+                                @if (!empty($lowongan->user->alamat->alamat))
+                                    {{ $lowongan->user->alamat->alamat }}
+                                @endif
+
+                                @if (!empty($lowongan->user->alamat->provinsi))
+                                    {{ $lowongan->user->alamat->provinsi }}
+                                @endif
+
+                                @if (!empty($lowongan->user->alamat->kab_kot))
+                                    {{ $lowongan->user->alamat->kab_kot }}
+                                @endif
+
+                                @if (!empty($lowongan->user->alamat->kecamatan))
+                                    {{ $lowongan->user->alamat->kecamatan }}
+                                @endif
+
+                                @if (!empty($lowongan->user->alamat->desa))
+                                    {{ $lowongan->user->alamat->desa }}
+                                @endif
+
+                                @if (!empty($lowongan->user->alamat->kode_pos))
+                                    {{ $lowongan->user->alamat->kode_pos }}
+                                @endif
+                            </p>
+                        @endif
                         @if (!empty($lowongan->user->sosmed))
-                        @if (!empty($lowongan->user->sosmed->website))
-                            <p class="card-text">
-                                <i class="mdi mdi-web"></i> Website :
-                                <a href="{{ $lowongan->user->sosmed->website }}" target="_blank">{{ $lowongan->user->sosmed->website }}</a>
-                            </p>
+                            @if (!empty($lowongan->user->sosmed->website))
+                                <p class="card-text">
+                                    <i class="mdi mdi-web"></i> Website :
+                                    <a href="{{ $lowongan->user->sosmed->website }}"
+                                        target="_blank">{{ $lowongan->user->sosmed->website }}</a>
+                                </p>
+                            @endif
+                            @if (!empty($lowongan->user->sosmed->linkedin))
+                                <p class="card-text">
+                                    <i class="mdi mdi-linkedin"></i> LinkedIn :
+                                    <a href="{{ $lowongan->user->sosmed->linkedin }}"
+                                        target="_blank">{{ $lowongan->user->sosmed->linkedin }}</a>
+                                </p>
+                            @endif
+                            @if (!empty($lowongan->user->sosmed->twiter))
+                                <p class="card-text">
+                                    <i class="mdi mdi-twitter"></i> Twitter :
+                                    <a href="{{ $lowongan->user->sosmed->twiter }}"
+                                        target="_blank">{{ $lowongan->user->sosmed->twiter }}</a>
+                                </p>
+                            @endif
+                            @if (!empty($lowongan->user->sosmed->instagram))
+                                <p class="card-text">
+                                    <i class="mdi mdi-instagram"></i> Instagram :
+                                    <a href="{{ $lowongan->user->sosmed->instagram }}"
+                                        target="_blank">{{ $lowongan->user->sosmed->instagram }}</a>
+                                </p>
+                            @endif
+                            @if (!empty($lowongan->user->sosmed->facebook))
+                                <p class="card-text">
+                                    <i class="mdi mdi-facebook"></i> Facebook :
+                                    <a href="{{ $lowongan->user->sosmed->facebook }}"
+                                        target="_blank">{{ $lowongan->user->sosmed->facebook }}</a>
+                                </p>
+                            @endif
+                            @if (!empty($lowongan->user->sosmed->tiktok))
+                                <p class="card-text">
+                                    <i class="mdi mdi-tiktok"></i> Tiktok :
+                                    <a href="{{ $lowongan->user->sosmed->tiktok }}"
+                                        target="_blank">{{ $lowongan->user->sosmed->tiktok }}</a>
+                                </p>
+                            @endif
                         @endif
-                        @if (!empty($lowongan->user->sosmed->linkedin))
-                            <p class="card-text">
-                                <i class="mdi mdi-linkedin"></i> LinkedIn :
-                                <a href="{{ $lowongan->user->sosmed->linkedin }}" target="_blank">{{ $lowongan->user->sosmed->linkedin }}</a>
-                            </p>
-                        @endif
-                        @if (!empty($lowongan->user->sosmed->twiter))
-                            <p class="card-text">
-                                <i class="mdi mdi-twitter"></i> Twitter :
-                                <a href="{{ $lowongan->user->sosmed->twiter }}" target="_blank">{{ $lowongan->user->sosmed->twiter }}</a>
-                            </p>
-                        @endif
-                        @if (!empty($lowongan->user->sosmed->instagram))
-                            <p class="card-text">
-                                <i class="mdi mdi-instagram"></i> Instagram :
-                                <a href="{{ $lowongan->user->sosmed->instagram }}" target="_blank">{{ $lowongan->user->sosmed->instagram }}</a>
-                            </p>
-                        @endif
-                        @if (!empty($lowongan->user->sosmed->facebook))
-                            <p class="card-text">
-                                <i class="mdi mdi-facebook"></i> Facebook :
-                                <a href="{{ $lowongan->user->sosmed->facebook }}" target="_blank">{{ $lowongan->user->sosmed->facebook }}</a>
-                            </p>
-                        @endif
-                        @if (!empty($lowongan->user->sosmed->tiktok))
-                            <p class="card-text">
-                                <i class="mdi mdi-tiktok"></i> Tiktok :
-                                <a href="{{$lowongan->user->sosmed->tiktok }}" target="_blank">{{ $lowongan->user->sosmed->tiktok }}</a>
-                            </p>
-                        @endif
-                    @endif
 
                         <hr>
 
-                        <p class="card-text"><i class="mdi mdi-briefcase"></i> Kebutuhan magang : {{ $lowongan->pemagang }} Orang
+                        <p class="card-text"><i class="mdi mdi-briefcase"></i> <strong>Kebutuhan magang :</strong> {{ $lowongan->pemagang }}
+                            Orang
                         </p>
-                        <p class="card-text"><i class="mdi mdi-clock"></i> Durasi : {{ $lowongan->durasi_magang }} bulan</p>
-                        <p class="card-text"><i class="mdi mdi-calendar-check"></i> Penutupan :
+                        <p class="card-text"><i class="mdi mdi-clock"></i> <strong>Durasi :</strong> {{ $lowongan->durasi_magang }} bulan
+                        </p>
+                        <p class="card-text"><i class="mdi mdi-calendar-check"></i> <strong>Penutupan :</strong>
                             {{ $lowongan->days_remaining }} Hari</p>
                         <hr>
 
 
 
-                        <h6 class="card-subtitle mb-2 text-muted">Kriteria :</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><strong>Kriteria :</strong></h6>
                         <p class="card-text">{!! nl2br(e($lowongan->kriteria ?? '')) !!}</p>
                         <hr>
-                        <h6 class="card-subtitle mb-2 text-muted">Rincian Kegiatan :</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><strong>Rincian Kegiatan :</strong></h6>
                         <p class="card-text">{!! nl2br(e($lowongan->rincian ?? '')) !!}</p>
                         <hr>
                         <div class="text-center">
