@@ -81,9 +81,9 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 // 6
-                'nama_depan' => 'Agus',
-                'nama_belakang' => 'Setiawan',
-                'email' => 'agus@gmail.com',
+                'nama_depan' => 'Yazid',
+                'nama_belakang' => '',
+                'email' => 'yazid@gmail.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
                 'role' => 'mahasiswa',
@@ -93,9 +93,9 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 // 7
-                'nama_depan' => 'Budi',
-                'nama_belakang' => 'Santoso',
-                'email' => 'budi@gmail.com',
+                'nama_depan' => 'Bustomi',
+                'nama_belakang' => '',
+                'email' => 'bustomi@gmail.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
                 'role' => 'mahasiswa',
