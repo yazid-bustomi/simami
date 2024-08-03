@@ -49,7 +49,7 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                     Mahasiswa Mendafar</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $applay ?? '0'}}
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $applay == null ? '0' : $applay->user->pendaftar->count()}}
                                 </div>
                             </div>
                             <div class="col-auto">
@@ -69,7 +69,7 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                                     Seleksi Perusahaan</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $approve ?? '0'}}
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $approve == null ? '0' : $approve->user->pendaftar->count() }}
                                 </div>
                             </div>
                             <div class="col-auto">
@@ -89,7 +89,7 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
                                     Mahasiswa Ditolak</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $reject ?? '0'}}
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $reject == null ? '0' : $reject->user->pendaftar->count()}}
                                 </div>
                             </div>
                             <div class="col-auto">
@@ -108,8 +108,8 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Mahasiswa Selesai Magang</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $select ?? '0'}}
+                                    Mahasiswa Diterima Magang</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $select == null ? '0' : $select->user->pendaftar->count()}}
                                 </div>
                             </div>
                             <div class="col-auto">

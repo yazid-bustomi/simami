@@ -213,10 +213,10 @@ class KampusController extends Controller
             ->get();
 
         if ($mhsApplay->isEmpty()) {
-            $applay = 0;
+            $applay = null;
         } else {
             foreach ($mhsApplay as $applay) {
-                $applay->user->pendaftar->count();
+                $applay;
             }
         }
 
@@ -228,10 +228,10 @@ class KampusController extends Controller
             ->get();
 
         if ($mhsRejects->isEmpty()) {
-            $reject = 0;
+            $reject = null;
         } else {
             foreach ($mhsRejects as $reject) {
-                $reject->user->pendaftar->count();
+                $reject;
             }
         }
 
@@ -243,10 +243,10 @@ class KampusController extends Controller
             ->get();
 
         if($mhsApprove->isEmpty()){
-            $approve = 0;
+            $approve = null;
         }else{
             foreach ($mhsApprove as $approve) {
-                $approve->user->pendaftar->count();
+                $approve;
             }
         }
 
@@ -256,10 +256,10 @@ class KampusController extends Controller
             }])
             ->get();
         if($mhsSelect->isEmpty()){
-            $select = 0;
+            $select = null;
         }else{
             foreach ($mhsSelect as $select) {
-                $select->user->pendaftar->count();
+                $select;
             }
         }
 

@@ -61,7 +61,7 @@
                 <label for="nim" class="form-control-label">Nomer Induk Mahasiswa</label>
 
                 <input class="form-control @error('nim') is-invalid @enderror" id="nim" name="nim"
-                    type="number" placeholder="1111" value="{{ old('nim', $mhs->akademikProfile->nim ?? '') }}"
+                    type="number"  value="{{ old('nim', $mhs->akademikProfile->nim ?? '') }}"
                     onfocusout="defocused(this)">
 
                 @error('nim')
