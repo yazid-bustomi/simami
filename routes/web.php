@@ -32,7 +32,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
 
-Auth::routes(['register' => false]);
+Auth::routes();
 
 // CRUD Users by admin
 Route::middleware(['auth', 'admin'])->group(function () {

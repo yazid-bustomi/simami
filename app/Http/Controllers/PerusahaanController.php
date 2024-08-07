@@ -68,8 +68,7 @@ class PerusahaanController extends Controller
             'rincian' => 'required|string',
             'pemagang' => 'required|integer|min:1',
             'durasi_magang' => 'required|integer|min:1',
-            'open_lowongan' => 'required|date|after_or_equal:today',
-            'close_lowongan' => 'required|date|after:open_lowongan',
+            'close_lowongan' => 'required|date|after_or_equal:today',
             'img' => 'image|mimes:jpeg,png,jpg|max:10120',
         ]);
 
@@ -89,6 +88,9 @@ class PerusahaanController extends Controller
             $file->move(public_path('img/post'), $fileName);
         }
 
+        $dateNow = Carbon::today();
+
+
         // simpan data
         $lowongans = new Lowongan([
             'user_id' => Auth::user()->id,
@@ -97,7 +99,7 @@ class PerusahaanController extends Controller
             'rincian' => $request->rincian,
             'pemagang' => $request->pemagang,
             'durasi_magang' => $request->durasi_magang,
-            'open_lowongan' => $request->open_lowongan,
+            'open_lowongan' => $dateNow,
             'close_lowongan' => $request->close_lowongan,
             'img' => $fileName,
         ]);
@@ -135,7 +137,6 @@ class PerusahaanController extends Controller
             'rincian' => 'required|string',
             'pemagang' => 'required|integer|min:1',
             'durasi_magang' => 'required|integer|min:1',
-            'open_lowongan' => 'required|date',
             'close_lowongan' => 'required|date|after:open_lowongan',
             'img' => 'image|mimes:jpeg,png,jpg,|max:10120',
         ]);
@@ -159,7 +160,6 @@ class PerusahaanController extends Controller
         $lowongan->rincian = $request->input('rincian');
         $lowongan->pemagang = $request->input('pemagang');
         $lowongan->durasi_magang = $request->input('durasi_magang');
-        $lowongan->open_lowongan = $request->input('open_lowongan');
         $lowongan->close_lowongan = $request->input('close_lowongan');
 
         $lowongan->save();

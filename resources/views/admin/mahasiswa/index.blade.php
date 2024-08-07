@@ -64,7 +64,7 @@
     <script src={{ asset('js/demo/datatables-demo.js') }}></script>
 
     <script>
-        function showDetail(user) {
+          function showDetail(user) {
             const socialMediaLinks = [{
                 platform: 'LinkedIn',
                 url: user.sosmed?.linkedin,
@@ -99,24 +99,55 @@
                         </a>`).join('');
 
 
+            const $items = [{
+                    nameItem: 'Email :',
+                    name: user.email,
+                },
+                {
+                    nameItem: 'No Hp:',
+                    name: user.profile?.no_hp,
+                },
+                {
+                    nameItem: 'Jenis Kelamin :',
+                    name: user.profile?.jenis_kelamin
+                },
+                {
+                    nameItem: 'Tempat, Tanggal Lahir :',
+                    name: user.profile?.tempat_lahir,
+                },
+                {
+                    nameItem: 'Agama :',
+                    name: user.profile?.agama,
+                },
+                {
+                    nameItem: 'Kampus :',
+                    name: user.akademik_profile?.admin_kampus.nama_depan,
+                },
+                {
+                    nameItem: 'Jurusan :',
+                    name: user.akademik_profile?.jurusan_kampus.nama_jurusan,
+                },
+                {
+                    nameItem: 'NIM :',
+                    name: user.akademik_profile?.nim,
+                },
+                {
+                    nameItem: 'IPK :',
+                    name: user.akademik_profile?.ipk,
+                },
+            ];
+
+            const $itemHtml = $items
+                .filter(data => data.name)
+                .map(data => `<li class="list-group-item"><strong>${data.nameItem}</strong> ${data.name}</li>`).join('');
+
             Swal.fire({
-                title: `${user.nama_depan} ${user.nama_belakang}`,
-                imageUrl: `/img/profile/${user.profile.img || 'profile-default.jpg'}`,
+                title: `${user.nama_depan || ''} ${user.nama_belakang || ''}`,
+                imageUrl: `/img/profile/${user.profile?.img || 'profile-default.jpg'}`,
                 imageAlt: "Foto Profile",
                 html: `
-                <div class="card-body">
-                    <p class="card-text">Dusun Kedungwaru Lor Rt.01 Rw.03 Jawa Timur Kabupaten Pasuruan Kecamatan Winongan Desa Sidepan 57182</p>
-                </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><strong>No Hp:</strong> ${user.profile.no_hp || ''}</li>
-                    <li class="list-group-item"><strong>Email:</strong> ${user.email}</li>
-                    <li class="list-group-item"><strong>Jenis Kelamin:</strong> ${user.profile.jenis_kelamin || ''}</li>
-                    <li class="list-group-item"><strong>Tempat, Tanggal Lahir:</strong> ${user.profile.tempat_lahir || ''}, ${user.profile.tanggal_lahir || ''}</li>
-                    <li class="list-group-item"><strong>Agama:</strong> ${user.profile.agama || ''}</li>
-                    <li class="list-group-item"><strong>Kampus:</strong> ${user.akademik_profile.admin_kampus.nama_depan || ''}</li>
-                    <li class="list-group-item"><strong>Jurusan:</strong> ${user.akademik_profile.jurusan_kampus.nama_jurusan || ''}</li>
-                    <li class="list-group-item"><strong>NIM:</strong> ${user.akademik_profile.nim || ''}</li>
-                    <li class="list-group-item"><strong>IPK:</strong> ${user.akademik_profile.ipk !== null ? user.akademik_profile.ipk : '-'}</li>
+                    ${$itemHtml}
                 </ul>
                 <div class="card-body">
                     ${socialMediaHtml}

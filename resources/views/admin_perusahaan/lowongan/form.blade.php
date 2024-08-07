@@ -64,18 +64,7 @@
                 @enderror
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="open_lowongan" class="form-control-label">Mulai Pendaftaran</label>
-                <input class="form-control @error('open_lowongan') is-invalid @enderror" name="open_lowongan"
-                    type="date" value="{{ old('open_lowongan', $lowongan->open_lowongan ?? '') }}" required>
-                @error('open_lowongan')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
-        </div>
+
         <div class="col-md-4">
             <div class="form-group">
                 <label for="close_lowongan" class="form-control-label">Batas Pendaftaran</label>
@@ -88,7 +77,7 @@
                 @enderror
             </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-4">
             <div class="form-group">
                 <label for="img" class="form-control-label">Upload Flyer (Jika ada)</label>
                 <input class="form-control @error('img') is-invalid @enderror" id="img" name="img"

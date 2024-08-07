@@ -25,11 +25,16 @@
 
                                 <form class="user" method="POST" action="{{ route('password.update') }}">
                                     @csrf
+                                    <input type="hidden" name="token" value="{{ $token }}">
+
                                     <div class="form-group">
                                         <input type="email"
                                             class="form-control form-control-user  @error('email') is-invalid @enderror"
                                             id="email" aria-describedby="emailHelp" placeholder="Email" name="email"
-                                            value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
+                                            value="{{ $email ?? old('email') }}" required autocomplete="email" readonly autofocus>
+
+
+
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -37,28 +42,47 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <input type="password"
-                                            class="form-control form-control-user @error('password') is-invalid @enderror"
-                                            id="password" placeholder="Password" name="password" required
-                                            autocomplete="new-password">
+                                        <div class="input-group">
+                                            <input type="password"
+                                                class="form-control form-control-user @error('password') is-invalid @enderror"
+                                                id="password" placeholder="Password" name="password" required
+                                                autocomplete="new-password">
 
-                                        @error('password')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" onclick="togglePassword()">
+                                                    <i class="fa fa-eye" id="togglePasswordIcon"></i>
+                                                </span>
+                                            </div>
+
+
+                                            @error('password')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <input type="password"
-                                            class="form-control form-control-user @error('password-confirm') is-invalid @enderror"
-                                            id="password-confirm" placeholder="Password Confirmasi" name="password_confirmation" required
-                                            autocomplete="new-password">
 
-                                        @error('password-confirm')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="password"
+                                                class="form-control form-control-user @error('password-confirm') is-invalid @enderror"
+                                                id="password-confirm" placeholder="Password Confirmasi"
+                                                name="password_confirmation" required autocomplete="new-password">
+
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" onclick="toggleConfirmPassword()">
+                                                    <i class="fa fa-eye" id="togglePasswordConfirmIcon"></i>
+                                                </span>
+                                            </div>
+
+                                            @error('password-confirm')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
                                     </div>
 
                                     <button class="btn btn-primary btn-user btn-block" type="submit">
@@ -78,4 +102,34 @@
         </div>
 
     </div>
+
+    <script>
+        function togglePassword() {
+            var passwordField = document.getElementById("password");
+            var toggleIcon = document.getElementById("togglePasswordIcon");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                toggleIcon.classList.remove("fa-eye");
+                toggleIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                toggleIcon.classList.remove("fa-eye-slash");
+                toggleIcon.classList.add("fa-eye");
+            }
+        }
+
+        function toggleConfirmPassword() {
+            var passwordField = document.getElementById("password-confirm");
+            var toggleIcon = document.getElementById("togglePasswordConfirmIcon");
+            if (passwordField.type === "password-confirm") {
+                passwordField.type = "text";
+                toggleIcon.classList.remove("fa-eye");
+                toggleIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password-confirm";
+                toggleIcon.classList.remove("fa-eye-slash");
+                toggleIcon.classList.add("fa-eye");
+            }
+        }
+    </script>
 @endsection
