@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alamat;
+use App\Models\Lowongan;
 use App\Models\MahasiswaProfile;
 use App\Models\Sosmed;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -151,6 +153,15 @@ class AdminController extends Controller
 
     public function dashboard()
     {
+        $dateNow = Carbon::today();
+
+        $campuses = User::where('role' ,'kampus')->count();
+        $company = User::where('role', 'perusahaan')->count();
+        $mahasiswas = User::where('role', 'mahasiswa')->count();
+        // $jobs = Lowongan::where('close_lowongan', '<=' ,$dateNow);
+
+        // dd($dateNow);
+        // dd($jobs);
         return view('admin.dashboard');
     }
 

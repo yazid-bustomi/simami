@@ -42,7 +42,6 @@
                     <tbody>
                         @php $no = 1 @endphp
                         @foreach ($lowongans as $lowongan)
-                            {{-- @if ($lowongan->close_lowongan >= $dateNow) --}}
                             <tr>
                                 <td>{{ $no }}</td>
                                 @if (Auth::user()->role == 'kampus' || Auth::user()->role == 'admin')
@@ -72,7 +71,6 @@
                                 @endif
                             </tr>
                             @php $no++ @endphp
-                            {{-- @endif --}}
                         @endforeach
                     </tbody>
                 </table>
