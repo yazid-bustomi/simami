@@ -5,7 +5,6 @@
     <div class="row justify-content-center">
 
         <div class="col-xl-10 col-lg-12 col-md-9">
-
             <div class="card o-hidden border-0 shadow-lg my-5">
                 <div class="card-body p-0">
                     <!-- Nested Row within Card Body -->
@@ -20,22 +19,23 @@
                                     <p class="mb-4 ">Silahkan input email untuk reset pasword</p>
                                     @if (session('status'))
                                         <div class="alert alert-success" role="alert">
-                                            {{ session('status') }}
+                                             Riset Password berhasil di kirim
                                         </div>
                                     @endif
+
                                 </div>
                                 <form class="user" method="POST" action="{{ route('password.email') }}">
                                     @csrf
                                     <div class="form-group">
                                         <input type="email"
-                                            class="form-control form-control-user @error('email') is->invalid @enderror"
+                                            class="form-control form-control-user @error('email') is-invalid @enderror"
                                             id="email" aria-describedby="emailHelp" name="email"
                                             value="{{ old('email') }}" autocomplete="email" required autofocus
                                             placeholder="Silahkan Masukkan Email Anda">
 
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
+                                                <strong>  Email tidak di temukan </strong>
                                             </span>
                                         @enderror
                                     </div>

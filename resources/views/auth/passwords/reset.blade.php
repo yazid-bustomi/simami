@@ -31,8 +31,8 @@
                                         <input type="email"
                                             class="form-control form-control-user  @error('email') is-invalid @enderror"
                                             id="email" aria-describedby="emailHelp" placeholder="Email" name="email"
-                                            value="{{ $email ?? old('email') }}" required autocomplete="email" readonly autofocus>
-
+                                            value="{{ $email ?? old('email') }}" required autocomplete="email" readonly
+                                            autofocus>
 
 
                                         @error('email')
