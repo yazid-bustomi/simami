@@ -9,7 +9,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Jumlah Perusahaan</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">3</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $company }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-building fa-2x text-primary"></i>
@@ -26,7 +26,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                 Jumlah Kampus</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $campuses }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-university fa-2x text-success"></i>
@@ -43,7 +43,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                                 Jumlah Mahasiswa</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">16</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $mahasiswas }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-users fa-2x text-info"></i>
@@ -60,7 +60,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                 Jumlah Lowongan Magang</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">3</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $closeLowongan }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-briefcase fa-2x text-warning"></i>

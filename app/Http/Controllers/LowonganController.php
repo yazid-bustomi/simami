@@ -23,10 +23,11 @@ class LowonganController extends Controller
      */
     public function index()
     {
-        // mendapatkan user id dari admin kampus hanya bisa melihat mahasiswanya
+        // mendapatkan user id mahasiswanya
         if (Auth::user()->role == 'mahasiswa') {
-            $lowongans = Lowongan::all();
+            $dateClose = Carbon::today();
 
+            $lowongans = Lowongan::WhereDate('close_lowongan', '>', $dateClose)->get();
 
             foreach ($lowongans as $lowongan) {
                 $lowongan->short_kriteria = TextHelper::truncateWords($lowongan->kriteria, 10);

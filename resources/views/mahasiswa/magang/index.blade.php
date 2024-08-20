@@ -19,33 +19,42 @@
         <div class="main-panel">
             <div class="content-wrapper">
                 <div class="row">
-                    @foreach ($lowongans as $lowongan)
-                        <div class="card mb-3" >
-                            <div class="row g-0" >
-                                <div class="col-md-4 ">
-                                    @php
-                                        $img = !empty($lowongan->img) ? $lowongan->img : 'default.jpg';
-                                    @endphp
-                                    <img src="{{ asset('img/post/' . $img) }}" class="img-fluid rounded-start"
-                                        style="width: 100%; object-fit: cover" alt="{{ $lowongan->judul }}">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h4 class="card-title fw-bold">{{ $lowongan->judul }}</h4>
-                                        <p class="card-text"><i class="mdi mdi-briefcase"></i> Pemagang:
-                                            {{ $lowongan->pemagang }} Orang</p>
-                                        <p class="card-text"><i class="mdi mdi-clock"></i> Durasi:
-                                            {{ $lowongan->durasi_magang }} bulan</p>
-                                        <p class="card-text"><i class="mdi mdi-calendar-check"></i> Penutupan:
-                                            {{ $lowongan->days_remaining }} Hari</p>
-                                        <p class="card-text"><strong>Kriteria:</strong> {{ $lowongan->short_kriteria }}</p>
-                                        <a href="{{ route('magang.show', $lowongan->id) }}" class="btn btn-primary">Lihat
-                                            Detail</a>
+                    @if ($lowongans->isNotEmpty())
+                        @foreach ($lowongans as $lowongan)
+                            <div class="card mb-3">
+                                <div class="row g-0">
+                                    <div class="col-md-4 ">
+                                        @php
+                                            $img = !empty($lowongan->img) ? $lowongan->img : 'default.jpg';
+                                        @endphp
+                                        <img src="{{ asset('img/post/' . $img) }}" class="img-fluid rounded-start"
+                                            style="width: 100%; object-fit: cover" alt="{{ $lowongan->judul }}">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h4 class="card-title fw-bold">{{ $lowongan->judul }}</h4>
+                                            <p class="card-text"><i class="mdi mdi-briefcase"></i> Pemagang:
+                                                {{ $lowongan->pemagang }} Orang</p>
+                                            <p class="card-text"><i class="mdi mdi-clock"></i> Durasi:
+                                                {{ $lowongan->durasi_magang }} bulan</p>
+                                            <p class="card-text"><i class="mdi mdi-calendar-check"></i> Penutupan:
+                                                {{ $lowongan->days_remaining }} Hari</p>
+                                            <p class="card-text"><strong>Kriteria:</strong> {{ $lowongan->short_kriteria }}
+                                            </p>
+                                            <a href="{{ route('magang.show', $lowongan->id) }}"
+                                                class="btn btn-primary">Lihat
+                                                Detail</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    @else
+                    <div class="d-flex justify-content-center align-items-center w-100" style="height: 300px;">
+                        <h4 class="text-danger">Lowongan Masih Belum Tersedia</h4>
+                    </div>
+
+                    @endif
                 </div>
             </div>
         </div>

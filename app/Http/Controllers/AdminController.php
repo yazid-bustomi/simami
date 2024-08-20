@@ -155,14 +155,13 @@ class AdminController extends Controller
     {
         $dateNow = Carbon::today();
 
+
         $campuses = User::where('role' ,'kampus')->count();
         $company = User::where('role', 'perusahaan')->count();
         $mahasiswas = User::where('role', 'mahasiswa')->count();
-        // $jobs = Lowongan::where('close_lowongan', '<=' ,$dateNow);
+        $closeLowongan = Lowongan::whereDate('close_lowongan', '<', $dateNow)->count();
 
-        // dd($dateNow);
-        // dd($jobs);
-        return view('admin.dashboard');
+        return view('admin.dashboard', compact('campuses', 'company', 'mahasiswas', 'closeLowongan'));
     }
 
     public function profile()
