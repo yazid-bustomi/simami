@@ -26,7 +26,6 @@
                             <th>No</th>
                             <th>Nama Kampus</th>
                             <th>Email</th>
-                            <th>No Hp</th>
                             <th>Alamat</th>
                             <th>Jurusan</th>
                             <th>Total Mahasiswa</th>
@@ -39,7 +38,6 @@
                                 <td>{{ $no }}</td>
                                 <td>{{ $kampus->nama_depan }}</td>
                                 <td>{{ $kampus->email ?? '' }}</td>
-                                <td>{{ $kampus->profile->no_hp ?? '-'}}</td>
                                 <td>
                                     {{ $kampus->alamat->alamat ?? '' }}
                                     {{ $kampus->alamat->provinsi ?? '' }}
