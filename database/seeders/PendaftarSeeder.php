@@ -38,7 +38,7 @@ class PendaftarSeeder extends Seeder
                 'user_id' => '7',
                 'lowongan_id' => '1',
                 'date_approve' => Carbon::now()->addDay(3),
-                'status' => 'pending',
+                'status' => 'rejected_kampus',
             ],
 
         ]);

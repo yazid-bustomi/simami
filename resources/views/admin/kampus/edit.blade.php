@@ -6,8 +6,8 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="text-uppercase text-sm mb-3">Edit Perusahaan</h5>
-                    @include('admin.perusahaan.form')
+                    <h5 class="text-uppercase text-sm mb-3">Edit Kampus</h5>
+                    @include('admin.kampus.form')
                 </div>
             </div>
         </div>

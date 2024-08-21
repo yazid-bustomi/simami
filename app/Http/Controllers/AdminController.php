@@ -21,10 +21,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        // menampilkan view admin
-        $users = User::with(['alamat', 'jurusanKampus', 'sosmed', 'akademikProfile',])->get();
-        // dd($user->toArray());
-        return view('admin.users.index', compact('users'));
+
     }
 
     /**
@@ -159,9 +156,9 @@ class AdminController extends Controller
         $campuses = User::where('role' ,'kampus')->count();
         $company = User::where('role', 'perusahaan')->count();
         $mahasiswas = User::where('role', 'mahasiswa')->count();
-        $closeLowongan = Lowongan::whereDate('close_lowongan', '<', $dateNow)->count();
+        $openLowongan = Lowongan::whereDate('close_lowongan', '>=', $dateNow)->count();
 
-        return view('admin.dashboard', compact('campuses', 'company', 'mahasiswas', 'closeLowongan'));
+        return view('admin.dashboard', compact('campuses', 'company', 'mahasiswas', 'openLowongan'));
     }
 
     public function profile()
@@ -215,5 +212,9 @@ class AdminController extends Controller
             ]);
         }
         return redirect()->route('admin.profile')->with('profileSuccess', 'Foto profile berhasil di update');
+    }
+
+    public function updatePassword(Request $request, $id){
+
     }
 }

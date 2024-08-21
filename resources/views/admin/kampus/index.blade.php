@@ -26,10 +26,10 @@
                             <th>No</th>
                             <th>Nama Kampus</th>
                             <th>Email</th>
-                            <th>No Hp</th>
                             <th>Alamat</th>
                             <th>Jurusan</th>
                             <th>Total Mahasiswa</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,7 +39,6 @@
                                 <td>{{ $no }}</td>
                                 <td>{{ $kampus->nama_depan }}</td>
                                 <td>{{ $kampus->email ?? '' }}</td>
-                                <td>{{ $kampus->profile->no_hp ?? '-'}}</td>
                                 <td>
                                     {{ $kampus->alamat->alamat ?? '' }}
                                     {{ $kampus->alamat->provinsi ?? '' }}
@@ -61,6 +60,15 @@
 
                                 </td>
                                 <td>{{ $kampus->adminKampus->count() ?? '0'}} Mahasiswa</td>
+                                <td>
+                                    <a href="{{ route('kampus.edit', $kampus->id) }}" class="btn btn-primary btn-sm my-3">Edit</a>
+                                    <form action="{{ route('kampus.destroy', $kampus->id) }}" method="post" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete(this, `{{ $kampus->nama_depan}}`)">Hapus</button>
+                                    </form>
+                                </td>
                             </tr>
                             @php $no++ @endphp
                         @endforeach
@@ -78,4 +86,22 @@
 
     <!-- Page level custom scripts -->
     <script src={{ asset('js/demo/datatables-demo.js') }}></script>
+
+    <script>
+         function confirmDelete(button, name) {
+            Swal.fire({
+                title: `Apakah Anda yakin menghapus ${name} ?`,
+                text: "Data ini tidak bisa dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    button.closest('form').submit();
+                }
+            });
+        }
+    </script>
 @endsection

@@ -18,8 +18,8 @@ class AdminKampusController extends Controller
     public function index()
     {
         $kampuses = User::where('role', 'kampus')
-        ->with('jurusanKampus', 'alamat', 'profile', 'adminKampus')
-        ->get();
+            ->with('jurusanKampus', 'alamat', 'profile', 'adminKampus')
+            ->get();
 
 
         // dd($kampuses->toArray());
@@ -50,7 +50,7 @@ class AdminKampusController extends Controller
             'password' => 'required|min:8'
         ];
 
-        $validated = Validator::make($request->all(),$rules, [
+        $validated = Validator::make($request->all(), $rules, [
             'nama_depan.required' => 'Nama harus di isi',
             'email.required' => 'Email harus di isi',
             'email.unique' => 'Email sudah terdaftar',
@@ -59,7 +59,7 @@ class AdminKampusController extends Controller
             'password.min' => 'Password minimal 8 karakter'
         ]);
 
-        if($validated->fails()){
+        if ($validated->fails()) {
             return redirect()->back()->withErrors($validated)->withInput();
         }
 
@@ -93,6 +93,9 @@ class AdminKampusController extends Controller
     public function edit($id)
     {
         //
+        $kampuses = User::find($id);
+
+        return view('admin.kampus.edit', compact('kampuses'));
     }
 
     /**
@@ -104,7 +107,40 @@ class AdminKampusController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $users = User::find($id);
+
+        if ($request->email !== $users->email) {
+
+            $rules = [
+                'nama_depan' => 'required',
+                'email' => 'required|unique:users,email|email',
+                'password' => 'min:8|required'
+            ];
+
+            $validated = Validator::make($request->all(), $rules, [
+                'nama_depan.required' => 'Nama harus di isi',
+                'email.required' => 'Email harus di isi',
+                'email.unique' => 'Email sudah ada',
+                'email.email' => 'Email harus berupa email valid',
+                'password.required' => 'Password harus di isi',
+                'password.min' => 'Password minimal 8 karakter'
+            ]);
+
+            if ($validated->fails()) {
+                return redirect()->back()->withInput()->withErrors($validated);
+            };
+        }
+
+        $users->nama_depan = $request->nama_depan;
+        $users->email = $request->email;
+
+        if ($request->password !== null) {
+            $users->password = Hash::make($request->password);
+        }
+
+        $users->save();
+
+        return redirect()->route('kampus.index')->with('success', 'Data berhasil di update');
     }
 
     /**
@@ -115,6 +151,9 @@ class AdminKampusController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $users = User::FindOrFail($id);
+        $users->delete();
+
+        return redirect()->route('kampus.index')->with('success', 'Data berhasil dihapus');
     }
 }

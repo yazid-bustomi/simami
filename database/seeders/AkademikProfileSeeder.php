@@ -24,7 +24,7 @@ class AkademikProfileSeeder extends Seeder
             ],
             [
                 'user_id' => '7',
-                'nim' => '10384973',
+                'nim' => '118228032',
                 'semester' => '5',
                 'jurusan_id' => '3',
                 'admin_kampus_id' => '3'

@@ -93,9 +93,9 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 // 7
-                'nama_depan' => 'Bustomi',
+                'nama_depan' => 'Jafar',
                 'nama_belakang' => '',
-                'email' => 'bustomi@gmail.com',
+                'email' => 'jafar@itby.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
                 'role' => 'mahasiswa',

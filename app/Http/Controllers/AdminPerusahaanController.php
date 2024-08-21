@@ -90,7 +90,8 @@ class AdminPerusahaanController extends Controller
      */
     public function edit($id)
     {
-        //
+        $companys = User::find($id);
+        return view('admin.perusahaan.edit', compact('companys'));
     }
 
     /**
@@ -102,7 +103,38 @@ class AdminPerusahaanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //find user
+        $company = User::FindOrFail($id);
+        if($company->email !== $request->email){
+            $rules = [
+                'nama_depan' => 'required',
+                'email' => 'required|unique:users,email',
+                'password' => 'required|min:8'
+            ];
+
+            $message = [
+                'nama_depan.required' => 'Nama harus di isi',
+                'email.required' => 'Email harus di isi',
+                'email.unique' => 'Email sudah terdaftar',
+                'password.required' => 'Password harus di isi',
+                'password.min' => 'Password minimal 8 karakter'
+            ];
+
+            $valited = Validator::make($request->all(), $rules, $message);
+
+            if($valited->fails()){
+                return redirect()->back()->withErrors($valited)->withInput();
+            }
+        }
+        $company->nama_depan = $request->nama_depan;
+        $company->email = $request->email;
+
+        if($request->password != null){
+            $company->password = Hash::make($request->password);
+        }
+        $company->save();
+
+        return redirect()->route('perusahaan.index')->with('success', 'Data berhasil di update');
     }
 
     /**
@@ -114,5 +146,9 @@ class AdminPerusahaanController extends Controller
     public function destroy($id)
     {
         //
+        $user = User::FindOrFail($id);
+        $user->delete();
+
+        return redirect()->route('perusahaan.index')->with('success', 'Data berhasil di hapus');
     }
 }

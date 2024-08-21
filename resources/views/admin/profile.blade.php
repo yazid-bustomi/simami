@@ -3,6 +3,8 @@
 @section('content')
     <div class="container-fluid py-4">
         <div class="row">
+
+
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
@@ -261,9 +263,8 @@
 
                         @if ($user->profile && $user->profile->img)
                             <label for="img" class="cursor-pointer">
-                                <img src="{{ asset('img/profile/' . $user->profile->img) }}"
-                                    alt="Image placeholder" class="card-img-top rounded rounded-circle"
-                                    id="image-preview">
+                                <img src="{{ asset('img/profile/' . $user->profile->img) }}" alt="Image placeholder"
+                                    class="card-img-top rounded rounded-circle" id="image-preview">
                             </label>
                         @else
                             <label for="img" class="cursor-pointer">
@@ -291,6 +292,68 @@
 
                 </div>
             </div>
+
+            {{-- <div class="col-md-12 mt-2">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="text-uppercase text-sm">Update Password</p>
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        <form action="{{ route('admin.password.update', Auth::user()->id) }}" method="post">
+                            @csrf
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="old_password" class="form-control-label">Password Lama</label>
+                                        <input class="form-control @error('old_password') is-invalid @enderror"
+                                            type="password" name="old_password" id="old_password" required>
+                                        @error('old_password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="new_password" class="form-control-label">Password Baru</label>
+                                        <input type="password" name="new_password" id="new_password"
+                                            class="form-control @error('new_password') is-invalid @enderror" required>
+                                        @error('new_password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="new_password_confirmation" class="form-control-label">Konfirmasi Password Baru</label>
+                                        <input
+                                            class="form-control @error('new_password_confirmation') is-invalid @enderror"
+                                            type="password" name="new_password_confirmation"
+                                            id="new_password_confirmation" required>
+                                        @error('new_password_confirmation')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                            </div>
+                            <button type="submit" class="btn btn-primary float-right">Update Password</button>
+                        </form>
+                    </div>
+                </div>
+            </div> --}}
         </div>
     </div>
 @endsection
