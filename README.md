@@ -1,64 +1,65 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Sistem Manajemen Magang Industri
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistem ini dirancang untuk memfasilitasi manajemen program magang industri antara kampus, perusahaan, dan mahasiswa. Terdapat beberapa jenis pengguna dengan fungsionalitas yang berbeda sesuai peran mereka.
 
-## About Laravel
+## Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### 1. Admin
+- **CRUD Kampus**: Admin dapat menambah, mengubah, menghapus, dan melihat daftar kampus.
+- **CRUD Perusahaan**: Admin dapat menambah, mengubah, menghapus, dan melihat daftar perusahaan yang berpartisipasi dalam program magang.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 2. Kampus
+- **CRUD Mahasiswa**: Kampus dapat menambah, mengubah, menghapus, dan melihat data mahasiswa yang terdaftar.
+- **Approve Mahasiswa**: Kampus memiliki wewenang untuk menyetujui mahasiswa yang layak mengikuti program magang.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 3. Perusahaan
+- **CRUD Lowongan**: Perusahaan dapat menambah, mengubah, menghapus, dan melihat lowongan magang yang tersedia.
+- **Terima Mahasiswa**: Perusahaan dapat menerima mahasiswa yang telah di-approve oleh kampus untuk mengikuti program magang.
 
-## Learning Laravel
+### 4. Mahasiswa
+- **Melamar Magang**: Mahasiswa dapat mencari dan melamar lowongan magang yang tersedia di perusahaan setelah mendapatkan persetujuan dari kampus.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Teknologi yang Digunakan
+- **Bahasa**: PHP V.8
+- **Database**: MySQL
+- **Framework**: Laravel
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Cara Menjalankan Proyek
+1. Clone repositori ini: `git clone https://github.com/yazid-bustomi/simami.git`
+2. Copy File .env.example. `cp .env.example .env`
+3. Jalankan perintah: `php artisan key:generate`
+4. Jalankan migrasi database: `php artisan migrate`
+5. Jalankan Seeders: `php artisan db:seed`
+6. Jalankan server: `php artisan serve`
 
-## Laravel Sponsors
+## Kontribusi
+Jika ingin berkontribusi, silakan fork repositori ini dan ajukan pull request.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Tampilan Aplikasi
 
-### Premium Partners
+Berikut adalah beberapa tampilan utama dari sistem manajemen magang industri:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### 1. Admin
 
-## Contributing
+Admin dapat melihat, menambah, mengubah, dan menghapus data kampus serta perusahaan.
+![CRUD Kampus]()
+![CRUD Perusahaan]()
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 2. Kampus
 
-## Code of Conduct
+Kampus dapat mengelola data mahasiswa dan memberikan persetujuan kepada mahasiswa untuk melamar magang.
+![CRUD Mahasiswa]()
+![Approve Mahasiswa]()
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 3. Perusahaan
 
-## Security Vulnerabilities
+Perusahaan dapat menambah lowongan magang dan menerima mahasiswa yang telah disetujui oleh kampus.
+![CRUD Lowongan]()
+![Terima Mahasiswa]()
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 4. Mahasiswa
 
-## License
+Mahasiswa dapat melihat dan melamar lowongan magang yang tersedia.
+![Lamar Lowongan Magang]()
+![Informasi Pendaftaran Magang]()
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
