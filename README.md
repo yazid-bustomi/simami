@@ -31,25 +31,27 @@ git clone https://github.com/yazid-bustomi/simami.git
 
 2. **Copy File .env.example**. 
 ```bash
-cp .env.example .env
+cp .env.example .env 
+```
 
 
 3. **Jalankan perintah**: 
 ```bash
 php artisan key:generate
+```
 
 4. **Jalankan migrasi database**: 
 ```bash
 php artisan migrate
-
+```
 5. **Jalankan Seeders**: 
 ```bash
 php artisan db:seed
-
+```
 6. **Jalankan server**: 
 ``` bash
 php artisan serve
-
+```
 ## Kontribusi
 Jika ingin berkontribusi, silakan fork repositori ini dan ajukan pull request.
 
