@@ -29,29 +29,41 @@ Sistem ini dirancang untuk memfasilitasi manajemen program magang industri antar
 ```bash
 git clone https://github.com/yazid-bustomi/simami.git
 ```
+
 2. **Copy File .env.example**. 
 ```bash
 cp .env.example .env 
 ```
 
+3. **Install Dependensi**:
+```bash
+composer install
+```
 
-3. **Jalankan perintah**: 
+4. **Jalankan perintah**: 
 ```bash
 php artisan key:generate
 ```
 
-4. **Jalankan migrasi database**: 
+5. **Buat Database dan Setting .env**
+Silahkan buat database dan settingg file .env 
+Sesuaikan dengan nama database
+
+6. **Jalankan migrasi database**: 
 ```bash
 php artisan migrate
 ```
-5. **Jalankan Seeders**: 
+
+7. **Jalankan Seeders**: 
 ```bash
 php artisan db:seed
 ```
-6. **Jalankan server**: 
+
+8. **Jalankan server**: 
 ``` bash
 php artisan serve
 ```
+
 ## Kontribusi
 Jika ingin berkontribusi, silakan fork repositori ini dan ajukan pull request.
 
