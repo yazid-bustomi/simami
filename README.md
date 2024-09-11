@@ -28,7 +28,7 @@ Sistem ini dirancang untuk memfasilitasi manajemen program magang industri antar
 1. **Clone repositori ini**: 
 ```bash
 git clone https://github.com/yazid-bustomi/simami.git
-
+```
 2. **Copy File .env.example**. 
 ```bash
 cp .env.example .env 
