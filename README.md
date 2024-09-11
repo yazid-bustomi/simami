@@ -45,9 +45,9 @@ composer install
 php artisan key:generate
 ```
 
-5. **Buat Database dan Setting .env**
-Silahkan buat database dan settingg file .env 
-Sesuaikan dengan nama database
+5. **Buat Database dan Setting .env**:
+- Silahkan buat database dan settingg file .env 
+- Sesuaikan dengan nama database
 
 6. **Jalankan migrasi database**: 
 ```bash
